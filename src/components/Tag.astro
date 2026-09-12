@@ -1,25 +1,31 @@
 ---
 export interface Props {
   label: string;
+  /** Use for an audience or scale figure, so it reads apart from the tags. */
+  solid?: boolean;
 }
-const { label } = Astro.props;
+const { label, solid = false } = Astro.props;
 ---
 
-<span class="tag">{label}</span>
+<span class={solid ? "tag tag--solid" : "tag"}>{label}</span>
 
 <style>
   .tag {
     display: inline-block;
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    padding: 0.25rem 0.6rem;
-    font-family: var(--font-meta);
+    background: var(--color-warm);
+    border-radius: var(--pill);
+    padding: 0.32rem 0.72rem;
+    font-family: var(--font-body);
     font-weight: 500;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 0.75rem;
     line-height: 1.4;
-    color: var(--color-text-muted);
+    color: var(--color-muted-on-warm);
     white-space: nowrap;
+  }
+
+  /* A scale figure is a fact, not another keyword — it gets the solid pill. */
+  .tag--solid {
+    background: var(--color-text);
+    color: #fff;
   }
 </style>

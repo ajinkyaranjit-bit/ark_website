@@ -99,18 +99,19 @@ const { team, collaboration, owned, moment } = Astro.props;
   }
 
   .lb-owned li {
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    padding: 0.2rem 0.55rem;
+    background: var(--color-warm);
+    border-radius: var(--pill);
+    padding: 0.28rem 0.68rem;
     font-size: 0.8125rem;
-    color: var(--color-text-muted);
+    font-weight: 500;
+    color: var(--color-muted-on-warm);
   }
 
   .lb-moment {
     margin-top: 2.5rem;
     padding: 1.75rem;
-    border: 1px solid var(--color-border);
-    background: color-mix(in srgb, var(--color-tag-border) 4%, transparent);
+    border-radius: var(--radius-sm);
+    background: var(--color-warm);
   }
 
   .lb-moment-title {

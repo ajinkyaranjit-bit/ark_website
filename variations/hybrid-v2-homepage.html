@@ -1,0 +1,402 @@
+<title>Editorial Hybrid Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap">
+
+<style>
+  /* ───────────────────────────────────────────────────────────────
+     Hybrid v2. Three changes from v1:
+
+     1. Serif headings were tracked tight (-0.022 to -0.028em), which
+        read as crunched. Instrument Serif already has close
+        sidebearings, so it needs no help — tracking is now 0 or
+        slightly open, with more line-height.
+     2. The story hook was serif directly under a serif title. Two
+        serifs stacked went muddy, so the hook is now the sans at
+        medium weight in near-black — it reads as a highlight and
+        gives three clear levels instead of two competing ones.
+     3. The media well was a side column, too small for dense system
+        diagrams. It is now full card width.
+     ─────────────────────────────────────────────────────────────── */
+  :root {
+    color-scheme: light;
+
+    --bg: #fdfcfc;
+    --surface: #ffffff;
+    --warm: #f5f3f1;
+    --warm-deep: #ebe8e4;
+    --ink: #0a0a0a;
+    --muted: #777169;   /* 4.71:1 — AA */
+    --label: #635d56;   /* 6.35:1 — AA */
+    --line-soft: rgba(0, 0, 0, 0.055);
+
+    --serif: "Instrument Serif", ui-serif, Georgia, serif;
+    --sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+
+    --wrap: 1180px;
+    --radius: 22px;
+    --pill: 9999px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Tracking at 0, not negative — this is the crunched-heading fix. */
+  h1, h2, h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: 0;
+    word-spacing: 0.02em;
+  }
+  p { margin: 0; text-wrap: pretty; }
+  a { color: inherit; }
+
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .wrap { padding-inline: 2.5rem; } }
+
+  .label {
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--label);
+  }
+
+  /* ─── Header ─────────────────────────────────────────────────── */
+  .hdr {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .hdr-in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 0.875rem; }
+  .mark { font-family: var(--serif); font-size: 1.3125rem; text-decoration: none; }
+  .nav { display: flex; align-items: center; gap: 0.4rem; }
+  .nav a {
+    font-size: 0.875rem; font-weight: 500; color: var(--muted); text-decoration: none;
+    padding: 0.4rem 0.8rem; border-radius: var(--pill);
+    transition: background 140ms ease, color 140ms ease;
+  }
+  .nav a:hover { color: var(--ink); background: var(--warm); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--ink); color: #fff;
+    font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; padding: 0.5rem 1.05rem; border-radius: var(--pill);
+    transition: transform 140ms ease, opacity 140ms ease;
+  }
+  .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn--light { background: #fff; color: #0a0a0a; }
+  .btn--outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.28); }
+  .btn--outline:hover { background: rgba(255,255,255,0.08); opacity: 1; }
+
+  /* ─── Hero ───────────────────────────────────────────────────── */
+  .hero { padding-block: 4.5rem 3.5rem; }
+  @media (min-width: 768px) { .hero { padding-block: 7.5rem 5rem; } }
+
+  .hero h1 {
+    margin-top: 1.875rem;
+    font-size: clamp(2.625rem, 6vw, 5.125rem);
+    line-height: 1.1;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  .hero-copy { margin-top: 2.5rem; max-width: 54ch; display: grid; gap: 1.125rem; }
+  .hero-copy p { color: var(--muted); }
+  .hero-copy strong { color: var(--ink); font-weight: 600; }
+
+  /* ─── Sections ───────────────────────────────────────────────── */
+  .sec { padding-block: 3.5rem; }
+  @media (min-width: 768px) { .sec { padding-block: 5rem; } }
+
+  .sec-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    flex-wrap: wrap; gap: 0.5rem 2rem; margin-bottom: 2.5rem;
+  }
+  .sec-head h2 { font-size: clamp(1.875rem, 3.4vw, 2.875rem); line-height: 1.14; }
+  .sec-note { color: var(--muted); font-size: 0.9375rem; }
+
+  /* ─── Project cards ──────────────────────────────────────────── */
+  .cards { display: grid; gap: 1.5rem; }
+
+  .card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  @media (min-width: 768px) { .card { padding: 2.75rem; } }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.055); }
+
+  /* Text keeps a readable measure even though the card is wide. */
+  .card-body { max-width: 60ch; }
+
+  .card h3 { margin-top: 0.875rem; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; }
+
+  /* The hook: sans, medium, near-black. It is the highlight line, and
+     stepping out of the serif here stops it competing with the title. */
+  .card-hook {
+    margin-top: 0.875rem;
+    font-family: var(--sans);
+    font-size: clamp(1.125rem, 1.8vw, 1.3125rem);
+    font-weight: 500;
+    line-height: 1.42;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    max-width: 34ch;
+  }
+  .card-desc { margin-top: 1rem; font-size: 0.9375rem; line-height: 1.62; color: var(--muted); max-width: 52ch; }
+
+  .card-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem;
+  }
+  .pill {
+    font-size: 0.75rem; font-weight: 500; color: var(--muted);
+    background: var(--warm); border-radius: var(--pill); padding: 0.32rem 0.72rem; white-space: nowrap;
+  }
+  .pill--solid { background: var(--ink); color: #fff; }
+
+  .card-cta {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    margin-top: 1.5rem; font-size: 0.875rem; font-weight: 500; text-decoration: none;
+  }
+  .card-cta::after { content: "→"; transition: transform 160ms ease; }
+  .card:hover .card-cta::after { transform: translateX(3px); }
+  .card-cta::before { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+
+  /* Full card width — these hold dense system diagrams, not thumbnails. */
+  .well {
+    margin-top: 2.25rem;
+    background: var(--warm);
+    border-radius: 14px;
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  @media (min-width: 768px) { .well { margin-top: 2.75rem; } }
+  .well-desc { margin-top: 0.75rem; font-size: 0.875rem; line-height: 1.55; color: var(--muted); max-width: 44ch; }
+
+  /* ─── Inverted band ──────────────────────────────────────────── */
+  .band { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 2.75rem 1.75rem; }
+  @media (min-width: 768px) { .band { padding: 4.5rem 3.5rem; } }
+  .band h2 { font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: 1.16; max-width: 22ch; }
+  .band p { margin-top: 1.375rem; color: rgba(255,255,255,0.66); max-width: 48ch; font-size: 1rem; }
+  .band .label { color: rgba(255,255,255,0.52); }
+  .band-actions { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 2.25rem; }
+
+  /* ─── More work ──────────────────────────────────────────────── */
+  .more { border-top: 1px solid var(--line-soft); }
+  .more-row { padding-block: 1.375rem; border-bottom: 1px solid var(--line-soft); }
+  @media (min-width: 768px) { .more-row { display: grid; grid-template-columns: 13rem 1fr; gap: 2.5rem; align-items: baseline; } }
+  .more-name { font-family: var(--serif); font-size: 1.125rem; }
+  .more-desc { margin-top: 0.25rem; font-size: 0.9375rem; color: var(--muted); max-width: 62ch; }
+  @media (min-width: 768px) { .more-desc { margin-top: 0; } }
+
+  /* ─── Footer ─────────────────────────────────────────────────── */
+  .ft { border-top: 1px solid var(--line-soft); padding-block: 2.5rem 3rem; margin-top: 2rem; }
+  .ft-in { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; justify-content: space-between; align-items: baseline; }
+  .ft a { color: var(--muted); text-decoration: none; font-size: 0.9375rem; }
+  .ft a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
+  .ft-links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+</style>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="mark" href="#top">Ajinkya Kale</a>
+    <nav class="nav">
+      <a href="#work">Work</a>
+      <a href="#more">About</a>
+      <a class="btn" href="mailto:ajinkyaranjit@gmail.com">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <p class="label">Lead Product Designer · Pune, India</p>
+      <h1>I design products that have to work in the real world.</h1>
+      <div class="hero-copy">
+        <p>
+          The hard part usually starts before the screen — business rules,
+          legacy systems, approval chains, regulation, and people who need to
+          get their job done without thinking about the software.
+        </p>
+        <p>
+          I'm Ajinkya, a Lead Product Designer with <strong>9 years</strong>
+          across fintech, banking, healthcare and enterprise products.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Selected work</h2>
+        <p class="sec-note">Three projects. Three different kinds of complexity.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-body">
+            <p class="label">01 / Enterprise Banking</p>
+            <h3>Kotak Cloud Branch</h3>
+            <p class="card-hook">Bringing 10–15 fragmented systems into one operational platform.</p>
+            <p class="card-desc">
+              I led UX across core branch-service workflows, helping create a
+              common structure for transactions, states and service patterns
+              instead of treating every banking service as a separate product.
+            </p>
+            <div class="card-meta">
+              <span class="pill pill--solid">For 5,000+ branch staff</span>
+              <span class="pill">Systems Design</span>
+              <span class="pill">Operational UX</span>
+              <span class="pill">Design Leadership</span>
+            </div>
+            <a class="card-cta" href="#work">View case study</a>
+          </div>
+          <div class="well">
+            <div>
+              <p class="label">Before → after ecosystem</p>
+              <p class="well-desc">Fragmented legacy systems on the left, one unified operational platform carrying six services on the right.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <p class="label">02 / Consumer Healthcare</p>
+            <h3>TrueMeds</h3>
+            <p class="card-hook">The cheaper medicine wasn't the hard sell. Trust was.</p>
+            <p class="card-desc">
+              I led the redesign around the moment customers decide whether to
+              switch from a familiar branded medicine to a lower-cost
+              substitute — focusing the experience on confidence, education and
+              decision-making.
+            </p>
+            <div class="card-meta">
+              <span class="pill pill--solid">1Cr+ app downloads</span>
+              <span class="pill">Consumer Behaviour</span>
+              <span class="pill">Healthcare</span>
+              <span class="pill">Conversion</span>
+            </div>
+            <a class="card-cta" href="#work">View case study</a>
+          </div>
+          <div class="well">
+            <div>
+              <p class="label">The substitute decision</p>
+              <p class="well-desc">The point of hesitation, and what the customer is weighing between a familiar brand and a lower-cost substitute.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <p class="label">03 / Corporate Banking</p>
+            <h3>Kotak Fyn</h3>
+            <p class="card-hook">Designing banking workflows where who can act depends on the company using them.</p>
+            <p class="card-desc">
+              I worked across four service areas of Kotak's enterprise banking
+              portal, designing workflows for SME and corporate clients where
+              approval structures, permissions and transaction states change by
+              organisation and service.
+            </p>
+            <div class="card-meta">
+              <span class="pill pill--solid">SME &amp; enterprise banking teams</span>
+              <span class="pill">0→1</span>
+              <span class="pill">Multi-role UX</span>
+              <span class="pill">Workflow Design</span>
+            </div>
+            <a class="card-cta" href="#work">View case study</a>
+          </div>
+          <div class="well">
+            <div>
+              <p class="label">Roles and approval model</p>
+              <p class="well-desc">Which roles exist, and who may act at each step, varying by service and by organisation.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="band">
+        <p class="label">How I work</p>
+        <h2 style="margin-top:1.25rem">The work becomes interesting before the interface begins.</h2>
+        <p>
+          Most of what decides whether an enterprise product works is settled
+          before anyone opens Figma — in what the business needs, what the
+          system can actually return, and who is allowed to act.
+        </p>
+        <div class="band-actions">
+          <a class="btn btn--light" href="mailto:ajinkyaranjit@gmail.com">Get in touch</a>
+          <a class="btn btn--outline" href="#work">See the work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="more" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2>More work</h2></div>
+      <div class="more">
+        <div class="more-row">
+          <p class="more-name">LoanNearby</p>
+          <p class="more-desc">Consumer lending that moved Aadhaar-KYC loan journeys from a largely offline process toward same-day digital approval.</p>
+        </div>
+        <div class="more-row">
+          <p class="more-name">Wellytics</p>
+          <p class="more-desc">0→1 consumer health product bringing health records, genomics, tracking and an AI health companion into one product.</p>
+        </div>
+        <div class="more-row">
+          <p class="more-name">Highland Brain</p>
+          <p class="more-desc">Learning platform designed across mobile, desktop, tablet and feature-phone contexts.</p>
+        </div>
+        <div class="more-row">
+          <p class="more-name">21K School</p>
+          <p class="more-desc">Administration experience for a multi-school digital education platform.</p>
+        </div>
+        <div class="more-row">
+          <p class="more-name">PayNearby / BuyNearby</p>
+          <p class="more-desc">Payments, commerce and lending products built for India's assisted-commerce ecosystem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <div class="wrap ft-in">
+    <p class="label">© 2026 Ajinkya Kale · Pune, India</p>
+    <div class="ft-links">
+      <a href="mailto:ajinkyaranjit@gmail.com">ajinkyaranjit@gmail.com</a>
+      <a href="https://linkedin.com/in/ajinkya-kale-88487b82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </div>
+</footer>

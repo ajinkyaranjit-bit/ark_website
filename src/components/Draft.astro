@@ -29,14 +29,14 @@ const show = import.meta.env.DEV;
 <style>
   .draft {
     margin: 2rem 0;
-    border: 1px dashed var(--color-tag-border);
-    border-radius: 3px;
-    background: color-mix(in srgb, var(--color-tag-border) 5%, transparent);
-    padding: 1rem 1.25rem;
+    border: 1px dashed var(--color-label);
+    border-radius: var(--radius-sm);
+    background: var(--color-warm);
+    padding: 1.125rem 1.375rem;
   }
 
   .draft-label {
-    font-family: var(--font-meta);
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.6875rem;
     text-transform: uppercase;
@@ -49,7 +49,7 @@ const show = import.meta.env.DEV;
     margin-top: 0.625rem;
     font-size: 0.875rem;
     line-height: 1.6;
-    color: var(--color-text-muted);
+    color: var(--color-muted-on-warm);
   }
 
   .draft-body :global(p + p) {

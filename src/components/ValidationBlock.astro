@@ -40,6 +40,9 @@ const steps = [
     grid-template-columns: 1fr;
     gap: 0;
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--color-surface);
   }
 
   @media (min-width: 860px) {
@@ -69,7 +72,7 @@ const steps = [
   }
 
   .vb-step--change {
-    background: color-mix(in srgb, var(--color-tag-border) 6%, transparent);
+    background: var(--color-warm);
   }
 
   .vb-text {

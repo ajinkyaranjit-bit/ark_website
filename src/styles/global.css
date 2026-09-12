@@ -4,12 +4,27 @@
    Design tokens
    ───────────────────────────────────────────────────────────── */
 :root {
-  --color-bg: #fafaf7;
-  --color-text: #1a1a1a;
-  --color-text-muted: #6b6b6b;
-  --color-border: #e5e3de;
-  --color-accent: #1a1a1a;
-  --color-tag-border: #8c7b6b;
+  /* Warm neutral family. The muted taupe carries most of the text; near-
+     black is kept for emphasis. Both tones are checked against the page
+     background: muted 4.71:1, label 6.35:1 — both AA. */
+  --color-bg: #fdfcfc;
+  --color-surface: #ffffff;
+  --color-warm: #f5f3f1;
+  --color-warm-deep: #ebe8e4;
+  --color-text: #0a0a0a;
+  --color-text-muted: #777169;
+  /* Muted text sitting on the warm surface rather than the page: #777169
+     measures 4.36:1 there and misses AA, so warm contexts use this. */
+  --color-muted-on-warm: #6b655d;
+  --color-label: #635d56;
+  --color-border: rgba(0, 0, 0, 0.055);
+  --color-border-strong: rgba(0, 0, 0, 0.1);
+  --color-accent: #0a0a0a;
+  --color-tag-border: #635d56;
+
+  --radius: 22px;
+  --radius-sm: 14px;
+  --pill: 9999px;
 
   /* Two families only. Metadata is the body face at a smaller size, medium
      weight and open tracking — not a third font. */
@@ -23,10 +38,10 @@
 }
 
 @theme {
-  --color-page: #fafaf7;
-  --color-ink: #1a1a1a;
-  --color-muted: #6b6b6b;
-  --color-rule: #e5e3de;
+  --color-page: #fdfcfc;
+  --color-ink: #0a0a0a;
+  --color-muted: #777169;
+  --color-rule: rgba(0, 0, 0, 0.055);
   /* Two families only. Metadata is the body face at a smaller size, medium
      weight and open tracking — not a third font. */
   --font-display: "Instrument Serif", ui-serif, Georgia, serif;
@@ -62,13 +77,16 @@ body {
 }
 
 /* Instrument Serif has one weight and no variable axes, so headings get
-   their hierarchy from size and tracking rather than weight. */
+   their hierarchy from size alone. It also has close sidebearings already,
+   so tracking stays at 0 — negative tracking reads as crunched. */
 h1,
 h2,
 h3,
 h4 {
   margin: 0;
   font-weight: 400;
+  letter-spacing: 0;
+  word-spacing: 0.02em;
   text-wrap: balance;
 }
 
@@ -109,8 +127,8 @@ hr {
 }
 
 ::selection {
-  background: #1a1a1a;
-  color: #fafaf7;
+  background: #0a0a0a;
+  color: #fdfcfc;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -118,17 +136,17 @@ hr {
    ───────────────────────────────────────────────────────────── */
 .t-h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  font-size: clamp(2.625rem, 6vw, 5.125rem);
   font-weight: 400;
-  letter-spacing: -0.022em;
-  line-height: 1.04;
+  letter-spacing: 0;
+  line-height: 1.1;
 }
 
 .t-h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.875rem, 3.4vw, 2.875rem);
   font-weight: 400;
-  letter-spacing: -0.016em;
+  letter-spacing: 0;
   line-height: 1.14;
 }
 
@@ -152,12 +170,12 @@ hr {
 
 .t-meta {
   font-family: var(--font-meta);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.11em;
   line-height: 1.5;
-  color: var(--color-text-muted);
+  color: var(--color-label);
 }
 
 .t-muted {
@@ -210,10 +228,10 @@ hr {
 
 .prose h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.625rem);
   font-weight: 400;
-  letter-spacing: -0.016em;
-  line-height: 1.14;
+  letter-spacing: 0;
+  line-height: 1.16;
   margin-top: 4.5rem;
 }
 
@@ -292,72 +310,4 @@ hr {
 .skip-link:focus {
   left: 1rem;
   top: 1rem;
-}
-
-/* ─────────────────────────────────────────────────────────────────────────
-   Touch targets — Apple HIG minimum 44×44pt.
-
-   Two techniques, picked per element so the design does not move more than
-   it has to:
-
-   1. An invisible centred ::before pad grows the hit area of a link that is
-      visually smaller. Type, colour and position are untouched and nothing
-      reflows. Used where links sit side by side with room around them.
-   2. Real padding, used only where links stack vertically — there an
-      invisible pad would overlap and steal taps from its neighbour.
-
-   Gated to coarse pointers and narrow viewports, so the desktop layout a
-   mouse user sees stays exactly as it was.
-   ───────────────────────────────────────────────────────────────────────── */
-
-@media (pointer: coarse), (max-width: 1024px) {
-  /* 1 — side-by-side links: grow the hit area, move nothing */
-  .wordmark,
-  .site-header nav a,
-  .cta-link a,
-  .cs-back,
-  .cs-next-link {
-    position: relative;
-  }
-
-  .wordmark::before,
-  .site-header nav a::before,
-  .cta-link a::before,
-  .cs-back::before,
-  .cs-next-link::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 44px;
-    /* 44px floor plus a little slack on wider labels. The header's 1.5rem
-       nav gap leaves 4px between neighbouring pads, so none overlap. */
-    width: max(44px, 100% + 1.25rem);
-  }
-
-  /* 2 — stacked links: real height, so pads cannot overlap */
-  .footer-links a,
-  .contact-links a,
-  .cs-index ol li a {
-    display: inline-block;
-  }
-
-  .footer-links a {
-    padding-block: 0.8rem; /* 19px type → 44px target */
-  }
-
-  .contact-links a {
-    padding-block: 0.7rem; /* 22px type → 44px target */
-  }
-
-  .cs-index ol li a {
-    padding-block: 0.65rem; /* 25px type → 45px target */
-  }
-
-  /* The list already spaced its rows; the padding now does that job, so
-     drop the gap and keep the block the height it was. */
-  .contact-links {
-    gap: 0;
-  }
 }

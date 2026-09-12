@@ -8,7 +8,6 @@ const isActive = (href: string) =>
 const links = [
   { href: url("/#work"), label: "Work", match: "/work" },
   { href: url("/about"), label: "About", match: "/about" },
-  { href: url("/contact"), label: "Contact", match: "/contact" },
 ];
 ---
 
@@ -29,6 +28,15 @@ const links = [
             </li>
           ))
         }
+        <li>
+          <a
+            class="cta"
+            href={url("/contact")}
+            aria-current={isActive("/contact") ? "page" : undefined}
+          >
+            Get in touch
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -39,56 +47,70 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
-    backdrop-filter: saturate(180%) blur(8px);
-    border-bottom: 1px solid transparent;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .header-inner {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    padding-block: 1.25rem;
+    padding-block: 0.875rem;
   }
 
   .wordmark {
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    letter-spacing: -0.005em;
+    font-family: var(--font-display);
+    font-size: 1.3125rem;
     text-decoration: none;
-  }
-
-  .wordmark:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
   }
 
   nav ul {
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 0.25rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   nav a {
+    display: inline-block;
     font-family: var(--font-body);
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 500;
     text-decoration: none;
     color: var(--color-text-muted);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--pill);
+    transition:
+      background 140ms ease,
+      color 140ms ease;
   }
 
   nav a:hover,
   nav a[aria-current="page"] {
     color: var(--color-text);
+    background: var(--color-warm);
   }
 
-  nav a[aria-current="page"] {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-    text-decoration-thickness: 1px;
+  /* The one filled control on the page. */
+  nav a.cta {
+    background: var(--color-text);
+    color: #fff;
+    margin-left: 0.4rem;
+    padding-inline: 1.05rem;
+    transition:
+      opacity 140ms ease,
+      transform 140ms ease;
+  }
+
+  nav a.cta:hover,
+  nav a.cta[aria-current="page"] {
+    background: var(--color-text);
+    color: #fff;
+    opacity: 0.88;
+    transform: translateY(-1px);
   }
 </style>

@@ -20,10 +20,10 @@ const DISPLAY = "'Instrument Serif', Georgia, 'Times New Roman', serif";
 const SANS = "'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 const META = "'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 
-const BG = "#FAFAF7";
-const INK = "#1A1A1A";
-const MUTED = "#6B6B6B";
-const RULE = "#E5E3DE";
+const BG = "#FDFCFC";
+const INK = "#0A0A0A";
+const MUTED = "#777169";
+const RULE = "#EBE8E4";
 
 const esc = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

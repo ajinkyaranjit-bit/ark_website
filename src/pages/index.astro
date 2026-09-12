@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
+import Band from "../components/Band.astro";
 import { EMAIL, url } from "../site.ts";
 
 const featured = (await getCollection("work"))
@@ -87,6 +88,20 @@ const more = [
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <!-- Positioning band -->
+  <section class="section section--band">
+    <div class="wrap measure-hero">
+      <Band
+        label="How I work"
+        heading="The work becomes interesting before the interface begins."
+        body="Most of what decides whether an enterprise product works is settled before anyone opens Figma — in what the business needs, what the system can actually return, and who is allowed to act."
+      >
+        <a class="solid" href={`mailto:${EMAIL}`}>Get in touch</a>
+        <a class="outline" href="#work">See the work</a>
+      </Band>
     </div>
   </section>
 
@@ -176,26 +191,22 @@ const more = [
   }
 
   .work-list {
-    margin-top: 4rem;
-  }
-
-  @media (min-width: 768px) {
-    .work-list {
-      margin-top: 5.5rem;
-    }
+    margin-top: 2.5rem;
   }
 
   /* More work sits below Selected work in every sense — smaller heading,
      no display face, no images. */
+  .section--band {
+    padding-block: 0 1rem;
+  }
+
   .section--quiet {
-    padding-top: 1rem;
+    padding-top: 3rem;
   }
 
   .more-head {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
     padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--color-border);
   }
@@ -217,10 +228,8 @@ const more = [
   }
 
   .more-name {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
   }
 
   .more-blurb {
@@ -234,6 +243,26 @@ const more = [
   .cta-inner {
     padding-top: 3rem;
     border-top: 1px solid var(--color-border);
+  }
+
+  .cta-link a {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-text);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--pill);
+    transition:
+      opacity 140ms ease,
+      transform 140ms ease;
+  }
+
+  .cta-link a:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
   }
 
   .cta-copy {

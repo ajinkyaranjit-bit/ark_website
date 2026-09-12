@@ -1,0 +1,104 @@
+---
+/**
+ * The inverted block that breaks the off-white run between Selected work and
+ * More work, and carries the positioning line.
+ */
+export interface Props {
+  label: string;
+  heading: string;
+  body: string;
+}
+
+const { label, heading, body } = Astro.props;
+---
+
+<div class="band">
+  <p class="band-label">{label}</p>
+  <h2 class="band-heading">{heading}</h2>
+  <p class="band-body">{body}</p>
+  <div class="band-actions">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .band {
+    background: var(--color-text);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 2.75rem 1.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .band {
+      padding: 4.5rem 3.5rem;
+    }
+  }
+
+  .band-label {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: rgba(255, 255, 255, 0.52);
+  }
+
+  .band-heading {
+    margin-top: 1.25rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.16;
+    max-width: 22ch;
+  }
+
+  .band-body {
+    margin-top: 1.375rem;
+    color: rgba(255, 255, 255, 0.66);
+    max-width: 48ch;
+    font-size: 1rem;
+  }
+
+  .band-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 2.25rem;
+  }
+
+  .band-actions :global(a) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5rem 1.05rem;
+    border-radius: var(--pill);
+    transition:
+      opacity 140ms ease,
+      transform 140ms ease,
+      background 140ms ease;
+  }
+
+  .band-actions :global(a.solid) {
+    background: #fff;
+    color: var(--color-text);
+  }
+
+  .band-actions :global(a.solid:hover) {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  .band-actions :global(a.outline) {
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+
+  .band-actions :global(a.outline:hover) {
+    background: rgba(255, 255, 255, 0.08);
+  }
+</style>

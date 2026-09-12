@@ -369,8 +369,8 @@ const education = [
 
   .number-value {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 3.2vw, 2.75rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(2.125rem, 3.4vw, 3rem);
+    letter-spacing: 0;
     line-height: 1.05;
   }
 
@@ -470,5 +470,25 @@ const education = [
 
   .cta-link {
     margin-top: 1.75rem;
+  }
+
+  .cta-link a {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-text);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--pill);
+    transition:
+      opacity 140ms ease,
+      transform 140ms ease;
+  }
+
+  .cta-link a:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
   }
 </style>

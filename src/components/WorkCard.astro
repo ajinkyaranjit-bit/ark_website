@@ -24,8 +24,6 @@ export interface Props {
     label: string;
     description: string;
     aspect?: "16:9" | "4:3" | "1:1" | "3:2";
-    src?: ImageMetadata;
-    alt?: string;
   };
 }
 
@@ -52,10 +50,10 @@ const {
     <h3 class="card-title">{title}</h3>
     <p class="card-hook">{hook}</p>
     <p class="card-desc">{description}</p>
-    <p class="card-audience">{audience}</p>
   </a>
 
   <ul class="card-tags">
+    <li><Tag label={audience} solid /></li>
     {
       tags.map((tag) => (
         <li>
@@ -74,8 +72,6 @@ const {
       aspect={image.aspect ?? "16:9"}
       label={image.label}
       description={image.description}
-      src={image.src}
-      alt={image.alt}
     />
   </div>
 </article>
@@ -84,31 +80,43 @@ const {
   .card {
     display: block;
     position: relative;
-  }
-
-  .card + .card {
-    margin-top: 5.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease;
   }
 
   @media (min-width: 768px) {
-    .card + .card {
-      margin-top: 9rem;
+    .card {
+      padding: 2.75rem;
     }
   }
 
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.055);
+  }
+
+  .card + .card {
+    margin-top: 1.5rem;
+  }
+
+  /* Text keeps a readable measure even though the card is wide. */
   .card-link {
     display: block;
     text-decoration: none;
     color: inherit;
-    max-width: var(--measure);
+    max-width: 60ch;
   }
 
-  /* Overlay spans the whole article so the tags, CTA and image below are all
-     part of the same click target. */
   .card-link::after {
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: var(--radius);
   }
 
   .card-eyebrow {
@@ -122,90 +130,73 @@ const {
   }
 
   .card-title {
-    margin-top: 1rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.875rem, 3.4vw, 2.625rem);
-    font-weight: 400;
-    letter-spacing: -0.018em;
-    line-height: 1.08;
-  }
-
-  .card-hook {
     margin-top: 0.875rem;
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.1vw, 1.625rem);
-    letter-spacing: -0.012em;
-    line-height: 1.24;
-    /* No tighter cap than the body measure — a hook set to 24ch breaks a
-       one-sentence hook across three ragged lines. */
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.1;
+  }
+
+  /* The hook steps out of the display face on purpose: a serif line under a
+     serif title made two voices compete. Sans at medium weight in near-black
+     reads as the highlight it is. */
+  .card-hook {
+    margin-top: 0.875rem;
+    font-family: var(--font-body);
+    font-size: clamp(1.125rem, 1.8vw, 1.3125rem);
+    font-weight: 500;
+    line-height: 1.42;
+    letter-spacing: -0.005em;
+    color: var(--color-text);
     max-width: 34ch;
-    text-wrap: balance;
   }
 
   .card-desc {
-    margin-top: 1.25rem;
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    color: var(--color-text-muted);
-    max-width: 58ch;
-  }
-
-  .card-audience {
-    margin-top: 1.25rem;
+    margin-top: 1rem;
     font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.003em;
+    line-height: 1.62;
+    color: var(--color-text-muted);
+    max-width: 52ch;
   }
 
   .card-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
     margin: 1.5rem 0 0;
     padding: 0;
     list-style: none;
-    max-width: var(--measure-wide);
     position: relative;
     z-index: 1;
   }
 
   .card-cta {
-    margin-top: 1.75rem;
-    font-size: 0.9375rem;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
     font-weight: 500;
   }
 
-  .card-cta-text {
+  .card-cta-text::after {
+    content: "";
+    display: inline-block;
+    transition: transform 160ms ease;
+  }
+
+  .card:hover .card-cta-text {
     text-decoration: underline;
-    text-decoration-thickness: 1px;
     text-underline-offset: 0.22em;
-    text-decoration-color: color-mix(
-      in srgb,
-      var(--color-text) 30%,
-      transparent
-    );
-    transition: text-decoration-color 150ms ease;
-  }
-
-  .card:hover .card-cta-text,
-  .card-link:focus-visible ~ .card-cta .card-cta-text {
-    text-decoration-color: var(--color-text);
-  }
-
-  .card:hover .card-title {
-    text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.1em;
   }
 
+  /* Full card width — these hold dense system diagrams, not thumbnails. */
   .card-media {
-    margin-top: 2.5rem;
-    max-width: var(--measure-wide);
+    margin-top: 2.25rem;
   }
 
   @media (min-width: 768px) {
     .card-media {
-      margin-top: 3rem;
+      margin-top: 2.75rem;
     }
   }
 </style>
