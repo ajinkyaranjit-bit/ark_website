@@ -1,0 +1,80 @@
+---
+/**
+ * Before → Observed → Changed → Why. The one section that proves the design
+ * was tested rather than asserted.
+ */
+export interface Props {
+  before: string;
+  observed: string;
+  changed: string;
+  why: string;
+}
+
+const { before, observed, changed, why } = Astro.props;
+
+const steps = [
+  { label: "Before", value: before },
+  { label: "Observed in testing", value: observed },
+  { label: "Changed", value: changed },
+  { label: "Why the change held", value: why },
+];
+---
+
+<ol class="vb">
+  {
+    steps.map((step, i) => (
+      <li class={i === 2 ? "vb-step vb-step--change" : "vb-step"}>
+        <p class="t-meta">{step.label}</p>
+        <p class="vb-text">{step.value}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .vb {
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 860px) {
+    .vb {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .vb-step {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .vb-step:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 860px) {
+    .vb-step {
+      border-bottom: none;
+      border-right: 1px solid var(--color-border);
+    }
+
+    .vb-step:last-child {
+      border-right: none;
+    }
+  }
+
+  .vb-step--change {
+    background: color-mix(in srgb, var(--color-tag-border) 6%, transparent);
+  }
+
+  .vb-text {
+    margin-top: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+</style>

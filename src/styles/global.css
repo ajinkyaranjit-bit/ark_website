@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Design tokens
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --color-bg: #fafaf7;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b6b6b;
+  --color-border: #e5e3de;
+  --color-accent: #1a1a1a;
+  --color-tag-border: #8c7b6b;
+
+  /* Two families only. Metadata is the body face at a smaller size, medium
+     weight and open tracking — not a third font. */
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --font-meta: "Instrument Sans", system-ui, -apple-system, sans-serif;
+
+  --measure: 680px;
+  --measure-wide: 900px;
+  --measure-hero: 1100px;
+}
+
+@theme {
+  --color-page: #fafaf7;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-rule: #e5e3de;
+  /* Two families only. Metadata is the body face at a smaller size, medium
+     weight and open tracking — not a third font. */
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --font-meta: "Instrument Sans", system-ui, -apple-system, sans-serif;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+}
+
+/* Instrument Serif has one weight and no variable axes, so headings get
+   their hierarchy from size and tracking rather than weight. */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--color-text) 35%, transparent);
+  transition: text-decoration-color 150ms ease;
+}
+
+a:hover {
+  text-decoration-color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 0;
+}
+
+::selection {
+  background: #1a1a1a;
+  color: #fafaf7;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Type scale
+   ───────────────────────────────────────────────────────────── */
+.t-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 1.04;
+}
+
+.t-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -0.016em;
+  line-height: 1.14;
+}
+
+.t-h3 {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+
+.t-body {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.t-lead {
+  font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+  line-height: 1.55;
+}
+
+.t-meta {
+  font-family: var(--font-meta);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.t-muted {
+  color: var(--color-text-muted);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Layout
+   ───────────────────────────────────────────────────────────── */
+.wrap {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding-inline: 2.5rem;
+  }
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.measure-wide {
+  max-width: var(--measure-wide);
+}
+
+.measure-hero {
+  max-width: var(--measure-hero);
+}
+
+.section {
+  padding-block: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: 6rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Prose — case study body copy
+   ───────────────────────────────────────────────────────────── */
+.prose > * + * {
+  margin-top: 1.5rem;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -0.016em;
+  line-height: 1.14;
+  margin-top: 4.5rem;
+}
+
+.prose h3 {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-top: 3rem;
+}
+
+.prose h2 + p,
+.prose h3 + p {
+  margin-top: 1rem;
+}
+
+.prose ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: none;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 0.35rem;
+}
+
+.prose ul li + li {
+  margin-top: 0.6rem;
+}
+
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: -0.85rem;
+  top: 0.72em;
+  width: 4px;
+  height: 1px;
+  background: var(--color-text-muted);
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Motion
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Touch targets — Apple HIG minimum 44×44pt.
+
+   Two techniques, picked per element so the design does not move more than
+   it has to:
+
+   1. An invisible centred ::before pad grows the hit area of a link that is
+      visually smaller. Type, colour and position are untouched and nothing
+      reflows. Used where links sit side by side with room around them.
+   2. Real padding, used only where links stack vertically — there an
+      invisible pad would overlap and steal taps from its neighbour.
+
+   Gated to coarse pointers and narrow viewports, so the desktop layout a
+   mouse user sees stays exactly as it was.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media (pointer: coarse), (max-width: 1024px) {
+  /* 1 — side-by-side links: grow the hit area, move nothing */
+  .wordmark,
+  .site-header nav a,
+  .cta-link a,
+  .cs-back,
+  .cs-next-link {
+    position: relative;
+  }
+
+  .wordmark::before,
+  .site-header nav a::before,
+  .cta-link a::before,
+  .cs-back::before,
+  .cs-next-link::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 44px;
+    /* 44px floor plus a little slack on wider labels. The header's 1.5rem
+       nav gap leaves 4px between neighbouring pads, so none overlap. */
+    width: max(44px, 100% + 1.25rem);
+  }
+
+  /* 2 — stacked links: real height, so pads cannot overlap */
+  .footer-links a,
+  .contact-links a,
+  .cs-index ol li a {
+    display: inline-block;
+  }
+
+  .footer-links a {
+    padding-block: 0.8rem; /* 19px type → 44px target */
+  }
+
+  .contact-links a {
+    padding-block: 0.7rem; /* 22px type → 44px target */
+  }
+
+  .cs-index ol li a {
+    padding-block: 0.65rem; /* 25px type → 45px target */
+  }
+
+  /* The list already spaced its rows; the padding now does that job, so
+     drop the gap and keep the block the height it was. */
+  .contact-links {
+    gap: 0;
+  }
+}

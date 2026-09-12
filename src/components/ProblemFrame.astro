@@ -1,0 +1,81 @@
+---
+/**
+ * Separates what people complained about from what was actually causing it,
+ * then lands on a single design challenge.
+ */
+export interface Props {
+  visible: string;
+  underlying: string;
+  challenge: string;
+}
+
+const { visible, underlying, challenge } = Astro.props;
+---
+
+<div class="pf">
+  <div class="pf-pair">
+    <div class="pf-side">
+      <p class="t-meta">Visible problem</p>
+      <p class="pf-text">{visible}</p>
+    </div>
+    <div class="pf-side pf-side--under">
+      <p class="t-meta">Underlying problem</p>
+      <p class="pf-text">{underlying}</p>
+    </div>
+  </div>
+
+  <blockquote class="pf-challenge">
+    <p class="t-meta">The design challenge</p>
+    <p class="pf-challenge-text">{challenge}</p>
+  </blockquote>
+</div>
+
+<style>
+  .pf {
+    margin-top: 2rem;
+  }
+
+  .pf-pair {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 700px) {
+    .pf-pair {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .pf-side {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* The underlying problem is the one that matters — give it the accent rule. */
+  .pf-side--under {
+    border-top-color: var(--color-tag-border);
+  }
+
+  .pf-text {
+    margin-top: 0.875rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .pf-challenge {
+    margin: 2.5rem 0 0;
+    padding: 1.75rem 0 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pf-challenge-text {
+    margin-top: 0.875rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    text-wrap: pretty;
+  }
+</style>

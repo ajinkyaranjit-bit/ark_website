@@ -1,0 +1,171 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseStudyHero from "../../components/CaseStudyHero.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("work");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content, headings } = await render(entry);
+
+// The 60-second scan layer: a jump list built from the body's own section
+// headings, so it never drifts out of sync with the content.
+const sections = headings.filter((h) => h.depth === 2);
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <CaseStudyHero
+    title={data.title}
+    subtitle={data.subtitle}
+    tags={data.tags}
+    snapshot={data.snapshot}
+    image={data.heroImage}
+  />
+
+  <div class="wrap measure-hero">
+    <div class="cs-body">
+      {
+        sections.length > 2 && (
+          <nav class="cs-index" aria-label="Case study sections">
+            <p class="t-meta">In this case study</p>
+            <ol>
+              {sections.map((section, i) => (
+                <li>
+                  <span class="cs-index-n t-meta">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <a href={`#${section.slug}`}>{section.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <article class="prose">
+        <Content />
+      </article>
+
+      {
+        data.next && (
+          <nav class="cs-next" aria-label="Next case study">
+            <p class="t-meta">Next case study</p>
+            <a href={data.next.href} class="cs-next-link">
+              <span class="t-h2 cs-next-title">{data.next.title} →</span>
+            </a>
+            <p class="cs-next-blurb">{data.next.blurb}</p>
+          </nav>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .cs-body {
+    max-width: var(--measure);
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .cs-body {
+      padding-top: 4.5rem;
+    }
+  }
+
+  .cs-index {
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cs-index ol {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  @media (min-width: 620px) {
+    .cs-index ol {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem 2rem;
+    }
+  }
+
+  .cs-index li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .cs-index-n {
+    font-size: 0.625rem;
+    flex-shrink: 0;
+  }
+
+  .cs-index a {
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .cs-index a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .cs-next {
+    margin-top: 5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .cs-next {
+      margin-top: 7rem;
+    }
+  }
+
+  .cs-next-link {
+    display: inline-block;
+    margin-top: 1rem;
+    text-decoration: none;
+  }
+
+  .cs-next-title {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.14em;
+    transition: text-decoration-color 150ms ease;
+  }
+
+  .cs-next-link:hover .cs-next-title,
+  .cs-next-link:focus-visible .cs-next-title {
+    text-decoration-color: var(--color-text);
+  }
+
+  .cs-next-blurb {
+    margin-top: 1rem;
+    max-width: 46ch;
+    color: var(--color-text-muted);
+  }
+</style>
+
+<style is:global>
+  /* Section headings get a little more air in the decision-led structure,
+     and a scroll offset so the sticky header never covers a jump target. */
+  .prose h2 {
+    scroll-margin-top: 5rem;
+  }
+</style>

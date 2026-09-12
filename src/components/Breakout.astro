@@ -1,0 +1,24 @@
+---
+/**
+ * Lets case-study imagery step out past the 680px body measure, up to the
+ * 900px image width, without ever going edge-to-edge.
+ */
+---
+
+<div class="breakout">
+  <slot />
+</div>
+
+<style>
+  .breakout {
+    margin-block: 3rem;
+  }
+
+  @media (min-width: 900px) {
+    .breakout {
+      width: var(--measure-wide);
+      margin-left: calc((var(--measure) - var(--measure-wide)) / 2);
+      margin-block: 4rem;
+    }
+  }
+</style>

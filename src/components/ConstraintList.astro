@@ -1,0 +1,65 @@
+---
+/**
+ * Why the project was hard. Three to five entries — beyond that it reads as a
+ * requirements list rather than a signal of judgement.
+ */
+export interface Props {
+  items: { title: string; body: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<dl class="constraints">
+  {
+    items.map((item, i) => (
+      <div class="constraint">
+        <dt>
+          <span class="constraint-n t-meta">{String(i + 1).padStart(2, "0")}</span>
+          <span class="constraint-title">{item.title}</span>
+        </dt>
+        <dd>{item.body}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .constraints {
+    margin: 2rem 0 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .constraint {
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .constraint:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .constraint dt {
+    display: flex;
+    align-items: baseline;
+    gap: 0.875rem;
+  }
+
+  .constraint-n {
+    flex-shrink: 0;
+    font-size: 0.6875rem;
+  }
+
+  .constraint-title {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .constraint dd {
+    margin: 0.5rem 0 0 2.05rem;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+</style>

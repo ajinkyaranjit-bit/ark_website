@@ -1,0 +1,128 @@
+---
+/**
+ * Lead-level evidence: who was on the team, what Ajinkya personally owned as
+ * distinct from the team, who needed aligning, and one concrete moment where
+ * he changed the direction of the work.
+ */
+export interface Props {
+  team: string;
+  collaboration: string;
+  owned: string[];
+  moment?: { title: string; body: string };
+}
+
+const { team, collaboration, owned, moment } = Astro.props;
+---
+
+<div class="lb">
+  <dl class="lb-rows">
+    <div class="lb-row">
+      <dt class="t-meta">Design team</dt>
+      <dd>{team}</dd>
+    </div>
+    <div class="lb-row">
+      <dt class="t-meta">Alignment needed across</dt>
+      <dd>{collaboration}</dd>
+    </div>
+    <div class="lb-row">
+      <dt class="t-meta">What I personally owned</dt>
+      <dd>
+        <ul class="lb-owned">
+          {owned.map((item) => <li>{item}</li>)}
+        </ul>
+      </dd>
+    </div>
+  </dl>
+
+  {
+    moment && (
+      <div class="lb-moment">
+        <p class="t-meta">Leadership moment</p>
+        <p class="lb-moment-title">{moment.title}</p>
+        <p class="lb-moment-body">{moment.body}</p>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .lb {
+    margin-top: 2rem;
+  }
+
+  .lb-rows {
+    margin: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 700px) {
+    .lb-rows {
+      grid-template-columns: 11rem 1fr;
+      gap: 1.5rem 2rem;
+    }
+
+    .lb-row {
+      display: contents;
+    }
+  }
+
+  .lb-row dt {
+    font-size: 0.6875rem;
+  }
+
+  @media (min-width: 700px) {
+    .lb-row dt {
+      padding-top: 0.2rem;
+    }
+  }
+
+  .lb-row dd {
+    margin: 0.375rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+
+  @media (min-width: 700px) {
+    .lb-row dd {
+      margin: 0;
+    }
+  }
+
+  .lb-owned {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .lb-owned li {
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .lb-moment {
+    margin-top: 2.5rem;
+    padding: 1.75rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-tag-border) 4%, transparent);
+  }
+
+  .lb-moment-title {
+    margin-top: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .lb-moment-body {
+    margin-top: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import { LINKEDIN_URL, READCV_URL, EMAIL } from "../site.ts";
+---
+
+<footer class="site-footer">
+  <div class="wrap measure-hero footer-inner">
+    <p class="footer-lead">
+      Available for senior design roles in Singapore, the Middle East, and
+      remote-first companies globally.
+    </p>
+    <p class="footer-links">
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      <span aria-hidden="true"> · </span>
+      <a
+        href={LINKEDIN_URL}
+        rel="noopener noreferrer"
+        target="_blank">LinkedIn</a
+      >
+      <span aria-hidden="true"> · </span>
+      <a href={READCV_URL} rel="noopener noreferrer" target="_blank"
+        >Read.cv</a
+      >
+    </p>
+    <p class="footer-legal">© 2026 Ajinkya Kale · Pune, India</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    margin-top: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-footer {
+      margin-top: 6rem;
+    }
+  }
+
+  .footer-inner {
+    padding-block: 3rem 3.5rem;
+  }
+
+  .footer-lead {
+    max-width: 42ch;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    margin-top: 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .footer-legal {
+    margin-top: 1.75rem;
+    font-family: var(--font-meta);
+    font-weight: 500;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+</style>

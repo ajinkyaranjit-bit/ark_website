@@ -1,0 +1,249 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WorkCard from "../components/WorkCard.astro";
+import { EMAIL } from "../site.ts";
+
+const featured = (await getCollection("work"))
+  .filter((entry) => entry.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+
+// Secondary work. Deliberately quieter than Selected work: no cards, no dates,
+// no responsibilities — breadth only.
+const more = [
+  {
+    name: "LoanNearby",
+    blurb:
+      "Consumer lending that moved Aadhaar-KYC loan journeys from a largely offline process toward same-day digital approval.",
+  },
+  {
+    name: "Wellytics",
+    blurb:
+      "0→1 consumer health product bringing health records, genomics, tracking and an AI health companion into one product.",
+  },
+  {
+    name: "Highland Brain",
+    blurb:
+      "Learning platform designed across mobile, desktop, tablet and feature-phone contexts.",
+  },
+  {
+    name: "21K School",
+    blurb:
+      "Administration experience for a multi-school digital education platform.",
+  },
+  {
+    name: "PayNearby / BuyNearby",
+    blurb:
+      "Payments, commerce and lending products built for India's assisted-commerce ecosystem.",
+  },
+];
+---
+
+<BaseLayout personSchema>
+  <!-- Hero — the statement carries the first fold. Nothing else. -->
+  <section class="hero">
+    <div class="wrap measure-hero">
+      <h1 class="t-h1 hero-title">
+        I design products that have to work in the real world.
+      </h1>
+      <div class="hero-copy">
+        <p>
+          The hard part usually starts before the screen — business rules,
+          legacy systems, approval chains, regulation, and people who need to
+          get their job done without thinking about the software.
+        </p>
+        <p>
+          I'm Ajinkya, a Lead Product Designer with 9 years across fintech,
+          banking, healthcare and enterprise products.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected work -->
+  <section class="section" id="work">
+    <div class="wrap measure-hero">
+      <header class="section-head">
+        <h2 class="t-h2">Selected work</h2>
+        <p class="section-note">
+          Three projects. Three different kinds of complexity.
+        </p>
+      </header>
+
+      <div class="work-list">
+        {
+          featured.map((entry) => (
+            <WorkCard
+              number={entry.data.number}
+              category={entry.data.cardCategory}
+              title={entry.data.cardTitle}
+              hook={entry.data.cardHook}
+              description={entry.data.cardDescription}
+              audience={entry.data.cardAudience}
+              href={`/work/${entry.id}`}
+              tags={entry.data.cardTags ?? entry.data.tags}
+              image={entry.data.cardImage}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- More work -->
+  <section class="section section--quiet">
+    <div class="wrap measure-hero">
+      <h2 class="more-head">More work</h2>
+
+      <ul class="more-list">
+        {
+          more.map((item) => (
+            <li class="more-item">
+              <h3 class="more-name">{item.name}</h3>
+              <p class="more-blurb">{item.blurb}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section cta">
+    <div class="wrap measure-hero">
+      <div class="cta-inner">
+        <h2 class="t-h2">Let's talk.</h2>
+        <p class="cta-copy">
+          I'm currently exploring Lead / Principal Product Designer roles where
+          complex products, systems thinking and design leadership matter.
+        </p>
+        <p class="cta-link">
+          <a href={`mailto:${EMAIL}`}>Get in touch →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Short of full height on purpose — the reader should see that work
+     follows without scrolling to find out. */
+  .hero {
+    min-height: 66vh;
+    display: flex;
+    align-items: center;
+    padding-block: 4rem 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      min-height: 74vh;
+      padding-block: 5rem 4rem;
+    }
+  }
+
+  .hero-title {
+    max-width: 17ch;
+  }
+
+  .hero-copy {
+    margin-top: 2.25rem;
+    max-width: 54ch;
+  }
+
+  .hero-copy p {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .hero-copy p + p {
+    margin-top: 1.25rem;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    flex-wrap: wrap;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-note {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .work-list {
+    margin-top: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .work-list {
+      margin-top: 5.5rem;
+    }
+  }
+
+  /* More work sits below Selected work in every sense — smaller heading,
+     no display face, no images. */
+  .section--quiet {
+    padding-top: 1rem;
+  }
+
+  .more-head {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .more-list {
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .more-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.75rem 3rem;
+    }
+  }
+
+  .more-name {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  .more-blurb {
+    margin-top: 0.5rem;
+    max-width: 46ch;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .cta-inner {
+    padding-top: 3rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cta-copy {
+    margin-top: 1.25rem;
+    max-width: 50ch;
+    color: var(--color-text-muted);
+  }
+
+  .cta-link {
+    margin-top: 1.75rem;
+    font-weight: 500;
+  }
+</style>

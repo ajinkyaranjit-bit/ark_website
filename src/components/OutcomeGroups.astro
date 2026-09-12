@@ -1,0 +1,153 @@
+---
+import Draft from "./Draft.astro";
+
+/**
+ * Outcomes, grouped by kind of impact and labelled by provenance.
+ *
+ * The provenance label is the point. A target presented as a measured result
+ * is the fastest way to lose a senior reviewer, so every claim has to declare
+ * which of these it is:
+ *
+ *   measured — verified in production after launch
+ *   observed — seen in testing, UAT, analytics or operations
+ *   target   — what the project was expected to achieve
+ *   scale    — the size of the environment, not a result of the work
+ *
+ * Set `verify: true` on any claim whose source Ajinkya has not yet confirmed.
+ * It renders normally but raises a dev-only notice listing what to check.
+ */
+export type ClaimKind = "measured" | "observed" | "target" | "scale";
+
+export interface Claim {
+  text: string;
+  kind: ClaimKind;
+  verify?: boolean;
+}
+
+export interface Props {
+  groups: { title: string; claims: Claim[] }[];
+}
+
+const { groups } = Astro.props;
+
+const KIND_LABEL: Record<ClaimKind, string> = {
+  measured: "Measured",
+  observed: "Observed",
+  target: "Target",
+  scale: "Scale",
+};
+
+const unverified = groups
+  .flatMap((g) => g.claims)
+  .filter((c) => c.verify)
+  .map((c) => c.text);
+---
+
+<div class="og">
+  {
+    groups.map((group) => (
+      <section class="og-group">
+        <h3 class="og-group-title">{group.title}</h3>
+        <ul class="og-claims">
+          {group.claims.map((claim) => (
+            <li class="og-claim">
+              <span class={`og-kind og-kind--${claim.kind}`}>
+                {KIND_LABEL[claim.kind]}
+              </span>
+              <span class="og-text">{claim.text}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+{
+  unverified.length > 0 && (
+    <Draft label="Claims to verify before launch">
+      <p>
+        These are labelled by their most defensible reading of the source copy.
+        Confirm the source of each, then either promote it to
+        <code> measured </code> or leave it as is:
+      </p>
+      <ul>
+        {unverified.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+    </Draft>
+  )
+}
+
+<style>
+  .og {
+    margin-top: 2rem;
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .og-group {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .og-group-title {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .og-claims {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.875rem;
+  }
+
+  .og-claim {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.375rem;
+  }
+
+  @media (min-width: 620px) {
+    .og-claim {
+      grid-template-columns: 6.5rem 1fr;
+      gap: 1rem;
+      align-items: baseline;
+    }
+  }
+
+  .og-kind {
+    justify-self: start;
+    font-family: var(--font-meta);
+    font-weight: 500;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 0.15rem 0.4rem;
+    white-space: nowrap;
+  }
+
+  /* Only a verified production result gets the solid accent. */
+  .og-kind--measured {
+    color: var(--color-text);
+    border-color: var(--color-tag-border);
+  }
+
+  .og-text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .og-claims :global(code) {
+    font-family: var(--font-meta);
+    font-weight: 500;
+    font-size: 0.85em;
+  }
+</style>

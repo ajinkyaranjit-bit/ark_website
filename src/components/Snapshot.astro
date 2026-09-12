@@ -1,0 +1,88 @@
+---
+/**
+ * The 10-second scan layer. A reviewer should get project, role, scale and
+ * outcome from this block alone, without reading a paragraph.
+ */
+export interface Props {
+  challenge: string;
+  items: { label: string; value: string }[];
+}
+
+const { challenge, items } = Astro.props;
+
+// Balance the last row rather than letting auto-fit leave an orphan: up to
+// four items sit on one line, more than that split into two even rows.
+const n = items.length;
+const cols = n <= 4 ? n : Math.ceil(n / 2);
+---
+
+<section class="snapshot" aria-label="Snapshot">
+  <p class="snapshot-challenge">{challenge}</p>
+  <dl class="snapshot-grid" style={`--snapshot-cols: ${cols}`}>
+    {
+      items.map((item) => (
+        <div class="snapshot-item">
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .snapshot {
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .snapshot {
+      padding-block: 2.5rem;
+    }
+  }
+
+  .snapshot-challenge {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.1vw, 1.625rem);
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+    max-width: 34ch;
+  }
+
+  .snapshot-grid {
+    margin: 2.25rem 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .snapshot-grid {
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+      gap: 1.75rem 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .snapshot-grid {
+      grid-template-columns: repeat(var(--snapshot-cols), 1fr);
+    }
+  }
+
+  .snapshot-item dt {
+    font-family: var(--font-meta);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-text-muted);
+  }
+
+  .snapshot-item dd {
+    margin: 0.5rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+</style>

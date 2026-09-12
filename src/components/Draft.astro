@@ -1,0 +1,58 @@
+---
+/**
+ * An authoring slot. Renders in `npm run dev` so Ajinkya can see exactly what
+ * a section still needs, and is stripped from `npm run build` so the live site
+ * never publishes scaffolding, half-claims, or "coming soon" filler.
+ *
+ * This is the mechanism that keeps the claims rule enforceable: anything that
+ * cannot yet be defended goes in a <Draft>, not into the page.
+ */
+export interface Props {
+  label?: string;
+}
+
+const { label = "To write" } = Astro.props;
+const show = import.meta.env.DEV;
+---
+
+{
+  show && (
+    <aside class="draft" data-draft>
+      <p class="draft-label">✎ {label} · dev only, not published</p>
+      <div class="draft-body">
+        <slot />
+      </div>
+    </aside>
+  )
+}
+
+<style>
+  .draft {
+    margin: 2rem 0;
+    border: 1px dashed var(--color-tag-border);
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--color-tag-border) 5%, transparent);
+    padding: 1rem 1.25rem;
+  }
+
+  .draft-label {
+    font-family: var(--font-meta);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    /* Darker than the border tone it sits next to — this is read, not decor. */
+    color: #6b5a49;
+  }
+
+  .draft-body {
+    margin-top: 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .draft-body :global(p + p) {
+    margin-top: 0.5rem;
+  }
+</style>

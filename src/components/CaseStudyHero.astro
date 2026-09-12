@@ -1,0 +1,111 @@
+---
+import Placeholder from "./Placeholder.astro";
+import Tag from "./Tag.astro";
+import Snapshot from "./Snapshot.astro";
+
+export interface Props {
+  title: string;
+  subtitle: string;
+  tags: string[];
+  snapshot: {
+    challenge: string;
+    items: { label: string; value: string }[];
+  };
+  image: {
+    label: string;
+    description: string;
+    aspect?: "16:9" | "4:3" | "1:1" | "3:2";
+  };
+}
+
+const { title, subtitle, tags, snapshot, image } = Astro.props;
+---
+
+<header class="cs-hero">
+  <div class="wrap measure-hero">
+    <a href="/#work" class="cs-back t-meta">← Selected work</a>
+
+    <h1 class="t-h1 cs-title">{title}</h1>
+    <p class="t-lead cs-subtitle">{subtitle}</p>
+
+    <ul class="cs-tags">
+      {
+        tags.map((tag) => (
+          <li>
+            <Tag label={tag} />
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="cs-snapshot">
+      <Snapshot challenge={snapshot.challenge} items={snapshot.items} />
+    </div>
+
+    <div class="cs-media">
+      <Placeholder
+        aspect={image.aspect ?? "16:9"}
+        label={image.label}
+        description={image.description}
+      />
+    </div>
+  </div>
+</header>
+
+<style>
+  .cs-hero {
+    padding-top: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .cs-hero {
+      padding-top: 4rem;
+    }
+  }
+
+  .cs-back {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-decoration: none;
+  }
+
+  .cs-back:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .cs-title {
+    margin-top: 2.5rem;
+    max-width: 18ch;
+  }
+
+  .cs-subtitle {
+    margin-top: 1.5rem;
+    max-width: 46ch;
+    color: var(--color-text-muted);
+  }
+
+  .cs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cs-snapshot {
+    margin-top: 3rem;
+  }
+
+  .cs-media {
+    margin-top: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .cs-media {
+      margin-top: 4.5rem;
+    }
+  }
+</style>

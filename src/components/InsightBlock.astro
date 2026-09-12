@@ -1,0 +1,100 @@
+---
+/**
+ * Artifact → Observation → Insight. An artifact without an insight attached
+ * does not belong in a case study, so this component refuses to render one:
+ * all three fields are required.
+ */
+export interface Props {
+  artifact: string;
+  observation: string;
+  insight: string;
+}
+
+const { artifact, observation, insight } = Astro.props;
+---
+
+<div class="insight">
+  <ol class="insight-chain">
+    <li>
+      <p class="t-meta">Artifact</p>
+      <p class="insight-text">{artifact}</p>
+    </li>
+    <li>
+      <p class="t-meta">Observation</p>
+      <p class="insight-text">{observation}</p>
+    </li>
+    <li class="insight-final">
+      <p class="t-meta">Insight</p>
+      <p class="insight-text">{insight}</p>
+    </li>
+  </ol>
+</div>
+
+<style>
+  .insight {
+    margin-top: 2rem;
+  }
+
+  .insight-chain {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0;
+  }
+
+  .insight-chain li {
+    position: relative;
+    padding: 1.25rem 0 1.25rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .insight-chain li:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Vertical spine connecting the three steps. */
+  .insight-chain li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .insight-chain li:first-child::before {
+    top: 1.35rem;
+  }
+
+  .insight-chain li:last-child::before {
+    bottom: calc(100% - 1.35rem);
+  }
+
+  .insight-chain li::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 1.3rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-border);
+  }
+
+  .insight-final::after {
+    background: var(--color-tag-border) !important;
+  }
+
+  .insight-text {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .insight-final .insight-text {
+    font-size: 1.0625rem;
+    font-weight: 500;
+  }
+</style>

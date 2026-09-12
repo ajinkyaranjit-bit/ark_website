@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FAFAF7"/>
+  <rect x="1" y="1" width="1198" height="628" fill="none" stroke="#E5E3DE" stroke-width="2"/>
+
+  <text x="88" y="112" font-family="'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" letter-spacing="2.4" fill="#6B6B6B">PORTFOLIO</text>
+
+  <text x="86" y="288" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-size="70" font-weight="500" letter-spacing="-1.6" fill="#1A1A1A">Product design for complex,</text>
+  <text x="86" y="370" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-size="70" font-weight="500" letter-spacing="-1.6" fill="#1A1A1A">real-world systems.</text>
+
+  <line x1="88" y1="452" x2="1112" y2="452" stroke="#E5E3DE" stroke-width="2"/>
+
+  <text x="88" y="510" font-family="'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#1A1A1A">Ajinkya Kale</text>
+  <text x="88" y="552" font-family="'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" fill="#6B6B6B">Lead Product Designer</text>
+
+  <text x="1112" y="510" text-anchor="end" font-family="'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" letter-spacing="1.4" fill="#6B6B6B">FINTECH · BANKING · HEALTHCARE</text>
+  <text x="1112" y="552" text-anchor="end" font-family="'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" letter-spacing="1.4" fill="#6B6B6B">SAAS · ED-TECH</text>
+</svg>
