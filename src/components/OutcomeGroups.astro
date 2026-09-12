@@ -15,6 +15,11 @@ import Draft from "./Draft.astro";
  *
  * Set `verify: true` on any claim whose source Ajinkya has not yet confirmed.
  * It renders normally but raises a dev-only notice listing what to check.
+ *
+ * `note` is the instruction to himself about what still needs checking. It is
+ * deliberately NOT rendered into the page — a live portfolio should not show a
+ * reviewer "confirm this before publishing". It appears only in the dev-only
+ * checklist below.
  */
 export type ClaimKind = "measured" | "observed" | "target" | "scale";
 
@@ -22,6 +27,8 @@ export interface Claim {
   text: string;
   kind: ClaimKind;
   verify?: boolean;
+  /** Author-facing only. Never rendered into the published page. */
+  note?: string;
 }
 
 export interface Props {
@@ -39,8 +46,7 @@ const KIND_LABEL: Record<ClaimKind, string> = {
 
 const unverified = groups
   .flatMap((g) => g.claims)
-  .filter((c) => c.verify)
-  .map((c) => c.text);
+  .filter((c) => c.verify);
 ---
 
 <div class="og">
@@ -72,8 +78,11 @@ const unverified = groups
         <code> measured </code> or leave it as is:
       </p>
       <ul>
-        {unverified.map((t) => (
-          <li>{t}</li>
+        {unverified.map((c) => (
+          <li>
+            <strong>{c.text}</strong>
+            {c.note && <> — {c.note}</>}
+          </li>
         ))}
       </ul>
     </Draft>

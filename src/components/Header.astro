@@ -1,18 +1,20 @@
 ---
+import { url } from "../site.ts";
+
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
 
 const links = [
-  { href: "/#work", label: "Work", match: "/work" },
-  { href: "/about", label: "About", match: "/about" },
-  { href: "/contact", label: "Contact", match: "/contact" },
+  { href: url("/#work"), label: "Work", match: "/work" },
+  { href: url("/about"), label: "About", match: "/about" },
+  { href: url("/contact"), label: "Contact", match: "/contact" },
 ];
 ---
 
 <header class="site-header">
   <div class="wrap measure-hero header-inner">
-    <a href="/" class="wordmark">Ajinkya Kale</a>
+    <a href={url("/")} class="wordmark">Ajinkya Kale</a>
     <nav aria-label="Primary">
       <ul>
         {

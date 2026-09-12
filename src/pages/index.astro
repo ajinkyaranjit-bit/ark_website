@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
-import { EMAIL } from "../site.ts";
+import { EMAIL, url } from "../site.ts";
 
 const featured = (await getCollection("work"))
   .filter((entry) => entry.data.featured)
@@ -80,7 +80,7 @@ const more = [
               hook={entry.data.cardHook}
               description={entry.data.cardDescription}
               audience={entry.data.cardAudience}
-              href={`/work/${entry.id}`}
+              href={url(`/work/${entry.id}`)}
               tags={entry.data.cardTags ?? entry.data.tags}
               image={entry.data.cardImage}
             />

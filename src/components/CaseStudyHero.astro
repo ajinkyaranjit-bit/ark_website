@@ -2,6 +2,7 @@
 import Placeholder from "./Placeholder.astro";
 import Tag from "./Tag.astro";
 import Snapshot from "./Snapshot.astro";
+import { url } from "../site.ts";
 
 export interface Props {
   title: string;
@@ -23,7 +24,7 @@ const { title, subtitle, tags, snapshot, image } = Astro.props;
 
 <header class="cs-hero">
   <div class="wrap measure-hero">
-    <a href="/#work" class="cs-back t-meta">← Selected work</a>
+    <a href={url("/#work")} class="cs-back t-meta">← Selected work</a>
 
     <h1 class="t-h1 cs-title">{title}</h1>
     <p class="t-lead cs-subtitle">{subtitle}</p>

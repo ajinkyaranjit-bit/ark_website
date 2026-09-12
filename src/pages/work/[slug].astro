@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import CaseStudyHero from "../../components/CaseStudyHero.astro";
+import { url } from "../../site.ts";
 
 export async function getStaticPaths() {
   const entries = await getCollection("work");
@@ -57,7 +58,7 @@ const sections = headings.filter((h) => h.depth === 2);
         data.next && (
           <nav class="cs-next" aria-label="Next case study">
             <p class="t-meta">Next case study</p>
-            <a href={data.next.href} class="cs-next-link">
+            <a href={url(data.next.href)} class="cs-next-link">
               <span class="t-h2 cs-next-title">{data.next.title} →</span>
             </a>
             <p class="cs-next-blurb">{data.next.blurb}</p>
