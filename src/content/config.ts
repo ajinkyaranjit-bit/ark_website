@@ -1,16 +1,24 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection, z, type SchemaContext } from "astro:content";
 import { glob } from "astro/loaders";
 
-const placeholder = z.object({
-  label: z.string(),
-  description: z.string(),
-  aspect: z.enum(["16:9", "4:3", "1:1", "3:2"]).default("16:9"),
-  caption: z.string().optional(),
-});
+const placeholder = ({ image }: SchemaContext) =>
+  z.object({
+    label: z.string(),
+    description: z.string(),
+    aspect: z.enum(["16:9", "4:3", "1:1", "3:2"]).default("16:9"),
+    caption: z.string().optional(),
+
+    /** Real artwork. Path is relative to the .mdx file. Without it the slot
+        keeps rendering the described placeholder, exactly as before. */
+    src: image().optional(),
+    /** Falls back to `description` when absent. */
+    alt: z.string().optional(),
+  });
 
 const work = defineCollection({
   loader: glob({ base: "./src/content/work", pattern: "**/*.mdx" }),
-  schema: z.object({
+  schema: (ctx) =>
+    z.object({
     order: z.number(),
     number: z.string(),
     featured: z.boolean().default(true),
@@ -35,14 +43,14 @@ const work = defineCollection({
     cardDescription: z.string(),
     /** Audience or scale. May be non-numeric where no number is defensible. */
     cardAudience: z.string(),
-    cardImage: placeholder,
+    cardImage: placeholder(ctx),
     cardTags: z.array(z.string()).optional(),
 
     // ── Case study page ──────────────────────────────────────────────
     title: z.string(),
     subtitle: z.string(),
     tags: z.array(z.string()),
-    heroImage: placeholder,
+    heroImage: placeholder(ctx),
 
     /** The 10-second scan layer. */
     snapshot: z.object({

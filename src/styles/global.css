@@ -311,3 +311,78 @@ hr {
   left: 1rem;
   top: 1rem;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Touch targets — Apple HIG minimum 44×44pt.
+
+   Two techniques, picked per element so the design does not move more than
+   it has to:
+
+   1. An invisible centred ::before pad grows the hit area of a link that is
+      visually smaller. Type, colour and position are untouched and nothing
+      reflows. Used where links sit side by side with room around them.
+   2. Real padding, used only where links stack vertically — there an
+      invisible pad would overlap and steal taps from its neighbour.
+
+   Gated to coarse pointers and narrow viewports, so the desktop layout a
+   mouse user sees stays exactly as it was.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media (pointer: coarse), (max-width: 1024px) {
+  /* 1 — side-by-side links: grow the hit area, move nothing */
+  .wordmark,
+  .cta-link a,
+  .cs-back,
+  .cs-next-link {
+    position: relative;
+  }
+
+  .wordmark::before,
+  .cta-link a::before,
+  .cs-back::before,
+  .cs-next-link::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 44px;
+    /* 44px floor plus a little slack on wider labels. The header's 1.5rem
+       nav gap leaves 4px between neighbouring pads, so none overlap. */
+    width: max(44px, 100% + 1.25rem);
+  }
+
+  /* Header nav pills sit only 4px apart in the hybrid layout, so an
+     invisible pad on each would overlap its neighbour and steal taps. They
+     get a real 44px height instead. */
+  .site-header nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* 2 — stacked links: real height, so pads cannot overlap */
+  .footer-links a,
+  .contact-links a,
+  .cs-index ol li a {
+    display: inline-block;
+  }
+
+  .footer-links a {
+    padding-block: 0.8rem; /* 19px type → 44px target */
+  }
+
+  .contact-links a {
+    padding-block: 0.7rem; /* 22px type → 44px target */
+  }
+
+  .cs-index ol li a {
+    padding-block: 0.65rem; /* 25px type → 45px target */
+  }
+
+  /* The list already spaced its rows; the padding now does that job, so
+     drop the gap and keep the block the height it was. */
+  .contact-links {
+    gap: 0;
+  }
+}
