@@ -1,7 +1,8 @@
 ---
 /**
- * Lets case-study imagery step out past the 680px body measure, up to the
- * 900px image width, without ever going edge-to-edge.
+ * Case-study imagery at the full content width — the same edges as the hero
+ * image above it — while body copy stays on the 680px measure. The prose
+ * rules in global.css put every other block on the measure; this one opts out.
  */
 ---
 
@@ -11,13 +12,12 @@
 
 <style>
   .breakout {
+    width: 100%;
     margin-block: 3rem;
   }
 
   @media (min-width: 900px) {
     .breakout {
-      width: var(--measure-wide);
-      margin-left: calc((var(--measure) - var(--measure-wide)) / 2);
       margin-block: 4rem;
     }
   }

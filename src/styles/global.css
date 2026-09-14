@@ -226,6 +226,16 @@ hr {
   margin-top: 1.5rem;
 }
 
+/* Text and component blocks sit on the reading measure; imagery (.breakout)
+   runs the full content width so every image shares the hero image's edges. */
+.prose > * {
+  max-width: var(--measure);
+}
+
+.prose > .breakout {
+  max-width: none;
+}
+
 .prose h2 {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.2vw, 2.625rem);

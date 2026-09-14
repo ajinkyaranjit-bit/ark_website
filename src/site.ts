@@ -12,8 +12,12 @@ export const SITE_DESCRIPTION =
 export const EMAIL = "ajinkyaranjit@gmail.com";
 export const LINKEDIN_URL = "https://linkedin.com/in/ajinkya-kale-88487b82";
 
-// TODO(ajinkya): replace with the real Read.cv profile URL before launch.
-export const READCV_URL = "https://read.cv/ajinkyakale";
+/**
+ * The resume PDF lives in /public so it ships with the site. To update it,
+ * replace public/Ajinkya-Kale-Resume.pdf with the new file — same name — and
+ * push. Nothing else needs to change.
+ */
+export const RESUME_PATH = "/Ajinkya-Kale-Resume.pdf";
 
 export const LOCATION = "Pune, India";
 

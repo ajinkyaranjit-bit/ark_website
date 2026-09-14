@@ -83,12 +83,11 @@ const { title, subtitle, tags, snapshot, image } = Astro.props;
 
   .cs-title {
     margin-top: 2.5rem;
-    max-width: 18ch;
   }
 
   .cs-subtitle {
     margin-top: 1.5rem;
-    max-width: 46ch;
+    max-width: var(--measure);
     color: var(--color-text-muted);
   }
 

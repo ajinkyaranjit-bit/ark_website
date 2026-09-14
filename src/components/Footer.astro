@@ -1,5 +1,5 @@
 ---
-import { LINKEDIN_URL, READCV_URL, EMAIL } from "../site.ts";
+import { LINKEDIN_URL, RESUME_PATH, EMAIL, url } from "../site.ts";
 ---
 
 <footer class="site-footer">
@@ -17,9 +17,7 @@ import { LINKEDIN_URL, READCV_URL, EMAIL } from "../site.ts";
         target="_blank">LinkedIn</a
       >
       <span aria-hidden="true"> · </span>
-      <a href={READCV_URL} rel="noopener noreferrer" target="_blank"
-        >Read.cv</a
-      >
+      <a href={url(RESUME_PATH)} target="_blank" rel="noopener">Resume</a>
     </p>
     <p class="footer-legal">© 2026 Ajinkya Kale · Pune, India</p>
   </div>

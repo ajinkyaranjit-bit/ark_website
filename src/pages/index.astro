@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
 import Band from "../components/Band.astro";
-import { EMAIL, url } from "../site.ts";
+import { EMAIL, LINKEDIN_URL, url } from "../site.ts";
 
 const featured = (await getCollection("work"))
   .filter((entry) => entry.data.featured)
@@ -91,6 +91,27 @@ const more = [
     </div>
   </section>
 
+  <!-- More work -->
+  <section class="section" id="more-work">
+    <div class="wrap measure-hero">
+      <header class="section-head">
+        <h2 class="t-h2">More work</h2>
+        <p class="section-note">Breadth, without the full write-up.</p>
+      </header>
+
+      <ul class="more-list">
+        {
+          more.map((item) => (
+            <li class="more-item">
+              <h3 class="t-h3 more-name">{item.name}</h3>
+              <p class="more-blurb">{item.blurb}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <!-- Positioning band -->
   <section class="section section--band">
     <div class="wrap measure-hero">
@@ -99,27 +120,9 @@ const more = [
         heading="The work becomes interesting before the interface begins."
         body="Most of what decides whether an enterprise product works is settled before anyone opens Figma — in what the business needs, what the system can actually return, and who is allowed to act."
       >
-        <a class="solid" href={`mailto:${EMAIL}`}>Get in touch</a>
-        <a class="outline" href="#work">See the work</a>
+        <a class="solid" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <a class="outline" href={LINKEDIN_URL} rel="noopener noreferrer" target="_blank">LinkedIn</a>
       </Band>
-    </div>
-  </section>
-
-  <!-- More work -->
-  <section class="section section--quiet">
-    <div class="wrap measure-hero">
-      <h2 class="more-head">More work</h2>
-
-      <ul class="more-list">
-        {
-          more.map((item) => (
-            <li class="more-item">
-              <h3 class="more-name">{item.name}</h3>
-              <p class="more-blurb">{item.blurb}</p>
-            </li>
-          ))
-        }
-      </ul>
     </div>
   </section>
 
@@ -133,7 +136,7 @@ const more = [
           complex products, systems thinking and design leadership matter.
         </p>
         <p class="cta-link">
-          <a href={`mailto:${EMAIL}`}>Get in touch →</a>
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
         </p>
       </div>
     </div>
@@ -144,26 +147,18 @@ const more = [
   /* Short of full height on purpose — the reader should see that work
      follows without scrolling to find out. */
   .hero {
-    min-height: 66vh;
-    display: flex;
-    align-items: center;
     padding-block: 4rem 3rem;
   }
 
   @media (min-width: 768px) {
     .hero {
-      min-height: 74vh;
-      padding-block: 5rem 4rem;
+      padding-block: 6rem;
     }
-  }
-
-  .hero-title {
-    max-width: 17ch;
   }
 
   .hero-copy {
     margin-top: 2.25rem;
-    max-width: 54ch;
+    max-width: var(--measure);
   }
 
   .hero-copy p {
@@ -191,28 +186,13 @@ const more = [
   }
 
   .work-list {
-    margin-top: 2.5rem;
+    margin-top: 2.25rem;
   }
 
-  /* More work sits below Selected work in every sense — smaller heading,
-     no display face, no images. */
-  .section--band {
-    padding-block: 0 1rem;
-  }
-
-  .section--quiet {
-    padding-top: 3rem;
-  }
-
-  .more-head {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
+  /* More work sits below Selected work in hierarchy, but on the same type
+     scale and the same section rhythm — no images is the only difference. */
   .more-list {
-    margin: 2.5rem 0 0;
+    margin: 2.25rem 0 0;
     padding: 0;
     list-style: none;
     display: grid;
@@ -225,11 +205,6 @@ const more = [
       grid-template-columns: repeat(2, 1fr);
       gap: 2.75rem 3rem;
     }
-  }
-
-  .more-name {
-    font-family: var(--font-display);
-    font-size: 1.125rem;
   }
 
   .more-blurb {
@@ -245,34 +220,15 @@ const more = [
     border-top: 1px solid var(--color-border);
   }
 
-  .cta-link a {
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-text);
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.55rem 1.15rem;
-    border-radius: var(--pill);
-    transition:
-      opacity 140ms ease,
-      transform 140ms ease;
-  }
-
-  .cta-link a:hover {
-    opacity: 0.88;
-    transform: translateY(-1px);
-  }
-
   .cta-copy {
     margin-top: 1.25rem;
-    max-width: 50ch;
+    max-width: var(--measure);
     color: var(--color-text-muted);
   }
 
   .cta-link {
     margin-top: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 500;
   }
 </style>

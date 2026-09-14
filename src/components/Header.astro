@@ -1,5 +1,5 @@
 ---
-import { url } from "../site.ts";
+import { url, EMAIL, RESUME_PATH } from "../site.ts";
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -29,13 +29,10 @@ const links = [
           ))
         }
         <li>
-          <a
-            class="cta"
-            href={url("/contact")}
-            aria-current={isActive("/contact") ? "page" : undefined}
-          >
-            Get in touch
-          </a>
+          <a href={url(RESUME_PATH)} target="_blank" rel="noopener">Resume</a>
+        </li>
+        <li>
+          <a class="email" href={`mailto:${EMAIL}`}>{EMAIL}</a>
         </li>
       </ul>
     </nav>
@@ -95,22 +92,15 @@ const links = [
     background: var(--color-warm);
   }
 
-  /* The one filled control on the page. */
-  nav a.cta {
-    background: var(--color-text);
-    color: #fff;
+  /* The address itself, not a button — nothing to "get in touch" through yet. */
+  nav a.email {
+    color: var(--color-text);
     margin-left: 0.4rem;
-    padding-inline: 1.05rem;
-    transition:
-      opacity 140ms ease,
-      transform 140ms ease;
   }
 
-  nav a.cta:hover,
-  nav a.cta[aria-current="page"] {
-    background: var(--color-text);
-    color: #fff;
-    opacity: 0.88;
-    transform: translateY(-1px);
+  @media (max-width: 640px) {
+    nav a.email {
+      display: none;
+    }
   }
 </style>
