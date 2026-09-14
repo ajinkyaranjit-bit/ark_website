@@ -2,19 +2,19 @@
 order: 2
 number: "02"
 featured: true
-status: short
+status: full
 
 cardTitle: TrueMeds
 cardCategory: Consumer Healthcare
 cardHook: >-
   The cheaper medicine wasn't the hard sell. Trust was.
 cardDescription: >-
-  I led the redesign around the moment customers decide whether to switch from a familiar branded medicine to a lower-cost substitute — focusing the experience on confidence, education and decision-making.
-cardAudience: 1Cr+ app downloads
+  I led a six-month redesign around the moment customers decide whether to switch from a medicine they know to a lower-cost substitute — making the recommendation feel like advice from a trusted pharmacist, not just another discount.
+cardAudience: Online pharmacy, mobile app
 cardImage:
-  label: The substitute decision
+  label: The substitute journey
   description: >-
-    The moment of hesitation: a familiar branded medicine on one side, a lower-cost substitute on the other, and what the customer is weighing between them.
+    Discover, evaluate, switch — the three phone screens where a customer meets a substitute, weighs it, and buys it.
   src: ../../assets/work/truemeds-thumb.png
   alt: >-
     TrueMeds substitute journey across three phone screens: discover, evaluate, and switch to a lower-cost substitute.
@@ -26,7 +26,7 @@ cardTags:
 
 title: TrueMeds
 subtitle: >-
-  Reducing the trust gap between branded and substitute medicines, at the point of purchase.
+  Making substitute medicine feel like a recommendation, not a compromise.
 tags:
   - Consumer Healthcare
   - Behaviour Design
@@ -35,112 +35,190 @@ tags:
 
 snapshot:
   challenge: >-
-    Customers reached the substitute recommendation, understood the saving, and still hesitated. The economics were never the obstacle.
+    When a substitute was available, showing a lower price was not enough to make someone switch from a medicine they already knew. The redesign had to make a cheaper alternative feel like advice from a trusted pharmacist, rather than just another discount.
   items:
     - label: Role
-      value: Lead Designer, 3-designer team
+      value: Lead UX Designer
     - label: Duration
-      value: ~6 months
-    - label: Platform
-      value: Mobile app and web
-    - label: Focus
-      value: The substitute decision and the checkout funnel around it
+      value: 6 months
+    - label: Team
+      value: 6 people, 2 designers working with me
+    - label: Status
+      value: Parts shipped or taken into development
 
 heroImage:
-  label: The hesitation point
+  label: The substitute journey
   description: >-
-    The purchase journey shown as a funnel, with drop-off concentrated at the substitute-recommendation step. Annotated with what the customer is weighing at that moment — familiarity with the branded medicine, the absent doctor, and perceived risk against a visible saving. Structural diagram, no colour, no product UI.
-  aspect: "16:9"
+    Discover, evaluate, switch — the three phone screens where a customer meets a substitute, weighs it, and buys it.
+  src: ../../assets/work/truemeds-thumb.png
+  alt: >-
+    TrueMeds substitute journey across three phone screens: discover, evaluate, and switch to a lower-cost substitute.
+  aspect: "3:2"
 
 description: >-
-  The cheaper medicine wasn't the hard sell — trust was. Designing for confidence at the moment customers decide whether to switch to a substitute.
+  The cheaper medicine wasn't the hard sell — trust was. How a six-month redesign made substitute medicines easier to understand and trust across home, product page and cart.
 
 next:
-  title: Kotak Fyn — Supply Chain Finance
+  title: Kotak Fyn
   href: /work/fyn
-  blurb: A 0→1 financing workflow across Maker, Verifier and Authoriser roles.
+  blurb: Enterprise banking workflows where who can act depends on the company using them.
 ---
 
 import Placeholder from "../../components/Placeholder.astro";
 import Breakout from "../../components/Breakout.astro";
-import ProblemFrame from "../../components/ProblemFrame.astro";
-import OutcomeGroups from "../../components/OutcomeGroups.astro";
-import Draft from "../../components/Draft.astro";
+import DataStrip from "../../components/DataStrip.astro";
+import LeadershipBlock from "../../components/LeadershipBlock.astro";
+import Band from "../../components/Band.astro";
 
-## The problem
+import homeStates from "../../assets/work/truemeds/01-home-three-user-states.webp";
+import productPage from "../../assets/work/truemeds/02-product-page.webp";
+import cartCheckout from "../../assets/work/truemeds/03-cart-checkout.webp";
 
-TrueMeds sells prescription medicine with a substitute recommendation attached: the same molecule, a different manufacturer, at a lower price. The value to the customer is explicit and quantified on screen. Customers reached that recommendation and hesitated anyway.
+## The ambition
 
-<ProblemFrame
-  visible="Customers dropped out around the substitute recommendation, close to the point of purchase."
-  underlying="Discovery was never the problem — the recommendation was already in front of them. What was missing was confidence at the moment of the decision. A substitute asks someone to overrule a familiar medicine, a prescription in their hand, and an absent doctor, on their own judgement."
-  challenge="Design for confidence at the point of the substitute decision, rather than for a clearer explanation of the saving."
-/>
+TrueMeds wanted to move beyond being an app people opened only to buy medicine. The larger ambition was to feel more like the pharmacist people already trust — someone who can help them find what they need, explain a lower-cost alternative, and make saving money feel safe rather than risky.
+
+I joined the project as Lead UX Designer for a six-month redesign engagement. I worked with two designers as part of a six-person team, leading the UX direction while staying hands-on through the audit, research and redesign.
+
+## The cheaper medicine wasn't the hard sell. Trust was.
+
+TrueMeds already had users coming into the product, but people were dropping at multiple points between discovery and purchase.
+
+When a substitute was available, showing a lower price was not enough to make someone switch from a medicine they already knew.
+
+The business wanted stronger conversion, higher substitute adoption and a better overall buying experience.
+
+**The design question:** How do you make a cheaper alternative feel like advice from a trusted pharmacist, rather than just another discount?
+
+## From an online pharmacy to a trusted pharmacist
+
+We reframed the experience around three questions:
+
+- **Can I find what I need quickly?**
+- **Can I trust what TrueMeds is recommending instead?**
+- **Is the saving worth switching for?**
+
+This became a more useful lens for the redesign than treating every screen as an isolated UX problem.
+
+## What changed our view of the problem
+
+Our audit, stakeholder inputs, user sessions, app-review analysis and competitor benchmarking pointed to three recurring behaviours.
+
+### Trust came before price
+
+Users questioned whether the substitute would have the same effect, whether the composition was comparable, who manufactured it, why it cost less and whether it was safe to switch. **Price created interest. Confidence created action.**
+
+### The decision was not linear
+
+Users could need awareness on Home, reassurance during Search, comparison on the product page, and a reminder of value in Cart. Instead of creating one substitute-education flow, we distributed the right message across the moments where users were already making a decision.
+
+### Savings needed context
+
+A percentage discount alone was easy to ignore. Savings became more meaningful when users could understand what they had already saved, what they could save on the current order and why the substitute was cheaper.
+
+**This shifted the redesign from "promote substitutes harder" to "build confidence across the journey."**
+
+## 01 — Make the home respond to user behaviour
+
+The existing home worked largely as one long catalogue of banners, categories, products and content. Important actions competed for attention, sections became repetitive, personalisation was limited and the substitute proposition could disappear among everything else on the page.
+
+So we stopped thinking about Home as one fixed experience, and designed around three user states instead: someone new to TrueMeds, someone who already uses substitutes and wants to reorder quickly, and someone who keeps buying the medicine they know and has never tried one.
+
+The home became less about showing more content and more about showing the **right reason to act**.
 
 <Breakout>
   <Placeholder
     aspect="16:9"
-    label="Where the hesitation sits"
-    description="The purchase journey as a funnel, with the drop-off concentrated at the substitute-recommendation step rather than at discovery or checkout mechanics. Annotated with what the customer is weighing at that moment: familiarity with the branded medicine, the absent prescriber, and perceived risk against a visible and quantified saving."
-    caption="The saving was never the missing information."
+    label="Home for three user states"
+    description="The same home, deciding which proposition to lead with based on whether the customer is new, already saving with substitutes, or yet to try one."
+    src={homeStates}
+    alt="TrueMeds home in three states — a first-time customer sees why substitutes are worth considering, a returning substitute user sees quick reorder and the savings so far, and a returning customer who has not tried substitutes sees reassurance and a clear reason to explore one."
+    caption="Decision 01 — customer state decides what the home leads with."
   />
 </Breakout>
 
-## Outcome
+## 02 — Reduce the perceived risk of switching
 
-<OutcomeGroups
-  groups={[
-    {
-      title: "Platform context",
-      claims: [
-        { kind: "scale", text: "1Cr+ app downloads — the size of the product this work shipped into." },
-      ],
-    },
-    {
-      title: "Team",
-      claims: [
-        { kind: "measured", text: "Led a 3-designer team across mobile app and web." },
-      ],
-    },
+The original product page could show that a substitute was cheaper, but users still had to work to understand whether switching made sense.
+
+We reorganised the experience around the decision itself. The searched medicine and its substitute became clearly distinct states. The substitute experience brought forward composition, manufacturer, pack details, price difference and comparison.
+
+We also explored explaining **why substitutes can cost less**, rather than expecting users to trust a large discount without explanation. **Price gets attention. Explanation builds confidence.**
+
+We also designed for medicines with no substitute available instead of forcing the recommendation pattern everywhere.
+
+<Breakout>
+  <Placeholder
+    aspect="16:9"
+    label="The product page around the decision"
+    description="Your medicine and the recommended substitute as two clear states, with the comparison and the reason for the lower price brought forward."
+    src={productPage}
+    alt="TrueMeds product page redesign — the searched medicine, the recommended substitute with composition, manufacturer, pack details and price difference, and a comparison explaining why it costs less."
+    caption="Decision 02 — the page answers the questions users were already asking before they switch."
+  />
+</Breakout>
+
+## 03 — Make savings visible without slowing down checkout
+
+By the time someone reaches Cart, they are no longer exploring. They are trying to finish the order.
+
+The existing cart mixed substitute decisions, discounts, rewards, coupons and checkout information across a long experience. That created more thinking at exactly the point where the journey should become simpler.
+
+We redesigned the cart around three questions: what am I buying, when will I receive it, and what am I actually saving? Medicine, quantity and price became easier to verify. Delivery estimates moved closer to the order itself. Coupons and rewards were grouped more clearly. The bill explained the relationship between cart value, discounts, rewards, delivery and the final amount payable.
+
+Savings became part of the order itself: **"You saved ₹X on this purchase."** The closer the customer moved toward payment, the simpler the experience became.
+
+<Breakout>
+  <Placeholder
+    aspect="16:9"
+    label="Cart and checkout"
+    description="The cart answering what you are buying, when it arrives and what you are saving, with the bill explaining how it reaches the final amount."
+    src={cartCheckout}
+    alt="TrueMeds cart and checkout redesign — items with quantity and price easy to verify, delivery estimate beside the order, coupons and rewards grouped, and a bill that shows cart value, discounts, rewards, delivery and the amount payable, with the saving stated on the order."
+    caption="Decision 03 — the closer to payment, the less there is to think about."
+  />
+</Breakout>
+
+## One strategy across the journey
+
+**Home** created relevance. **Product pages** built confidence. **Cart** made the value tangible.
+
+**Help me see it → Help me trust it → Help me act.**
+
+That gave the team a consistent way to evaluate new ideas without forcing every user through the same linear education flow.
+
+<DataStrip
+  label="Project data"
+  items={[
+    { value: "₹1,300", label: "average cart value" },
+    { value: "3", label: "average products per cart" },
+    { value: "2 of 3", label: "average substitute products per cart" },
+  ]}
+  note="Figures from the project's own material."
+/>
+
+## What I led
+
+<LeadershipBlock
+  team="Me as Lead UX Designer, working directly on the design alongside two designers, within a six-person project team — so the strategy and the execution stayed connected."
+  collaboration="The product team — translating stakeholder goals into design problems, and reviewing concepts together before they moved into stakeholder discussions."
+  owned={[
+    "The initial UX audit",
+    "Pharmacy and broader e-commerce benchmarking",
+    "Opportunity mapping across the customer journey",
+    "UX strategy and the journey redesign",
+    "Concept reviews with the product team",
   ]}
 />
 
-<Draft label="TrueMeds — this is the gap blocking launch">
-  <p>
-    Everything above is real but thin. This is the one case study on the site
-    without enough source material, and it is carrying an important job: Cloud
-    Branch and Fyn both prove systems thinking, and TrueMeds is the only project
-    proving consumer behaviour and measurable product thinking. Without it the
-    portfolio reads as banking-only — which is the exact positioning problem the
-    brief is trying to avoid.
-  </p>
-  <p>To finish it, five things, in order of how much they matter:</p>
-  <p>
-    <strong>1. The research.</strong> How did you learn that hesitation was about
-    confidence rather than price or discovery? Interviews, session recordings,
-    support tickets, funnel analytics? One artifact plus the observation it
-    produced plus the insight it led to.
-  </p>
-  <p>
-    <strong>2. Three decisions.</strong> Where the education appears in the
-    journey, how the doctor-backed reassurance is presented, and how savings are
-    framed alongside it — for each: what the alternative was, and why you chose
-    what you chose.
-  </p>
-  <p>
-    <strong>3. The validation.</strong> What did testing change? A
-    Before → Observed → Changed → Why, as on Cloud Branch.
-  </p>
-  <p>
-    <strong>4. The metric.</strong> The conversion and drop-off figures are off
-    the site until the TrueMeds team confirms them. When they arrive, note the
-    period, the baseline, and how confident you are that this work caused the
-    change — then add them as <code>measured</code>. Until then the page carries
-    only the download figure, labelled as platform context rather than as your
-    impact.
-  </p>
-  <p>
-    <strong>5. Leadership.</strong> You led three designers. What did you own
-    versus what did they own, and what did you have to align with product on?
-  </p>
-</Draft>
+## Outcome
+
+Several recommendations from the audit were implemented, while broader parts of the redesign were taken forward selectively as the product evolved.
+
+The work helped move the product toward a clearer direction: not simply selling medicines at a lower price, but making the value of substitute medicines easier to understand and trust throughout the buying journey.
+
+<Band
+  label="Closing thought"
+  heading="It has to make the decision understandable."
+  body="When a product asks someone to change something they already trust, the design has to do more than make the alternative attractive."
+/>

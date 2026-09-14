@@ -49,10 +49,13 @@ snapshot:
       value: 0→1, designed end to end
 
 heroImage:
-  label: Finance-request state machine
+  label: Kotak Fyn
   description: >-
-    State-machine diagram for a finance request: upload → general validation → resolution (full pass / partial pass / fail) → audit applicability → GSTIN validation with OCR fallback to an operations queue → multi-level authorisation → instrument path → digital signature → disbursed. Exception branches for invalid GSTIN, PAN not found, duplicate invoice, limit breach and counterparty decline. Clean vector, neutral palette.
-  aspect: "16:9"
+    The corporate banking portal on a laptop, with service tiles for payments, supply chain finance, trade, loans and deposits.
+  src: ../../assets/work/fyn-thumb.png
+  alt: >-
+    Kotak Fyn corporate banking dashboard on a laptop, with service tiles for payments, supply chain finance, trade, loans and deposits.
+  aspect: "3:2"
 
 description: >-
   Designing enterprise banking workflows for Kotak Fyn, where who can act depends on the organisation using them — the state model, the configurable approval architecture, and the exception paths.
@@ -63,142 +66,6 @@ next:
   blurb: Fragmented branch systems consolidated into one operational platform.
 ---
 
-import Placeholder from "../../components/Placeholder.astro";
-import Breakout from "../../components/Breakout.astro";
-import ProblemFrame from "../../components/ProblemFrame.astro";
-import ConstraintList from "../../components/ConstraintList.astro";
-import DecisionBlock from "../../components/DecisionBlock.astro";
-import Draft from "../../components/Draft.astro";
+## Case study in progress
 
-## The problem
-
-Supply chain finance lets a supplier get paid early against invoices raised on a large buyer — the anchor — with the bank funding the gap. The commercial logic is simple. The operational process was not: it ran half on paper, across an anchor, its counterparties, a relationship manager, and a bank approval chain, with regulatory instruments that had to be signed before money moved.
-
-<ProblemFrame
-  visible="A financing process split between a portal and paper, slow to move and hard to track."
-  underlying="A financing request is not one decision. It is a chain of them, made by different people with different authority, against validation that can fail at several points — and each failure needs somewhere to go that is not a dead end."
-  challenge="Give a multi-role financing request one state model that every participant reads the same way, including when it fails."
-/>
-
-## Constraints
-
-<ConstraintList
-  items={[
-    {
-      title: "Multi-party, multi-role",
-      body: "Maker, Checker, Authoriser and Sender, with multi-level authorisation above a threshold. Which of these roles exist, and who may act at each step, is configurable per service and per organisation — not every flow carries every role.",
-    },
-    {
-      title: "Regulatory instruments",
-      body: "Financing is executed through instruments that must be generated and signed. Nothing disburses on a screen action alone.",
-    },
-    {
-      title: "External validation dependency",
-      body: "Invoice data is checked against registry data the bank does not control. Those checks fail routinely, for ordinary reasons.",
-    },
-    {
-      title: "Bulk with individual outcomes",
-      body: "Suppliers submit invoices in files, but each invoice can pass, fail or be rejected on its own terms.",
-    },
-  ]}
-/>
-
-## Key decisions
-
-<Draft label="Fyn — confirm the rationale">
-  <p>
-    These four decisions are reconstructed from your own SCF wireframes in this
-    repository — the flows, states and exception paths are read directly from the
-    prototype, so the <em>what</em> is accurate. The <em>why</em> is my reading of
-    the design logic those artifacts imply.
-  </p>
-  <p>
-    Read each "why this over the alternatives" line and replace it with how you
-    actually argued it at the time. That sentence is the one a Head of Design will
-    push on in an interview.
-  </p>
-</Draft>
-
-<DecisionBlock
-  n="01"
-  decision="Make the file the unit of workflow and the invoice the unit of state"
-  problem="Suppliers submit invoices in bulk, but validation, approval and rejection all resolve per invoice. Treating a submission as a single object would have forced an all-or-nothing outcome on a process that is routinely partial."
-  evidence="Validation on a real file resolves three ways — full pass, partial pass, or fail — and a partial pass is the common case, not the edge case."
-  why="Failing a whole file because some invoices did not validate pushes the correction work back onto the supplier and restarts the approval chain. Holding state per invoice inside a file that moves as one lets the valid portion keep moving while the rest is resolved."
-  consequence="Every list, review and approval screen shows a file-level position and a per-invoice breakdown together. Partial processing became a first-class outcome with its own screens rather than an error condition."
-  needs="What did this cost? Per-invoice state inside a file-level approval is harder to build and harder to audit — name the trade-off you accepted and who you had to convince."
-/>
-
-<DecisionBlock
-  n="02"
-  decision="Route validation failures to a person, never to a dead end"
-  problem="Invoice data is validated against external registry data. Format errors, missing records and duplicate invoice numbers are ordinary events, and a document that cannot be read automatically cannot simply stop the request."
-  evidence="The failure modes are well-defined and recurring: invalid GSTIN format, PAN not found, duplicate invoice number, failed field checks, and documents that defeat automatic extraction."
-  why="Automation that fails silently converts into support load and abandoned requests. Each failure mode has a different owner — some belong back with the maker, some belong with operations — so the design routes by failure type rather than surfacing one generic error."
-  consequence="Named resolution screens per failure type, and an explicit fallback path where automatic extraction fails to an operations queue, so the request stays alive and visibly assigned instead of stalling with the maker."
-  result="Every failure state has an owner and a next action on screen."
-/>
-
-<Breakout>
-  <Placeholder
-    aspect="16:9"
-    label="Validation and fallback routing"
-    description="Decision diagram for the validation stage: submission enters general validation, resolves to full pass, partial pass or fail. Each failure type branches to its named resolution — invalid GSTIN format, record not found, duplicate invoice number, failed field check — with a separate branch where automatic extraction fails and the request is routed to an operations queue rather than returned to the maker. Neutral palette, clean vector."
-    caption="Decision 02 — the routing is the design. The screens follow from it."
-  />
-</Breakout>
-
-<DecisionBlock
-  n="03"
-  decision="Keep the two instrument paths mutually exclusive at submission"
-  problem="Financing can be executed through different instruments with materially different downstream steps, signing requirements and tracking. Allowing that choice to stay open would have made every later screen conditional on it."
-  evidence="The two paths diverge almost immediately after submission and never reconverge — different documents, different signing flows, different completion semantics."
-  why="A branch taken late has to be carried through every screen after it. Forcing the choice at submission keeps each path linear and legible, and keeps the approval chain reading one document set rather than two possible ones."
-  consequence="The instrument is chosen at submission and the request follows one path from there. Signature progress is tracked per instrument, so a request can sit legitimately in a partly-signed state without being either complete or failed."
-  needs="Was this contested? Product teams usually push to keep the choice open. If someone argued for a late branch and you held the line, that exchange belongs here."
-/>
-
-<DecisionBlock
-  n="04"
-  decision="Model authority as role plus level, not as a sequence of screens"
-  problem="Approval is not one step, and it is not the same shape twice. Which roles exist, and who may act at which point, varies by service and by the organisation using it. Authority also varies by value, the counterparty runs its own chain in parallel, and exceptions need a legitimate lower-friction route without becoming a bypass."
-  evidence="Above a threshold, authorisation runs through multiple levels; the counterparty side runs its own chain; an exception approval mode exists alongside the standard signed one; and role availability is configuration, not a constant."
-  why="Building approval as a screen sequence means every new authority rule, and every organisation with a different structure, becomes a new screen. Modelling role and level as data lets one review surface serve a first-level authoriser and a final one — and lets a client whose structure omits a role use the same product."
-  consequence="One review surface parameterised by role and level, showing where a request sits in its chain, who has acted, and who is next. The exception approval mode is visibly marked as an exception wherever it is used, so it stays auditable."
-  needs="The exception approval mode is the interesting part — a deliberate lower-friction path in a regulated flow. What guardrails did you put on it, and what did compliance ask for?"
-/>
-
-<Breakout>
-  <Placeholder
-    aspect="16:9"
-    label="Approval architecture"
-    description="Two parallel approval chains, drawn as configuration rather than a fixed sequence. Bank side: maker → checker → authoriser → sender, with the authoriser step expanding into multiple levels above a value threshold, and each role marked as present-or-absent depending on service and organisation. Counterparty side: its own chain, with the standard signed approval mode and the marked exception mode as alternate terminal routes. Annotated with who can see the request in each state. Neutral palette."
-    caption="Decision 04 — role and level as a model, so a new authority rule is data rather than a new screen."
-  />
-</Breakout>
-
-## Where this stands
-
-The workflow, state model and approval architecture were designed end to end. The artifacts on this page are reconstructed from my own working files, with client-identifying data removed.
-
-<Draft label="Fyn — to complete">
-  <p>Three things would finish this case study:</p>
-  <p>
-    <strong>Scope precision.</strong> The body below is written around supply
-    chain finance, because that is the area your own wireframes in this repo
-    cover in depth. Name the other three service areas you worked on, or say
-    explicitly that SCF is the one documented here and the others are listed
-    without detail. Right now the page implies more depth across the portal
-    than it actually shows.
-  </p>
-  <p>
-    <strong>Validation.</strong> Anything real — a walkthrough with the bank's
-    operations team, UAT feedback, a review where someone found a state you had
-    not modelled. Even one exchange that changed a flow is enough.
-  </p>
-  <p>
-    <strong>Current status.</strong> Where did this land — built, in build, or
-    designed and shelved? Say it plainly. A reviewer respects "designed end to
-    end, delivery paused" far more than an unexplained absence.
-  </p>
-</Draft>
+I'm currently documenting this work. Happy to walk through it in an interview.

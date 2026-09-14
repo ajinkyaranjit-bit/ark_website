@@ -1,0 +1,78 @@
+---
+/**
+ * A short row of verified project figures. Numbers only go here when their
+ * source is known — this strip is evidence, not decoration, so anything
+ * unconfirmed stays out of it.
+ */
+export interface Props {
+  label: string;
+  items: { value: string; label: string }[];
+  note?: string;
+}
+
+const { label, items, note } = Astro.props;
+---
+
+<div class="ds">
+  <p class="t-meta ds-label">{label}</p>
+  <dl class="ds-items">
+    {
+      items.map((item) => (
+        <div class="ds-item">
+          <dd class="ds-value">{item.value}</dd>
+          <dt class="ds-key">{item.label}</dt>
+        </div>
+      ))
+    }
+  </dl>
+  {note && <p class="ds-note">{note}</p>}
+</div>
+
+<style>
+  .ds {
+    border-top: 1px solid var(--color-text);
+    padding-top: 1.25rem;
+  }
+
+  .ds-items {
+    display: grid;
+    gap: 1.75rem 2rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+  }
+
+  @media (min-width: 640px) {
+    .ds-items {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .ds-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ds-value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .ds-key {
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  .ds-note {
+    margin: 1.75rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    max-width: var(--measure);
+  }
+</style>

@@ -1,109 +1,58 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { EMAIL } from "../site.ts";
+import Band from "../components/Band.astro";
+import { EMAIL, LINKEDIN_URL, RESUME_PATH, url } from "../site.ts";
 
 const principles = [
   {
-    number: "01",
-    title: "Understand the system before the screen.",
-    body: "Map the workflows, states, dependencies and constraints first. On Cloud Branch that meant three months of scoping before a single screen — long enough to find that business, operations and technology did not share a definition of what a transaction was. No interface would have survived that gap. The screen is the last thing I design, not the first.",
+    title: "Understand the system first",
+    body: "Before I start moving screens around, I want to know what is actually happening underneath — the people, states, rules, dependencies and exceptions.",
   },
   {
-    number: "02",
-    title: "Make decisions visible.",
-    body: "In regulated work the expensive mistakes are the ones nobody saw being made. I use artifacts — state models, service maps, approval diagrams — to put a trade-off in front of Product, Engineering, Operations and Compliance while it is still cheap to argue about. These are also what compliance signs and what engineering builds against, so they are the design output, not documentation of it.",
+    title: "Make the complicated easier to act on",
+    body: "I'm less interested in making complexity disappear than in making sure the person using the product knows what is happening, what matters, and what they need to do next.",
   },
   {
-    number: "03",
-    title: "Build reusable structure.",
-    body: "A requirement arrives as one service. I turn it into the pattern underneath it — a state model, an approval architecture, an operational sequence — so the next service is a configuration rather than a redesign. Consistency at component level makes services look alike; consistency at workflow level makes them behave alike, which is what the person using six of them actually experiences.",
-  },
-  {
-    number: "04",
-    title: "Lead through collaboration.",
-    body: "Most of the leverage in enterprise design is in the room, not the file. I bring PMs, engineers, operations and stakeholders to one direction — surfacing trade-offs, resolving disagreement, and reviewing the work of the designers I lead so the output holds together across people and modules rather than within one Figma file.",
-  },
-];
-
-const services = [
-  {
-    title: "0→1 Product Design",
-    body: "End-to-end ownership from discovery through shipped UI. Fyn Supply Chain Finance (47 screens, 3 approval roles) and Wellytics were both built from zero.",
-  },
-  {
-    title: "Design Systems & Governance",
-    body: "Currently own standardisation across a 30+ service enterprise product. Restructured the Figma architecture behind it into one source of truth for multiple squads.",
-  },
-  {
-    title: "Enterprise, Regulated & Multi-Persona UX",
-    body: "Where compliance, legacy systems, and approval chains are the binding constraints. Corporate banking, lending, branch operations, healthcare.",
-  },
-  {
-    title: "Design Leadership",
-    body: "Currently leading design across multiple modules. Previously built and led a 7-designer team at okoders and a 3-designer team at TrueMeds.",
+    title: "Stay close to the work",
+    body: "Leading design doesn't mean stepping away from it. I still map flows, review interactions, prototype ideas and sit with users. I also spend a lot of time helping designers and stakeholders get to the same decision.",
   },
 ];
 
 const numbers = [
-  { value: "9", label: "years in product design" },
-  { value: "5,000+", label: "staff on the live platform I currently design" },
-  { value: "60M+", label: "annual transactions across the branch network I design for" },
-  { value: "16+", label: "products shipped from zero" },
-  { value: "20+", label: "service modules owned end-to-end" },
+  { value: "9+", label: "years designing products" },
+  { value: "5,000+", label: "branch staff using a platform I currently design for" },
+  { value: "16", label: "products designed during my time at Nearby" },
+  { value: "7", label: "designers in the largest team I've built and led" },
 ];
 
 const experience = [
   {
     company: "Ungrammary",
     role: "Senior UX Lead",
-    dates: "May 2024 – Present",
+    dates: "2024 — now",
     detail:
-      "Kotak Fyn (corporate banking), Kotak Cloud Branch, TrueMeds, Wellytics, Highland Brain.",
+      "Banking, healthcare and consumer products — including Kotak Cloud Branch, FYN and TrueMeds.",
   },
   {
-    company: "okoders (D'Accord TechHub)",
-    role: "Lead Designer, promoted from Sr. UX/UI Designer",
-    dates: "Oct 2021 – Apr 2024",
+    company: "okoders",
+    role: "Lead Designer",
+    dates: "2021 — 2024",
     detail:
-      "Staffed onto Builder.ai's global design team; also 21K School, IMSOM, Eservz.",
+      "Promoted from Senior UX/UI Designer; built and led a seven-designer team across multiple client products.",
   },
   {
     company: "Nearby Technologies",
-    role: "UI Designer → Product Designer",
-    dates: "Mar 2017 – Sep 2021",
+    role: "Product Designer",
+    dates: "2017 — 2021",
     detail:
-      "PayNearby, BuyNearby, LoanNearby. First designer at the company; grew with it from ~100 to 500+ people.",
+      "Joined as the first designer and worked across PayNearby, BuyNearby and LoanNearby as the company scaled.",
   },
-];
-
-const tools = [
-  { label: "Design", value: "Figma · FigJam · Adobe XD · Sketch · Zeplin" },
-  {
-    label: "AI",
-    value:
-      "Claude · Claude Code (coded prototypes for user testing) · ChatGPT",
-  },
-  { label: "Collaboration", value: "Miro · Jira" },
-];
-
-const certifications = [
-  { name: "Design Thinking & Innovation", meta: "IIT Delhi · 2022" },
-  { name: "Human-Centered Design", meta: "Acumen Academy & IDEO.org · 2020" },
-  {
-    name: "Human-Computer Interaction",
-    meta: "Interaction Design Foundation · 2019",
-  },
-];
-
-const education = [
-  { name: "MCA", meta: "Mumbai University · 2013-2016" },
-  { name: "BCA", meta: "RTMNU, Nagpur · 2010-2013" },
 ];
 ---
 
 <BaseLayout
   title="About"
-  description="Lead Product Designer, 9 years across fintech, banking, healthcare, SaaS, e-commerce, and ed-tech. Currently leading UX for a large corporate-banking program at Ungrammary."
+  description="Lead Product Designer with 9+ years across fintech, banking and consumer products. Currently at Ungrammary, leading UX across large banking programs while staying hands-on with the design."
   personSchema
 >
   <div class="wrap measure-hero">
@@ -111,157 +60,119 @@ const education = [
       <!-- Hero -->
       <section class="about-hero">
         <h1 class="t-h1">
-          I design products that work in the real world — where business goals,
-          user needs, and hard constraints all have to win together.
+          I design products for the messy parts of the real world.
         </h1>
-        <p class="t-lead about-hero-sub">
-          Lead Product Designer, 9 years across fintech, banking, healthcare,
-          SaaS, e-commerce, and ed-tech. Currently leading UX for a large
-          corporate-banking program at Ungrammary.
-        </p>
+        <div class="about-hero-copy">
+          <p class="t-lead">
+            Banking workflows. Approval chains. Healthcare decisions. Products
+            where the simplest screen usually sits on top of a much more
+            complicated system.
+          </p>
+          <p>
+            I'm Ajinkya, a Lead Product Designer with 9+ years across fintech,
+            banking and consumer products. I currently work at Ungrammary,
+            leading UX across large banking programs while staying hands-on
+            with the design.
+          </p>
+        </div>
       </section>
 
-      <!-- Short bio -->
-      <section class="block">
-        <p>
-          I'm Ajinkya — a product designer who takes ownership of the whole
-          problem, not just the screens. The goal on every project is the same:
-          make the business case, the user need, and the real-world constraints
-          all line up in one product that actually ships.
-        </p>
-        <p>
-          For 9 years I've designed across regulated fintech, B2B SaaS, consumer
-          e-commerce, ed-tech, and healthcare. At Nearby Technologies I joined as
-          the company's first designer and shipped 16 products and 20+ service
-          modules — PayNearby, BuyNearby, LoanNearby — before moving through
-          okoders (staffed onto Builder.ai's global design team) to Ungrammary,
-          where I now lead UX for a large corporate-banking program alongside
-          consumer work like TrueMeds and Wellytics.
-        </p>
-        <p>
-          I lead the full design cycle — strategy through delivery — and lead a
-          team of designers doing the same. Increasingly, I build coded
-          prototypes with AI so we can run user testing on real interaction —
-          not clickable mocks.
-        </p>
+      <!-- A little about me -->
+      <section class="block block--split">
+        <h2 class="t-h2">A little about me</h2>
+        <div class="block-copy">
+          <p>
+            I started my career at Nearby Technologies as the company's first
+            designer. The team grew, the products grew, and so did my role —
+            from designing interfaces to figuring out how payments, lending and
+            merchant products should actually work.
+          </p>
+          <p>
+            Since then, I've worked across consumer products, SaaS, healthcare
+            and enterprise banking. I've built a design team of seven, led
+            smaller product teams, and worked with PMs, engineers, operations
+            and business teams on products that rarely come with clean
+            requirements.
+          </p>
+          <p>
+            Today, most of my work sits in fintech and banking. I like problems
+            with multiple users, awkward constraints and enough complexity that
+            drawing the screen is rarely the hardest part.
+          </p>
+          <p class="block-close">I still design. That matters to me.</p>
+        </div>
       </section>
 
       <!-- How I work -->
       <section class="block">
-        <h2 class="t-h2 block-head">How I work</h2>
-        <div class="principles">
+        <h2 class="t-h2">How I work</h2>
+        <div class="board board--3">
           {
-            principles.map((p) => (
-              <div class="principle">
-                <p class="t-meta">{p.number}</p>
-                <h3 class="t-h3 principle-title">{p.title}</h3>
-                <p class="principle-body">{p.body}</p>
+            principles.map((p, i) => (
+              <div class="cell">
+                <p class="t-meta">{String(i + 1).padStart(2, "0")}</p>
+                <h3 class="t-h3 cell-title">{p.title}</h3>
+                <p class="cell-body">{p.body}</p>
               </div>
             ))
           }
         </div>
       </section>
 
-      <!-- What I do -->
+      <!-- A few numbers -->
       <section class="block">
-        <h2 class="t-h2 block-head">What I do</h2>
-        <dl class="services">
-          {
-            services.map((s) => (
-              <div class="service">
-                <dt class="t-h3">{s.title}</dt>
-                <dd class="service-body">{s.body}</dd>
-              </div>
-            ))
-          }
-        </dl>
-      </section>
-
-      <!-- By the numbers -->
-      <section class="block">
-        <h2 class="t-h2 block-head">By the numbers</h2>
-        <dl class="numbers">
+        <h2 class="t-h2">A few numbers</h2>
+        <dl class="board board--4 numbers">
           {
             numbers.map((n) => (
-              <div class="number">
-                <dt class="number-value">{n.value}</dt>
-                <dd class="number-label">{n.label}</dd>
+              <div class="cell">
+                <dd class="number-value">{n.value}</dd>
+                <dt class="number-label">{n.label}</dt>
               </div>
             ))
           }
         </dl>
       </section>
 
-      <!-- Experience -->
+      <!-- Where I've worked -->
       <section class="block">
-        <h2 class="t-h2 block-head">Experience</h2>
-        <ul class="entries">
+        <h2 class="t-h2">Where I've worked</h2>
+        <ul class="board board--3 entries">
           {
             experience.map((e) => (
-              <li class="entry">
-                <p class="entry-line">
-                  <span class="entry-company">{e.company}</span>
-                  <span class="entry-sep" aria-hidden="true"> — </span>
-                  <span class="entry-role">{e.role}</span>
-                  <span class="entry-dates t-meta">{e.dates}</span>
-                </p>
-                <p class="entry-detail">{e.detail}</p>
+              <li class="cell">
+                <p class="t-meta">{e.dates}</p>
+                <h3 class="entry-company">{e.company}</h3>
+                <p class="entry-role">{e.role}</p>
+                <p class="cell-body">{e.detail}</p>
               </li>
             ))
           }
         </ul>
-      </section>
-
-      <!-- Tools -->
-      <section class="block">
-        <h2 class="t-h2 block-head">Tools</h2>
-        <dl class="tools">
-          {
-            tools.map((t) => (
-              <div class="tool">
-                <dt class="t-meta">{t.label}</dt>
-                <dd class="tool-value">{t.value}</dd>
-              </div>
-            ))
-          }
-        </dl>
-      </section>
-
-      <!-- Certifications & Education -->
-      <section class="block">
-        <h2 class="t-h2 block-head">Certifications &amp; Education</h2>
-        <ul class="entries entries--tight">
-          {
-            certifications.map((c) => (
-              <li class="entry">
-                <p class="entry-company">{c.name}</p>
-                <p class="entry-detail t-muted">{c.meta}</p>
-              </li>
-            ))
-          }
-        </ul>
-        <ul class="entries entries--tight entries--spaced">
-          {
-            education.map((e) => (
-              <li class="entry">
-                <p class="entry-company">{e.name}</p>
-                <p class="entry-detail t-muted">{e.meta}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <!-- CTA -->
-      <section class="block cta">
-        <h2 class="t-h2">Available for senior design roles.</h2>
-        <p class="cta-copy">
-          Currently open to Lead / Principal Product Designer roles at product
-          companies and banks globally.
+        <p class="education">
+          MCA · Design Thinking &amp; Innovation, IIT Delhi · HCI, Interaction
+          Design Foundation
         </p>
-        <p class="cta-link">
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        </p>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="block">
+        <Band
+          label="What's next"
+          heading="I'm looking for the next difficult product problem."
+          body="I'm currently exploring Lead and Principal Product Designer roles, particularly in fintech, banking and complex product environments."
+        >
+          <a class="solid" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          <a
+            class="outline"
+            href={LINKEDIN_URL}
+            rel="noopener noreferrer"
+            target="_blank">LinkedIn</a
+          >
+          <a class="outline" href={url(RESUME_PATH)} target="_blank" rel="noopener"
+            >Resume</a
+          >
+        </Band>
       </section>
     </div>
   </div>
@@ -269,7 +180,6 @@ const education = [
 
 <style>
   .about {
-    max-width: var(--measure);
     padding-block: 3rem 2rem;
   }
 
@@ -279,16 +189,27 @@ const education = [
     }
   }
 
+  /* Hero — quiet: one headline, two short paragraphs, nothing else. */
   .about-hero h1 {
-    max-width: 20ch;
+    max-width: var(--measure-wide);
   }
 
-  .about-hero-sub {
-    margin-top: 2rem;
-    max-width: 52ch;
+  .about-hero-copy {
+    margin-top: 2.25rem;
+    max-width: var(--measure);
+  }
+
+  .about-hero-copy .t-lead {
     color: var(--color-text-muted);
   }
 
+  .about-hero-copy p + p {
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+    line-height: 1.62;
+  }
+
+  /* Sections */
   .block {
     margin-top: 5rem;
   }
@@ -299,196 +220,117 @@ const education = [
     }
   }
 
-  .block > p + p {
+  /* Heading left, copy right — the same editorial split as the case
+     studies, so the About page and the work share one rhythm. */
+  .block-copy {
     margin-top: 1.5rem;
   }
 
-  .block-head {
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
+  .block-copy p {
+    font-size: 1.125rem;
+    line-height: 1.62;
   }
 
-  /* How I work */
-  .principles {
-    margin-top: 3rem;
-    display: grid;
-    gap: 3rem;
+  .block-copy p + p {
+    margin-top: 1.25rem;
   }
 
-  .principle-title {
-    margin-top: 0.75rem;
-  }
-
-  .principle-body {
-    margin-top: 0.875rem;
-  }
-
-  /* What I do */
-  .services {
-    margin: 3rem 0 0;
-    display: grid;
-    gap: 2.5rem;
-  }
-
-  .service-body {
-    margin: 0.75rem 0 0;
-  }
-
-  /* By the numbers */
-  /* The stat band is the one block allowed past the 680px measure — five
-     columns need the room, and .about is left-aligned inside the 1100px
-     wrap, so widening it here does not shift the page. */
-  .numbers {
-    margin: 3rem 0 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  @media (min-width: 768px) {
-    .numbers {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.5rem 1.5rem;
-    }
-  }
-
-  @media (min-width: 1180px) {
-    .numbers {
-      /* 1100px wrap minus its 2.5rem side padding. max-width must stay
-         `none` — a percentage would clamp back to the 680px parent. */
-      width: calc(var(--measure-hero) - 5rem);
-      max-width: none;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1.75rem;
-    }
-  }
-
-  .number {
-    margin: 0;
-  }
-
-  .number-value {
-    font-family: var(--font-display);
-    font-size: clamp(2.125rem, 3.4vw, 3rem);
-    letter-spacing: 0;
-    line-height: 1.05;
-  }
-
-  .number-label {
-    margin: 0.625rem 0 0;
-    font-size: 0.8125rem;
-    line-height: 1.45;
-    color: var(--color-text-muted);
-    max-width: 22ch;
-  }
-
-  /* Experience + lists */
-  .entries {
-    margin: 3rem 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 2.5rem;
-  }
-
-  .entries--tight {
-    gap: 1.5rem;
-  }
-
-  .entries--spaced {
-    margin-top: 2.5rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .entry-line {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0 0.25rem;
-  }
-
-  .entry-company {
+  .block-close {
     font-weight: 600;
   }
 
-  .entry-role {
-    color: var(--color-text-muted);
+  @media (min-width: 900px) {
+    .block--split {
+      display: grid;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: 4rem;
+      align-items: start;
+    }
+
+    .block-copy {
+      margin-top: 0;
+    }
   }
 
-  .entry-dates {
-    margin-left: 0.5rem;
-    font-size: 0.7rem;
-  }
-
-  .entry-detail {
-    margin-top: 0.5rem;
-    color: var(--color-text-muted);
-    max-width: 56ch;
-  }
-
-  /* Tools */
-  .tools {
-    margin: 3rem 0 0;
+  /* Boards: equal columns with a rule on top of each cell. */
+  .board {
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
     display: grid;
-    gap: 1.75rem;
+    gap: 2.5rem 2rem;
   }
 
   @media (min-width: 640px) {
-    .tools {
-      grid-template-columns: 7rem 1fr;
-      gap: 1.25rem 2rem;
-      align-items: baseline;
-    }
-
-    .tool {
-      display: contents;
+    .board--3,
+    .board--4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  .tool-value {
-    margin: 0.375rem 0 0;
-  }
+  @media (min-width: 900px) {
+    .board--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-  @media (min-width: 640px) {
-    .tool-value {
-      margin: 0;
+    .board--4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
-  /* CTA */
-  .cta {
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
+  .cell {
+    margin: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-text);
   }
 
-  .cta-copy {
-    margin-top: 1.25rem;
-    max-width: 48ch;
+  .cell-title {
+    margin-top: 0.875rem;
+  }
+
+  .cell-body {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.6;
     color: var(--color-text-muted);
   }
 
-  .cta-link {
-    margin-top: 1.75rem;
+  /* A few numbers */
+  .number-value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.01em;
   }
 
-  .cta-link a {
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-text);
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.55rem 1.15rem;
-    border-radius: var(--pill);
-    transition:
-      opacity 140ms ease,
-      transform 140ms ease;
+  .number-label {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
   }
 
-  .cta-link a:hover {
-    opacity: 0.88;
-    transform: translateY(-1px);
+  /* Where I've worked */
+  .entry-company {
+    margin-top: 0.875rem;
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .entry-role {
+    margin-top: 0.375rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .education {
+    margin-top: 2.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
   }
 </style>
