@@ -41,7 +41,6 @@ const ratios: Record<string, string> = {
         loading="lazy"
         decoding="async"
         class="ph-img"
-        style={`--ph-ratio: ${ratios[aspect]}`}
       />
     ) : (
       <div class="ph" style={`--ph-ratio: ${ratios[aspect]}`} role="img" aria-label={`Placeholder — ${label}. ${description}`}>
@@ -98,13 +97,17 @@ const ratios: Record<string, string> = {
 
   /* Real artwork takes the same rounded frame as the warm well, plus a
      hairline — these thumbnails have near-white grounds that would otherwise
-     dissolve into a white card. */
+     dissolve into a white card.
+
+     No aspect-ratio and no object-fit here on purpose. The slot's `aspect`
+     sizes the *placeholder*; forcing real artwork into it cropped any asset
+     whose true ratio differed (the 4:3 case-study exports in a 16:9 slot lost
+     their top and bottom). Width 100% + height auto lets the file's own ratio
+     decide, so no export can be clipped. */
   .ph-img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: var(--ph-ratio);
-    object-fit: cover;
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
     background: var(--color-warm);

@@ -29,7 +29,7 @@ cardTags:
 
 title: Kotak Cloud Branch
 subtitle: >-
-  One operational platform for thousands of branch employees previously working across fragmented banking systems.
+  A branch operations platform for 5,000+ staff, bringing everyday branch work out of fragmented systems and into one shared way of working.
 tags:
   - Enterprise Banking
   - Systems Design
@@ -39,302 +39,217 @@ tags:
 
 snapshot:
   challenge: >-
-    Not a UI consolidation project. A workflow and operating-model consolidation problem wearing a UI consolidation brief.
+    The core banking systems could not be replaced. The employee experience had to be simplified around them, without losing a single check, approval or audit trail.
   items:
     - label: Role
       value: Senior UX Lead
-    - label: Team
-      value: Me + one junior designer, inside Product, Technology, Operations and Compliance
-    - label: Duration
-      value: ~1 year
     - label: Scope
-      value: Six core services, end to end
-    - label: Scale
-      value: 5,000+ staff environment
+      value: 6 core services
+    - label: Team
+      value: 1 designer, with Product, Operations and Technology
     - label: Status
-      value: Live in branches and expanding
+      value: Live
 
 heroImage:
   label: Before → after ecosystem
   description: >-
-    Wide diagram. Left side: 10-15 loosely arranged rectangles representing fragmented legacy systems (core banking terminal, transfer portal, compliance tool — generic labels only), with tangled paths between them for the officer's handoffs. Right side: one platform surface carrying six services over a shared state model. Neutral palette, two weights of line. No screenshots.
-  aspect: "16:9"
+    A fragmented journey across three systems with manual hand-offs, set against one primary system with mobile assist for select tasks.
+  src: ../../assets/work/cloud-branch/02-three-systems-to-one-workflow.webp
+  alt: >-
+    From 3 systems to 1 workflow — a fragmented multi-system process with manual hand-offs on the left, one unified workflow with mobile assist on the right. Three systems become one; 25+ clicks become 10 to 15.
+  aspect: "4:3"
 
 description: >-
-  How fragmented branch banking systems became one operational platform — the state model, the workflow standard, and the decisions behind them.
+  How fragmented branch banking workflows became one operating platform — the entry point, the state model, and the shared workflow behind them.
 
 next:
   title: TrueMeds
   href: /work/truemeds
-  blurb: Consumer behaviour at the point where a customer hesitates to switch medicines.
+  blurb: Designing for trust at the moment customers consider a lower-cost medicine substitute.
 ---
 
 import Placeholder from "../../components/Placeholder.astro";
-import PlaceholderGrid from "../../components/PlaceholderGrid.astro";
 import Breakout from "../../components/Breakout.astro";
-import ProblemFrame from "../../components/ProblemFrame.astro";
-import ConstraintList from "../../components/ConstraintList.astro";
-import InsightBlock from "../../components/InsightBlock.astro";
 import DecisionBlock from "../../components/DecisionBlock.astro";
 import ValidationBlock from "../../components/ValidationBlock.astro";
 import OutcomeGroups from "../../components/OutcomeGroups.astro";
 import LeadershipBlock from "../../components/LeadershipBlock.astro";
-import Draft from "../../components/Draft.astro";
+
+import entryPoint from "../../assets/work/cloud-branch/01-shared-entry-point.webp";
+import workflowArchitecture from "../../assets/work/cloud-branch/03-common-workflow-architecture.webp";
+import fundTransfer from "../../assets/work/cloud-branch/04-fund-transfer-workflow.webp";
+import reviewContext from "../../assets/work/cloud-branch/05-review-with-context.webp";
+import checkerTesting from "../../assets/work/cloud-branch/06-checker-testing.webp";
+import aiInWorkflow from "../../assets/work/cloud-branch/07-ai-inside-workflow.webp";
+
+## The hard part was not the UI
+
+The bank could not simply replace its core systems. We had to simplify the employee experience while keeping existing checks, approvals and auditability intact.
 
 ## The problem
 
-Kotak Mahindra Bank's branch network processes more than 60 million transactions a year. On paper, a branch officer's job is straightforward — help the customer sitting across the desk complete a transfer, open an account, submit a service request. In practice, that officer moved between 10 to 15 different systems to do it, each with its own login and its own patterns. Some were core banking terminals from the 90s; others were newer web tools bolted on top of them.
+A customer visit could require a branch employee to move between multiple applications, each with its own login, interaction patterns, transaction logic and status terminology.
 
-<ProblemFrame
-  visible="Branch employees needed 10 to 15 systems to complete customer-facing banking tasks, with 30+ minute customer wait times and high error rates."
-  underlying="Each of those systems carried its own workflow, authentication, transaction logic, permissions, compliance checks, audit trail and interaction patterns. The fragmentation was not only in the software — it ran through the operating definitions underneath it."
-  challenge="Create a shared operational structure that can carry multiple banking services without breaking compliance, auditability, or the core systems that cannot be replaced."
-/>
+A representative fund-transfer journey spanned **3 systems and 25+ clicks**, with hand-offs between people and tools. The goal was to reduce switching without removing the controls branch operations depend on.
 
-## Constraints
-
-<ConstraintList
-  items={[
-    {
-      title: "Legacy infrastructure",
-      body: "The underlying core banking systems could not be replaced. They had to be wrapped.",
-    },
-    {
-      title: "Compliance",
-      body: "Every meaningful transaction action needed traceability. The compliance team held veto power on every screen.",
-    },
-    {
-      title: "Operational speed",
-      body: "Branch employees were serving customers in real time, with roughly five minutes per visit. Any friction in the workflow became wait time in the lobby.",
-    },
-    {
-      title: "Scale",
-      body: "Patterns had to work consistently across 5,000+ staff from day one, while the branches stayed open.",
-    },
-    {
-      title: "Progressive migration",
-      body: "Services moved onto the platform incrementally, so old and new had to coexist without a cutover.",
-    },
-  ]}
-/>
-
-## Understanding the system
-
-Before designing anything, I ran facilitated workshops with business, operations and technology leaders — not the "how might we" kind, but the "what does compliance actually require here, what does the core banking system actually return, where does the officer's workflow break down" kind. Three months of that produced a joint scope document and a service map.
-
-<InsightBlock
-  artifact="Facilitated workshops with business, operations and technology leaders, ending in a joint scope document and service map."
-  observation="Three teams that had worked alongside each other for years did not share a definition of what a transaction was — when it started, when it was final, and who could see it in between."
-  insight="A shared interface was the second problem. The first was a shared vocabulary of states, because without one there was nothing for three teams to agree on and nothing for compliance to sign off."
-/>
-
-<InsightBlock
-  artifact="Current-state walkthrough of a single customer visit, timed and counted across the systems an officer touched."
-  observation="Repeated authentication was only part of the delay. Context switching and inconsistent transaction states between systems created additional operational friction."
-  insight="The unit of the design was not a feature or a persona. It was a customer visit, measured from greeting to receipt."
-/>
-
-<Breakout>
-  <Placeholder
-    aspect="16:9"
-    label="Current-state ecosystem"
-    description="Deliberately messy diagram: 12-15 small rectangles in a loose grid, each labelled with a generic function (fund transfer portal, KYC verifier, cheque deposit tool, compliance log). Thin paths between them tracing one officer's handoffs during a single visit. Centre annotation: 'Branch officer — 5 minutes per customer.'"
-    caption="The map that made the argument: the cost was not in any one system, it was in the gaps between them."
-  />
-</Breakout>
-
-## Key decisions
+## Three decisions shaped the work
 
 <DecisionBlock
   n="01"
-  decision="Design around the customer visit, not around the bank's product catalogue"
-  problem="The obvious structure was to organise the platform the way the bank organises itself — by product line, mirroring the systems being replaced. That would have reproduced the fragmentation inside a single login."
-  evidence="Timing a customer visit showed the officer's cost was concentrated in the switches between tasks, not inside any one task."
-  why="Structuring by visit made the officer's real unit of work the platform's unit of work. Structuring by product would have optimised each service in isolation and left the switching cost untouched — the exact failure of the system being replaced."
-  consequence="Navigation, service grouping and the post-login surface were all built around what an officer needs during a visit. The single-SSO decision came out of this: cutting authentication in half was not a UX win in the abstract, it was time returned to every service request."
-  result="Officers complete a customer-facing task without leaving the platform."
-/>
-
-<DecisionBlock
-  n="02"
-  decision="Model transaction states before designing any screen"
-  problem="Each legacy system expressed the progress of a transaction differently, and compliance needed an audit trail that none of them agreed on."
-  evidence="The workshops surfaced that business, operations and technology each described a transaction's lifecycle differently, including what counted as final."
-  why="A form that greys out fields depending on where the officer is hides the state machine inside the UI, where engineering cannot build against it and compliance cannot audit it. Making states explicit moved that logic somewhere all three teams could see."
-  consequence="Explicit states — initiated, verification, compliance hold, processing, completed — with exception states for failed, rejected and reversed. Each state got its own screen rather than one form with conditional fields. Every service designed afterwards inherited the model."
-  result="Engineering could build against the states cleanly, compliance could sign off on the audit trail, and the officer could see where a transaction stood without asking anyone."
+  decision="Change where the journey starts"
+  problem="The existing experience mirrored the bank's internal systems, so employees had to know which application handled each part of a customer's request."
+  evidence="Walking the representative fund-transfer journey showed it spanning three systems and 25+ clicks, with hand-offs between people and tools."
+  why="A branch visit starts with a customer need, not with a backend system."
+  consequence="The customer became the entry point. Staff search once, open the customer context, and move into the required service from there."
+  result="One shared starting point across services, instead of a different front door for each underlying system."
 />
 
 <Breakout>
   <Placeholder
-    aspect="16:9"
-    label="Transaction state model"
-    description="State-machine diagram: initiated → verification → compliance / processing → completed, with exception branches to failed, rejected, reversed and held. Each transition annotated with who can trigger it and who can see it (officer, supervisor, audit). Clean-line vector, neutral palette, not a UI screenshot."
-    caption="The strongest artifact on the project — and the one compliance actually signed."
+    aspect="4:3"
+    label="One shared entry point"
+    description="Employee home, customer search, and the opened customer context — the three steps of starting from the customer rather than the system."
+    src={entryPoint}
+    alt="One shared entry point — employee home with the day's tasks, customer search, and the opened customer context showing accounts, activity and notes."
+    caption="Decision 01 — a shared starting point reduced switching between service-specific systems."
+  />
+</Breakout>
+
+<DecisionBlock
+  n="02"
+  decision="Make ownership and status obvious"
+  problem="Banking requests move through maker, checker and approval steps, and each legacy system expressed that progress differently."
+  evidence="Testing with checkers showed status itself was understood; what was unclear was how to enter the work and continue an existing task."
+  why="Unclear status creates follow-ups, rework and operational risk."
+  consequence="States and hand-offs were mapped before any screen was designed, then surfaced as full transaction context, attachment preview and a visible audit trail."
+  result="Staff can answer two questions without asking anyone: where is this request now, and what happens next?"
+/>
+
+<Breakout>
+  <Placeholder
+    aspect="4:3"
+    label="Clear review and status visibility"
+    description="A cash withdrawal awaiting approval — transaction context, attachment preview and audit trail — beside the approved state showing the outcome and next steps."
+    src={reviewContext}
+    alt="Clear review and status visibility — a cash withdrawal pending approval with full transaction context, attachment preview and audit trail, beside the approved state showing outcome and next steps."
+    caption="Decision 02 — visibility reduced rework and improved checker confidence."
   />
 </Breakout>
 
 <DecisionBlock
   n="03"
-  decision="Standardise the workflow before standardising components"
-  problem="Six services were being designed in parallel, with more to follow. Component-level consistency would not stop each service inventing its own sequence."
-  evidence="Across services, the underlying operational sequence was the same even where the banking product was not."
-  why="A component library makes services look consistent. A shared workflow makes them behave consistently — which is what an officer moving between services actually experiences, and what lets a new service be designed without renegotiating its shape."
-  consequence="One operational spine — identify customer, choose service, capture information, validate, review, process, confirm — became the default sequence for every service, and the basis for the reusable UI patterns layered on top of it."
-  needs="A concrete example of a service that was reshaped to fit the spine, and what it cost to do that. One specific instance will do more here than the general principle."
-/>
-
-<DecisionBlock
-  n="04"
-  decision="Scope AI narrowly around policy knowledge, not around the interface"
-  problem="The officer's real cognitive load was not operating the app. It was remembering policy — which procedure applies to which customer, under which rule."
-  evidence="Officers were carrying procedural knowledge between systems and asking colleagues rather than consulting documentation mid-visit."
-  why="A general-purpose assistant would have been the more impressive demo and the less useful tool: in a regulated environment, an answer that is plausible but not the bank's own policy is worse than no answer. Constraining the domain was what made it safe to ship."
-  consequence="Companion answers only from the bank's own services and approved internal knowledge — no open-domain answers. The interaction pattern is deliberately conventional: a linear chat, no experimental AI interface. Tools, a second feature, provides guided templates for staff communication with tone guidance and pre-vetted phrasing, so a junior officer's email to a customer reads like a senior officer's."
-  result="AI carries the policy layer, which let the application itself stay simple."
+  decision="Reuse the operating logic, not just the UI"
+  problem="Transfers, deposits and withdrawals each need different details, and a shared component library alone would not stop them behaving differently."
+  evidence="Across those services the service-specific details changed, but much of the underlying journey stayed the same."
+  why="Reusable logic mattered more than making every screen look identical."
+  consequence="A shared pattern — identify, capture, review, route and resolve — with each service adding its own rules, documents and approval levels on top."
+  result="A new service inherits the operating logic rather than renegotiating its shape."
 />
 
 <Breakout>
   <Placeholder
-    aspect="16:9"
-    label="Companion — scope boundary"
-    description="Two-part diagram. Above: low-fidelity wireframe of the assistant in context — service panel on the left holding the officer's current transaction, conversation on the right, one procedural question and its policy-grounded answer. Below: a boundary diagram showing what is inside scope (bank services, approved internal knowledge) and what is deliberately outside it."
-    caption="The design decision is the boundary, not the chat."
+    aspect="4:3"
+    label="Common workflow architecture"
+    description="The reusable pattern across assisted-service journeys, from opening the service through search, context, capture, supporting information, authorisation and status — with employee, customer and checker lanes beneath."
+    src={workflowArchitecture}
+    alt="Common workflow architecture — an eight-stage pattern from start through search, open context, select service, capture details, add supporting info, authorise and review status, with employee, customer and checker or manager lanes shown beneath."
+    caption="Decision 03 — one pattern across assisted-service journeys: simpler for employees, better for customers, built to scale."
   />
 </Breakout>
 
-## Design evidence
+## In practice
 
-Each artifact here exists to show a decision, not to show a screen.
+The fund-transfer journey shows how that pattern worked in a real service: a familiar structure, with service-specific details, documents and authorisation only where needed.
 
 <Breakout>
-  <PlaceholderGrid
-    items={[
-      {
-        label: "Post-SSO home",
-        description: "Low-fidelity wireframe of the officer's surface after a single sign-on: service groupings arranged by visit type, current-transaction strip, activity feed. Structure only, no data.",
-        caption: "Decision 01 — the visit, not the product catalogue, sets the structure.",
-        aspect: "4:3",
-      },
-      {
-        label: "Representative workflow — fund transfer",
-        description: "The operational spine applied to one high-value service across its steps: identify customer, choose service and sub-type, capture, validate, review, process, confirm. Shown as a horizontal filmstrip with the state at each step called out.",
-        caption: "Decision 03 — one sequence, applied to a real service and its cash, physical and cheque sub-types.",
-        aspect: "4:3",
-      },
-      {
-        label: "Review and status pattern",
-        description: "The screen an officer sees for a transaction in a non-terminal state: current state, what happened, who acts next, and the audit trail. Includes a compliance-hold and a rejected variant.",
-        caption: "Decision 02 — auditability made visible rather than implied.",
-        aspect: "4:3",
-      },
-      {
-        label: "Exception handling",
-        description: "How a failed or reversed transaction surfaces mid-visit: what the officer tells the customer, what recovery is available, and what is recorded.",
-        caption: "Decision 02 — the exception states, which is where operational trust is won or lost.",
-        aspect: "4:3",
-      },
-    ]}
+  <Placeholder
+    aspect="4:3"
+    label="A representative fund-transfer workflow"
+    description="One guided flow from search to authorisation — search customer, capture payment details, add supporting information, authorise."
+    src={fundTransfer}
+    alt="A representative fund-transfer workflow — search customer, capture payment details, add supporting information, and authorise, shown as four sequential screens."
+    caption="The pattern scaled across multiple service journeys."
   />
 </Breakout>
 
-## Validation
+## Testing changed the checker workflow
 
-Before hand-off I ran moderated, task-based prototype testing with branch staff — recorded sessions, task-based questioning, and feedback analysis. The tasks were built around the questions that matter operationally rather than around whether people liked the interface:
+<ValidationBlock
+  before="The checker dashboard led with a 'Start a priority task' call to action, while queue actions used language such as 'Initiate'."
+  observed="Checkers understood urgency and status. What was unclear was how to enter the work, and how to continue a task already in progress."
+  changed="A dedicated task queue with clearer work-state categories, visible time remaining, stronger transaction context and retained audit history."
+  why="The problem was the route into the work, not the status language. Fixing the entry point changed the workflow rather than the wording."
+/>
 
-- Can an officer tell where to begin, without being told?
-- Can they complete a representative task unassisted, inside the time a customer is willing to wait?
-- Can they tell what state a transaction is in, and who needs to act next?
-- Can they recover when something fails?
+<Breakout>
+  <Placeholder
+    aspect="4:3"
+    label="Testing changed the checker workflow"
+    description="Before, observed and after — the original dashboard, what users signalled in testing, and the task queue that replaced it."
+    src={checkerTesting}
+    alt="Testing changed the checker workflow — the original dashboard, the observed results from testing, and the redesigned task queue with time remaining, customer details and a direct action on each row."
+    caption="Checkers understood urgency; they needed a clearer path into the work."
+  />
+</Breakout>
 
-Some patterns broke under real interaction and were redesigned. That work continues as services move onto the platform.
+## AI support
 
-<Draft label="Validation — the one example that has to be real">
-  <p>
-    This section needs a single concrete <strong>Before → Observed → Changed → Why</strong>
-    from those sessions. It is the highest-value missing piece in the case study:
-    it is what separates a design that was tested from a design that was asserted.
-  </p>
-  <p>
-    Pick the pattern that broke hardest. What did officers actually do, what did
-    you change, and why did the revised version hold? Then replace this block with
-    the <code>&lt;ValidationBlock /&gt;</code> already imported at the top of this file.
-  </p>
-</Draft>
+We also kept bank knowledge inside the workflow. The side panel gives staff contextual customer information and process guidance without making them leave the screen they are working in.
 
-## Outcome
+<Breakout>
+  <Placeholder
+    aspect="4:3"
+    label="AI assistance inside the workflow"
+    description="A persistent side panel offering internal account information and a question-answering mode, scoped to bank knowledge and the employee's current context."
+    src={aiInWorkflow}
+    alt="AI assistance inside the workflow — an account details screen with a side panel offering internal information and a question-answering mode, without leaving the customer context."
+    caption="Context-aware, grounded in internal knowledge, and available without leaving the customer context."
+  />
+</Breakout>
+
+## What changed
 
 <OutcomeGroups
   groups={[
     {
       title: "Product and user impact",
       claims: [
-        { kind: "target", verify: true, text: "Authentication steps and average handling time both halved — the objective the programme was designed against.", note: "Confirm against production measurement before this can be promoted to measured." },
-        { kind: "observed", text: "Officers complete customer-facing tasks inside the platform rather than moving between systems." },
-      ],
-    },
-    {
-      title: "Business and operational impact",
-      claims: [
-        { kind: "measured", text: "Six core services designed end to end during my tenure, including fund transfer and its cash, physical and cheque sub-types." },
-        { kind: "measured", text: "Single sign-on across the platform, replacing per-system authentication." },
-        { kind: "target", verify: true, text: "Live in branches, with a materially larger rollout targeted this year.", note: "Confirm the current live branch count before putting a number on this." },
+        { kind: "target", text: "3 systems reduced to 1 for the representative fund-transfer journey.", note: "Mapped as-is versus target-state process evidence, not a post-launch production measurement. Keep that framing." },
+        { kind: "target", text: "25+ clicks reduced to 10–15 in the redesigned representative fund-transfer flow.", note: "Same provenance as above — process mapping, not measured production impact." },
+        { kind: "observed", text: "Staff start from the customer and stay in one environment for a service request, instead of navigating each underlying application." },
       ],
     },
     {
       title: "System impact",
       claims: [
-        { kind: "measured", text: "A shared transaction-state model that every service designed after it inherited." },
-        { kind: "measured", text: "A reusable operational workflow that became the basis for the platform's UI patterns and design-system foundation." },
-        { kind: "observed", verify: true, text: "Accessibility standards applied consistently across services — contrast, keyboard and focus order, and screen-reader labelling reviewed before hand-off.", note: "Confirm the conformance level actually audited before naming AA or AAA anywhere on the site." },
+        { kind: "measured", text: "A shared workflow pattern — identify, capture, review, route, resolve — that later services could build on." },
+        { kind: "measured", text: "Reusable review, approval and status patterns carried across services." },
+        { kind: "measured", text: "Six core services designed end to end during my tenure, including fund-transfer workflows and their variants." },
       ],
     },
     {
       title: "Environment",
       claims: [
-        { kind: "scale", text: "5,000+ branch staff." },
-        { kind: "scale", verify: true, text: "60M+ transactions a year across the branch network.", note: "This is the size of the environment, not a figure processed by this platform — keep that distinction if anyone asks." },
+        { kind: "scale", text: "5,000+ branch staff the platform was designed for." },
       ],
     },
   ]}
 />
 
-## Leadership
+## What I led
 
 <LeadershipBlock
-  team="Me as Senior UX Lead, with one junior designer, reporting to two VPs of Design."
-  collaboration="Product, Technology, Operations, Compliance, and design leadership. I ran the working sessions directly; the VP handled the higher-level stakeholder rooms."
+  team="Me as Senior UX Lead, directing one supporting designer."
+  collaboration="Product, Operations and Technology — working through requirements and constraints, and turning recurring service problems into reusable patterns."
   owned={[
-    "UX direction",
-    "Problem framing and scope",
-    "Workflow architecture",
-    "Service design",
-    "Transaction state models",
-    "Design reviews",
-    "Design-system consistency",
-    "Moderated validation",
-    "Stakeholder alignment",
-    "Hand-off",
+    "UX across six core services",
+    "Workflow and state architecture",
+    "Review, approval and status patterns",
+    "Task-based testing with branch staff",
+    "Design direction and hand-off",
   ]}
 />
 
-<Draft label="Leadership — one concrete moment">
-  <p>
-    The ownership list above is accurate but generic; every Lead candidate has one.
-    What makes this section work is a single moment where you changed the direction
-    of the work: a disagreement you resolved, a constraint you renegotiated, a
-    decision you made visible before it got expensive, or a standard you created
-    that outlived the service it came from.
-  </p>
-  <p>
-    The three-month scoping phase is the most likely place to find it — holding
-    three teams in a room until they agreed what a transaction was is a leadership
-    act, if you can name what almost went wrong instead.
-  </p>
-</Draft>
+## Takeaway
 
-## Reflection
-
-The interface is the smallest part of an enterprise redesign. Ninety percent of the work is aligning what business, operations and technology each think the problem is — before any of them can agree on what "done" looks like. Once that alignment happens, the design almost writes itself. Once it doesn't, no amount of polish will save the ship date.
-
-The other lesson: process artifacts — state models, service maps, journey diagrams — do more work in banking projects than pixel-perfect mockups. They are what compliance signs off on. They are what engineering builds against. They are what stakeholders read. In this domain, they are the design output.
+Different banking services did not need identical screens. They needed a shared operating logic that staff could learn once and reuse.
