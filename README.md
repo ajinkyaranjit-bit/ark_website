@@ -114,7 +114,7 @@ service map, journey diagram, wireframe).
 - [ ] **Verify every claim marked `verify: true`.** The dev build lists them per
       page. Confirm the source, then promote to `measured` or reword.
 - [ ] Set the real domain in `astro.config.mjs` (`site:`) and `public/robots.txt`.
-      Both currently read `https://ajinkyakale.com`.
+      Both currently read `https://ark-website-peach.vercel.app` (the Vercel deployment).
 - [ ] Set the real Read.cv URL in `src/site.ts` (`READCV_URL` is a placeholder).
 - [ ] Add analytics. Either:
       - Vercel: `npm i @vercel/analytics` and add `<Analytics />` to `BaseLayout`, or

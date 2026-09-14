@@ -12,7 +12,7 @@ import tailwindcss from "@tailwindcss/vite";
  * Locally they are unset, so the custom domain below is used. It only drives
  * sitemap.xml, robots.txt and the absolute OG image URL.
  */
-const site = process.env.SITE_URL || "https://ajinkyakale.com";
+const site = process.env.SITE_URL || "https://ark-website-peach.vercel.app";
 const base = process.env.BASE_PATH || "/";
 
 export default defineConfig({
