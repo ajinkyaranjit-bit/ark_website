@@ -10,15 +10,20 @@ export interface Props {
 }
 
 const { label, heading, body } = Astro.props;
+const hasActions = Astro.slots.has("default");
 ---
 
 <div class="band">
   <p class="band-label">{label}</p>
   <h2 class="band-heading">{heading}</h2>
   <p class="band-body">{body}</p>
-  <div class="band-actions">
-    <slot />
-  </div>
+  {
+    hasActions && (
+      <div class="band-actions">
+        <slot />
+      </div>
+    )
+  }
 </div>
 
 <style>

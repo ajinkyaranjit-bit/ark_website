@@ -61,13 +61,22 @@ const rows = [
     border-top: 1px solid var(--color-border);
   }
 
+  /* Matches the page grid: heading left third, rows right two-thirds. */
+  @media (min-width: 900px) {
+    .decision {
+      display: grid;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: 4rem;
+      align-items: start;
+    }
+  }
+
   .decision-title {
     margin-top: 0.75rem;
     font-family: var(--font-display);
-    font-size: clamp(1.4375rem, 2.4vw, 1.875rem);
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
     letter-spacing: 0;
-    line-height: 1.2;
-    max-width: 30ch;
+    line-height: 1.16;
   }
 
   .decision-rows {
@@ -87,6 +96,12 @@ const rows = [
     }
   }
 
+  @media (min-width: 900px) {
+    .decision-rows {
+      margin-top: 0;
+    }
+  }
+
   .decision-row dt {
     font-size: 0.6875rem;
   }
@@ -99,8 +114,8 @@ const rows = [
 
   .decision-row dd {
     margin: 0.375rem 0 0;
-    font-size: 0.9375rem;
-    line-height: 1.65;
+    font-size: 1rem;
+    line-height: 1.62;
   }
 
   @media (min-width: 700px) {

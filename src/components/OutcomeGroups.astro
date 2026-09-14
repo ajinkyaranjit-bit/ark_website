@@ -96,37 +96,40 @@ const unverified = groups
     gap: 2.5rem;
   }
 
+  /* One column per group across the full width; the rule on top of each
+     column is the only chrome. */
+  @media (min-width: 860px) {
+    .og {
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 0 3rem;
+    }
+  }
+
   .og-group {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-text);
   }
 
   .og-group-title {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
   }
 
   .og-claims {
-    margin: 1.25rem 0 0;
+    margin: 1.5rem 0 0;
     padding: 0;
     list-style: none;
     display: grid;
-    gap: 0.875rem;
+    gap: 1.25rem;
   }
 
   .og-claim {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.375rem;
-  }
-
-  @media (min-width: 620px) {
-    .og-claim {
-      grid-template-columns: 6.5rem 1fr;
-      gap: 1rem;
-      align-items: baseline;
-    }
+    gap: 0.5rem;
   }
 
   .og-kind {
@@ -150,7 +153,7 @@ const unverified = groups
   }
 
   .og-text {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     line-height: 1.6;
   }
 

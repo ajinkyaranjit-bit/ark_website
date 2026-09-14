@@ -220,20 +220,22 @@ hr {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Prose — case study body copy
+   Prose — case study body
+
+   Narrow screens: one column, everything stacked.
+
+   From 900px: an editorial grid across the full content width. Section
+   headings take the left third, running copy the right two-thirds, and
+   block components (imagery, decisions, testing, outcomes, leadership)
+   span both — so text and images share the same left and right edges.
    ───────────────────────────────────────────────────────────── */
 .prose > * + * {
   margin-top: 1.5rem;
 }
 
-/* Text and component blocks sit on the reading measure; imagery (.breakout)
-   runs the full content width so every image shares the hero image's edges. */
-.prose > * {
-  max-width: var(--measure);
-}
-
-.prose > .breakout {
-  max-width: none;
+.prose > p {
+  font-size: 1.125rem;
+  line-height: 1.62;
 }
 
 .prose h2 {
@@ -258,22 +260,81 @@ hr {
   margin-top: 1rem;
 }
 
-.prose ul {
+@media (min-width: 900px) {
+  .prose {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    column-gap: 4rem;
+    row-gap: 1.25rem;
+    align-items: start;
+  }
+
+  .prose > * {
+    margin-top: 0;
+  }
+
+  /* Headings left, copy right. */
+  .prose > h2 {
+    grid-column: 1;
+  }
+
+  .prose > p,
+  .prose > ul,
+  .prose > ol,
+  .prose > blockquote {
+    grid-column: 2;
+  }
+
+  /* Block components run the full width. */
+  .prose > div,
+  .prose > section,
+  .prose > aside,
+  .prose > figure,
+  .prose > ol.vb {
+    grid-column: 1 / -1;
+    margin-top: 1.75rem;
+  }
+
+  /* A heading that introduces a block, not copy, runs full width too —
+     otherwise it sits alone with an empty right column beside it. */
+  .prose > h2:has(+ :is(div, section, aside, figure, ol.vb)) {
+    grid-column: 1 / -1;
+  }
+
+  /* Section breathing room: the heading and the first paragraph beside it
+     step down together, so their tops stay level. */
+  .prose > h2,
+  .prose > h2 + p {
+    padding-top: 3.5rem;
+  }
+
+  .prose > h2:first-child,
+  .prose > h2:first-child + p {
+    padding-top: 0;
+  }
+
+  .prose > h2 + p {
+    margin-top: 0;
+  }
+}
+
+/* Markdown lists only — lists inside block components style themselves. */
+.prose > ul {
   margin: 0;
   padding-left: 1.1rem;
   list-style: none;
 }
 
-.prose ul li {
+.prose > ul li {
   position: relative;
   padding-left: 0.35rem;
 }
 
-.prose ul li + li {
+.prose > ul li + li {
   margin-top: 0.6rem;
 }
 
-.prose ul li::before {
+.prose > ul li::before {
   content: "";
   position: absolute;
   left: -0.85rem;
