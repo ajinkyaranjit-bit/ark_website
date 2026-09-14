@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { url, EMAIL, RESUME_PATH } from "../site.ts";
+import avatar from "../assets/about/avatar.webp";
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -13,7 +15,17 @@ const links = [
 
 <header class="site-header">
   <div class="wrap measure-hero header-inner">
-    <a href={url("/")} class="wordmark">Ajinkya Kale</a>
+    <a href={url("/")} class="wordmark">
+      <Image
+        src={avatar}
+        alt=""
+        width={80}
+        height={80}
+        class="wordmark-avatar"
+        loading="eager"
+      />
+      <span>Ajinkya Kale</span>
+    </a>
     <nav aria-label="Primary">
       <ul>
         {
@@ -58,9 +70,21 @@ const links = [
   }
 
   .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
     font-family: var(--font-display);
     font-size: 1.3125rem;
     text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .wordmark-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
   }
 
   nav ul {
@@ -100,6 +124,21 @@ const links = [
 
   @media (max-width: 640px) {
     nav a.email {
+      display: none;
+    }
+
+    .header-inner {
+      gap: 1rem;
+    }
+
+    nav a {
+      padding: 0.4rem 0.6rem;
+    }
+  }
+
+  /* On the narrowest screens the picture stands in for the name. */
+  @media (max-width: 480px) {
+    .wordmark span {
       display: none;
     }
   }

@@ -1,6 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Band from "../components/Band.astro";
+import { Image } from "astro:assets";
+import photoKotak from "../assets/about/01-kotak-team.webp";
+import photoWorkshop from "../assets/about/02-workshop.webp";
+import photoTeam from "../assets/about/03-team-goa.webp";
+
+const photos = [
+  { src: photoKotak, alt: "Ajinkya with two colleagues in front of the Kotak sign at the bank's office." },
+  { src: photoWorkshop, alt: "The product, design and technology team after a whiteboard workshop in a Kotak meeting room." },
+  { src: photoTeam, alt: "The Ungrammary team together on a lawn under palm trees in Goa." },
+];
 import { EMAIL, LINKEDIN_URL, RESUME_PATH, url } from "../site.ts";
 
 const principles = [
@@ -75,6 +85,22 @@ const experience = [
             with the design.
           </p>
         </div>
+      </section>
+
+      <!-- Photos -->
+      <section class="block photos" aria-label="Photos">
+        {
+          photos.map((p) => (
+            <Image
+              src={p.src}
+              alt={p.alt}
+              width={800}
+              height={600}
+              class="photo"
+              loading="lazy"
+            />
+          ))
+        }
       </section>
 
       <!-- A little about me -->
@@ -207,6 +233,26 @@ const experience = [
     margin-top: 1.25rem;
     font-size: 1.125rem;
     line-height: 1.62;
+  }
+
+  /* Photos — a quiet row, same edges as everything else. */
+  .photos {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .photos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
   }
 
   /* Sections */

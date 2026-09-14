@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
 import Band from "../components/Band.astro";
-import { EMAIL, LINKEDIN_URL, url } from "../site.ts";
+import { EMAIL, url } from "../site.ts";
 
 const featured = (await getCollection("work"))
   .filter((entry) => entry.data.featured)
@@ -121,26 +121,10 @@ const more = [
         body="Most of what decides whether an enterprise product works is settled before anyone opens Figma — in what the business needs, what the system can actually return, and who is allowed to act."
       >
         <a class="solid" href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        <a class="outline" href={LINKEDIN_URL} rel="noopener noreferrer" target="_blank">LinkedIn</a>
       </Band>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section class="section cta">
-    <div class="wrap measure-hero">
-      <div class="cta-inner">
-        <h2 class="t-h2">Let's talk.</h2>
-        <p class="cta-copy">
-          I'm currently exploring Lead / Principal Product Designer roles where
-          complex products, systems thinking and design leadership matter.
-        </p>
-        <p class="cta-link">
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        </p>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
@@ -214,21 +198,5 @@ const more = [
     line-height: 1.6;
     color: var(--color-text-muted);
   }
-
-  .cta-inner {
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .cta-copy {
-    margin-top: 1.25rem;
-    max-width: var(--measure);
-    color: var(--color-text-muted);
-  }
-
-  .cta-link {
-    margin-top: 1.75rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-  }
 </style>
+
