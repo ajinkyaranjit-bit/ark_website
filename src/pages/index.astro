@@ -2,109 +2,190 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkCard from "../components/WorkCard.astro";
+import Placeholder from "../components/Placeholder.astro";
 import Band from "../components/Band.astro";
-import { EMAIL, url } from "../site.ts";
+import { EMAIL, AVAILABILITY, url } from "../site.ts";
 
 const featured = (await getCollection("work"))
   .filter((entry) => entry.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
 
-// Secondary work. Deliberately quieter than Selected work: no cards, no dates,
-// no responsibilities — breadth only.
+const [lead, ...supporting] = featured;
+
+// Real figures, the same ones stated on /about. `count` drives the count-up;
+// the rendered text is the final value, so the page reads correctly with no
+// script at all.
+const proof = [
+  { count: 9, suffix: "+", label: "years designing products" },
+  { count: 5000, suffix: "+", label: "branch staff on a platform I design" },
+  { count: 16, suffix: "", label: "products shipped at Nearby" },
+  { count: 7, suffix: "", label: "designers in the largest team I led" },
+];
+
+// Secondary work. Two across, then three across: five cells for five
+// projects, no empty tile. Each image slot carries the brief for its shot.
 const more = [
   {
     name: "LoanNearby",
     blurb:
-      "Consumer lending that moved Aadhaar-KYC loan journeys from a largely offline process toward same-day digital approval.",
+      "Moved Aadhaar-KYC loan journeys from a largely offline process toward same-day digital approval.",
+    aspect: "16:9",
+    brief:
+      "The loan journey on a mid-range Android phone: the Aadhaar KYC step beside the approval screen. Two phones on a flat colour, 16:9.",
   },
   {
     name: "Wellytics",
     blurb:
-      "0→1 consumer health product bringing health records, genomics, tracking and an AI health companion into one product.",
+      "A 0→1 health product combining records, genomics, tracking and an AI health companion.",
+    aspect: "16:9",
+    brief:
+      "The health timeline and the AI companion chat, side by side on two phones. Calm, clinical palette, 16:9.",
   },
   {
     name: "Highland Brain",
     blurb:
-      "Learning platform designed across mobile, desktop, tablet and feature-phone contexts.",
+      "A learning platform designed across mobile, desktop, tablet and feature phones.",
+    aspect: "4:3",
+    brief:
+      "One lesson shown on a laptop, a tablet and a feature phone together. The range is the point, 4:3.",
   },
   {
     name: "21K School",
-    blurb:
-      "Administration experience for a multi-school digital education platform.",
+    blurb: "Administration for a multi-school digital education platform.",
+    aspect: "4:3",
+    brief:
+      "The admin overview: schools, classes and attendance at a glance. Desktop screen, cropped tight, 4:3.",
   },
   {
     name: "PayNearby / BuyNearby",
     blurb:
-      "Payments, commerce and lending products built for India's assisted-commerce ecosystem.",
+      "Payments, commerce and lending for India's assisted-commerce network.",
+    aspect: "4:3",
+    brief:
+      "The retailer app mid-transaction at a kirana counter. A real photo if you have one, otherwise the screen on a phone, 4:3.",
   },
-];
+] as const;
 ---
 
 <BaseLayout personSchema>
-  <!-- Hero — the statement carries the first fold. Nothing else. -->
-  <section class="hero">
+  <!-- Hero: the statement, alone. -->
+  <section class="hero aurora">
     <div class="wrap measure-hero">
-      <h1 class="t-h1 hero-title">
+      {
+        AVAILABILITY && (
+          <p class="hero-status reveal">
+            <span class="hero-dot" aria-hidden="true" />
+            {AVAILABILITY}
+          </p>
+        )
+      }
+      <h1 class="t-h1 hero-title reveal">
         I design products that have to work in the real world.
       </h1>
-      <div class="hero-copy">
-        <p>
-          The hard part usually starts before the screen — business rules,
-          legacy systems, approval chains, regulation, and people who need to
-          get their job done without thinking about the software.
-        </p>
-        <p>
-          I'm Ajinkya, a Lead Product Designer with 9 years across fintech,
-          banking, healthcare and enterprise products.
-        </p>
+      <p class="hero-sub reveal">
+        Lead Product Designer with 9 years in fintech and banking, designing
+        the rules, approvals and legacy systems behind the screen.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn btn--solid" href={`mailto:${EMAIL}`}>Get in touch</a>
+        <a class="btn btn--ghost" href={url("/#work")}>View work</a>
       </div>
     </div>
   </section>
 
-  <!-- Selected work -->
-  <section class="section" id="work">
+  <!-- Proof: four real figures, counting up as they arrive. -->
+  <section class="proof" aria-label="In numbers">
     <div class="wrap measure-hero">
-      <header class="section-head">
-        <h2 class="t-h2">Selected work</h2>
-        <p class="section-note">
-          Three projects. Three different kinds of complexity.
-        </p>
-      </header>
-
-      <div class="work-list">
+      <dl class="proof-grid nums-tabular">
         {
-          featured.map((entry) => (
-            <WorkCard
-              number={entry.data.number}
-              category={entry.data.cardCategory}
-              title={entry.data.cardTitle}
-              hook={entry.data.cardHook}
-              description={entry.data.cardDescription}
-              audience={entry.data.cardAudience}
-              href={url(`/work/${entry.id}`)}
-              tags={entry.data.cardTags ?? entry.data.tags}
-              image={entry.data.cardImage}
-            />
+          proof.map((p) => (
+            <div class="proof-item reveal">
+              <dt class="proof-label">{p.label}</dt>
+              <dd
+                class="proof-value"
+                data-count={p.count}
+                data-suffix={p.suffix}
+              >
+                {p.count.toLocaleString("en-US")}
+                {p.suffix}
+              </dd>
+            </div>
           ))
         }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Selected work: one feature, two supporting. -->
+  <section class="section" id="work">
+    <div class="wrap measure-hero">
+      <header class="section-head reveal">
+        <h2 class="t-h2">Selected work</h2>
+        <p>Three projects, three different kinds of complexity.</p>
+      </header>
+
+      <div class="work">
+        {
+          lead && (
+            <WorkCard
+              variant="feature"
+              category={lead.data.cardCategory}
+              title={lead.data.cardTitle}
+              hook={lead.data.cardHook}
+              description={lead.data.cardDescription}
+              audience={lead.data.cardAudience}
+              href={url(`/work/${lead.id}`)}
+              tags={lead.data.cardTags ?? lead.data.tags}
+              image={lead.data.cardImage}
+            />
+          )
+        }
+        <div class="work-pair">
+          {
+            supporting.map((entry) => (
+              <WorkCard
+                variant="compact"
+                category={entry.data.cardCategory}
+                title={entry.data.cardTitle}
+                hook={entry.data.cardHook}
+                description={entry.data.cardDescription}
+                audience={entry.data.cardAudience}
+                href={url(`/work/${entry.id}`)}
+                tags={entry.data.cardTags ?? entry.data.tags}
+                image={entry.data.cardImage}
+              />
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- More work -->
-  <section class="section" id="more-work">
+  <!-- More work: a 2 + 3 bento. Not linked yet; no hover lift, so nothing
+       promises a click that does not exist. -->
+  <section class="section section--tight" id="more-work">
     <div class="wrap measure-hero">
-      <header class="section-head">
+      <header class="section-head reveal">
         <h2 class="t-h2">More work</h2>
-        <p class="section-note">Breadth, without the full write-up.</p>
+        <p>Breadth across payments, lending, health and education.</p>
       </header>
 
-      <ul class="more-list">
+      <ul class="more">
         {
           more.map((item) => (
-            <li class="more-item">
-              <h3 class="t-h3 more-name">{item.name}</h3>
-              <p class="more-blurb">{item.blurb}</p>
+            <li class="more-item reveal">
+              <div class="more-media">
+                <Placeholder
+                  aspect={item.aspect}
+                  label={`Image brief: ${item.name}`}
+                  description={item.brief}
+                  zoomable={false}
+                />
+              </div>
+              <div class="more-body">
+                <h3 class="t-h3">{item.name}</h3>
+                <p class="more-blurb">{item.blurb}</p>
+              </div>
             </li>
           ))
         }
@@ -112,91 +193,248 @@ const more = [
     </div>
   </section>
 
-  <!-- Positioning band -->
-  <section class="section section--band">
-    <div class="wrap measure-hero">
+  <!-- Closing band -->
+  <section class="section section--tight">
+    <div class="wrap measure-hero reveal">
       <Band
         label="How I work"
         heading="The work becomes interesting before the interface begins."
-        body="Most of what decides whether an enterprise product works is settled before anyone opens Figma — in what the business needs, what the system can actually return, and who is allowed to act."
+        body="Most of what decides whether an enterprise product works is settled before anyone opens Figma: what the business needs, what the system can return, and who is allowed to act."
+        animated
       >
-        <a class="solid" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <a class="solid" href={`mailto:${EMAIL}`}>Get in touch</a>
       </Band>
     </div>
   </section>
-
 </BaseLayout>
 
 <style>
-  /* Short of full height on purpose — the reader should see that work
-     follows without scrolling to find out. */
+  /* ── Hero ─────────────────────────────────────────────────────── */
   .hero {
-    padding-block: 4rem 3rem;
+    padding-block: var(--page-top) clamp(3.5rem, 7vw, 6rem);
   }
 
-  @media (min-width: 768px) {
-    .hero {
-      padding-block: 6rem;
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.375rem 0.875rem 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--pill);
+    backdrop-filter: blur(8px);
+  }
+
+  /* The one status dot on the site, and it carries real state: a live
+     availability flag. The ring breathes outward every few seconds. */
+  .hero-dot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1f9d55;
+  }
+
+  .hero-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #1f9d55;
+    opacity: 0;
+  }
+
+  @keyframes dot-ping {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(3.2);
+      opacity: 0;
     }
   }
 
-  .hero-copy {
-    margin-top: 2.25rem;
-    max-width: var(--measure);
+  :global(html.motion) .hero-dot::after {
+    animation: dot-ping 2.4s var(--ease-out) 1s infinite;
   }
 
-  .hero-copy p {
-    font-size: 1.0625rem;
-    line-height: 1.65;
+  /* Without the portrait the headline has the full width, so it can run
+     larger and still hold to two lines at 1440px. */
+  .hero-title {
+    margin-top: 1.75rem;
+    max-width: 18ch;
+    font-size: clamp(2.5rem, 6.2vw, 5.25rem);
+    letter-spacing: -0.045em;
+    line-height: 1;
   }
 
-  .hero-copy p + p {
-    margin-top: 1.25rem;
-  }
-
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 2rem;
-    flex-wrap: wrap;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .section-note {
-    font-size: 0.9375rem;
+  .hero-sub {
+    margin-top: 1.75rem;
+    max-width: 36rem;
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    line-height: 1.55;
     color: var(--color-text-muted);
   }
 
-  .work-list {
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
     margin-top: 2.25rem;
   }
 
-  /* More work sits below Selected work in hierarchy, but on the same type
-     scale and the same section rhythm — no images is the only difference. */
-  .more-list {
-    margin: 2.25rem 0 0;
-    padding: 0;
-    list-style: none;
+  /* ── Proof strip ──────────────────────────────────────────────── */
+  .proof {
+    border-block: 1px solid var(--color-border);
+  }
+
+  .proof-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
   }
 
   @media (min-width: 768px) {
-    .more-list {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.75rem 3rem;
+    .proof-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
+  }
+
+  /* Value above label visually, label first in the DOM so it reads as the
+     term. flex-end in a reversed column is the top edge, so every figure
+     starts on the same line however many lines its label wraps to. */
+  .proof-item {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1.75rem 1.25rem 1.75rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .proof-item {
+      padding: 2.25rem 1.5rem;
+    }
+
+    .proof-item:first-child {
+      padding-left: 0;
+    }
+
+    .proof-item + .proof-item {
+      border-left: 1px solid var(--color-border);
+    }
+  }
+
+  .proof-value {
+    margin: 0;
+    font-size: clamp(1.875rem, 3vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .proof-label {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+    max-width: 18ch;
+  }
+
+  /* ── Work ─────────────────────────────────────────────────────── */
+  .work {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .work-pair {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .work-pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ── More work: two across, then three across ─────────────────── */
+  .section--tight {
+    padding-top: 0;
+  }
+
+  .more {
+    display: grid;
+    gap: 1.25rem;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 768px) {
+    .more {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Tablet: 2 + 2 + 1, the fifth spanning so no tile is left alone. */
+    .more-item:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .more {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .more-item {
+      grid-column: span 2;
+    }
+
+    .more-item:nth-child(-n + 2) {
+      grid-column: span 3;
+    }
+
+    .more-item:last-child {
+      grid-column: span 2;
+    }
+  }
+
+  /* White, bordered and lifted like the work cards. The earlier flat grey
+     tiles read as disabled rows. */
+  .more-item {
+    --card-pad: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    padding: var(--card-pad);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-rest);
+  }
+
+  .more-media :global(.ph),
+  .more-media :global(.ph-img) {
+    border-radius: calc(var(--radius) - var(--card-pad) * 0.5);
+  }
+
+  .more-media :global(.ph) {
+    padding: 1.5rem;
+  }
+
+  .more-body {
+    padding: 1.25rem 0.5rem 0.625rem;
   }
 
   .more-blurb {
     margin-top: 0.5rem;
-    max-width: 46ch;
     font-size: 0.9375rem;
-    line-height: 1.6;
+    line-height: 1.55;
     color: var(--color-text-muted);
   }
 </style>
-

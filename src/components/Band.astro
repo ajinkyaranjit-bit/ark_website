@@ -7,13 +7,16 @@ export interface Props {
   label: string;
   heading: string;
   body: string;
+  /** Slowly drifting light behind the copy. Used on the homepage close. */
+  animated?: boolean;
 }
 
-const { label, heading, body } = Astro.props;
+const { label, heading, body, animated = false } = Astro.props;
 const hasActions = Astro.slots.has("default");
 ---
 
-<div class="band">
+<div class={animated ? "band band--animated" : "band"}>
+  {animated && <span class="band-light" aria-hidden="true" />}
   <p class="band-label">{label}</p>
   <h2 class="band-heading">{heading}</h2>
   <p class="band-body">{body}</p>
@@ -28,10 +31,102 @@ const hasActions = Astro.slots.has("default");
 
 <style>
   .band {
-    background: var(--color-text);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    /* The same four hues as the hero aurora, at a fifth of the alpha, lit from
+       the top-left. Flat #0a0a0a read as a hole in the page next to a hero
+       that now has colour in it; this gives the block a light source without
+       turning it into a gradient panel. */
+    background:
+      radial-gradient(
+        32rem 22rem at 6% -10%,
+        rgb(var(--aurora-apricot) / 0.16),
+        transparent 68%
+      ),
+      radial-gradient(
+        30rem 24rem at 96% 8%,
+        rgb(var(--aurora-periwinkle) / 0.14),
+        transparent 70%
+      ),
+      radial-gradient(
+        28rem 22rem at 78% 104%,
+        rgb(var(--aurora-rose) / 0.1),
+        transparent 70%
+      ),
+      var(--color-text);
     color: #fff;
     border-radius: var(--radius);
     padding: 2.75rem 1.75rem;
+  }
+
+  /* Animated variant: the static gradients give way to two light sources
+     that drift across the surface on long, offset loops (26s and 34s), so
+     the pattern never visibly repeats. Blurred shapes rather than moving
+     gradient stops, because transforms stay on the compositor and cost
+     nothing per frame. Content sits above on its own layer. */
+  .band--animated {
+    background: var(--color-text);
+  }
+
+  .band-light,
+  .band-light::before {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  .band-light {
+    width: 34rem;
+    height: 24rem;
+    top: -10rem;
+    left: -8rem;
+    background: rgb(var(--aurora-periwinkle) / 0.34);
+  }
+
+  .band-light::before {
+    content: "";
+    width: 30rem;
+    height: 22rem;
+    top: 18rem;
+    left: 40rem;
+    background: rgb(var(--aurora-apricot) / 0.26);
+  }
+
+  @keyframes band-drift-a {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(22rem, 6rem, 0) scale(1.15);
+    }
+    100% {
+      transform: translate3d(8rem, -2rem, 0) scale(0.95);
+    }
+  }
+
+  @keyframes band-drift-b {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(-26rem, -10rem, 0);
+    }
+    100% {
+      transform: translate3d(-8rem, 4rem, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .band-light {
+      animation: band-drift-a 26s ease-in-out infinite alternate;
+    }
+
+    .band-light::before {
+      animation: band-drift-b 34s ease-in-out infinite alternate;
+    }
   }
 
   @media (min-width: 768px) {
@@ -42,18 +137,17 @@ const hasActions = Astro.slots.has("default");
 
   .band-label {
     font-family: var(--font-body);
-    font-size: 0.6875rem;
+    font-size: 0.8125rem;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.11em;
-    color: rgba(255, 255, 255, 0.52);
+    color: rgba(255, 255, 255, 0.62);
   }
 
   .band-heading {
     margin-top: 1.25rem;
     font-family: var(--font-display);
+    letter-spacing: var(--display-tracking);
     font-size: clamp(1.75rem, 3.4vw, 2.75rem);
-    font-weight: 400;
+    font-weight: var(--display-weight);
     line-height: 1.16;
   }
 

@@ -26,15 +26,57 @@
   --radius-sm: 14px;
   --pill: 9999px;
 
-  /* Two families only. Metadata is the body face at a smaller size, medium
-     weight and open tracking — not a third font. */
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
-  --font-meta: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  /* One family. Geist (self-hosted via @fontsource-variable/geist) carries
+     display, body and metadata; hierarchy comes from weight, size and
+     tracking. The previous Instrument Serif display face is on the taste
+     skill's banned-default list as one of the two most common AI-portfolio
+     serifs, and a sans display reads closer to the product-tool language the
+     portfolio is pitching into. */
+  --font-display: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-meta: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --display-weight: 600;
+  --display-tracking: -0.032em;
 
   --measure: 680px;
   --measure-wide: 900px;
-  --measure-hero: 1100px;
+  --measure-hero: 1200px;
+
+  /* Spacing system. Every horizontal gutter and every section's vertical
+     rhythm reads from these three, so the header, hero, sections and footer
+     all share one edge and one cadence. Before this there were six unrelated
+     values (0.875rem, 1.5rem, 2.5rem, 3rem, 4rem, 6rem) doing the same job. */
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(4.5rem, 9vw, 7.5rem);
+  --header-h: 68px;
+  /* Space between the header and the first line of any page. */
+  --page-top: clamp(3rem, 7vw, 6rem);
+
+  /* The browser's built-in easings are weak — `ease` on a hover reads as a
+     lag rather than a response. These are the stronger variants: ease-out for
+     anything entering or responding to a press, ease-in-out for things moving
+     on screen. Nothing here uses ease-in, which delays the first frame — the
+     exact moment the eye is on the element. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Two stops, not one. A single large soft shadow reads as a drop shadow;
+     a tight contact shadow under a wider ambient one reads as a card sitting
+     on a surface. */
+  --shadow-rest: 0 1px 2px rgba(18, 14, 10, 0.03), 0 6px 16px rgba(18, 14, 10, 0.028);
+  --shadow-lift: 0 2px 4px rgba(18, 14, 10, 0.04), 0 18px 40px rgba(18, 14, 10, 0.07);
+
+  /* Aurora — the soft colour wash behind the two hero blocks.
+     Space-separated channels so alpha can be varied per use with rgb(… / …).
+     Chosen to sit with the work imagery already on the page: the apricot and
+     rose pick up Kotak's red, the periwinkle and cyan pick up the navy and
+     the TrueMeds blues. Nothing here is saturated — at the alphas below each
+     one lands above 92% lightness, which is what keeps it atmosphere rather
+     than decoration. */
+  --aurora-apricot: 255 150 110;
+  --aurora-rose: 255 141 188;
+  --aurora-periwinkle: 150 160 255;
+  --aurora-cyan: 120 208 235;
 }
 
 @theme {
@@ -42,11 +84,9 @@
   --color-ink: #0a0a0a;
   --color-muted: #777169;
   --color-rule: rgba(0, 0, 0, 0.055);
-  /* Two families only. Metadata is the body face at a smaller size, medium
-     weight and open tracking — not a third font. */
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-body: "Instrument Sans", system-ui, -apple-system, sans-serif;
-  --font-meta: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-meta: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -74,19 +114,28 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-synthesis-weight: none;
+  /* Lining figures everywhere — they sit correctly against caps in a line of
+     running text. Tabular is deliberately NOT global: it is for numbers that
+     stack into a column, and in prose it sets "9 years" and "10–15" with
+     gappy, mechanical spacing. See .nums-tabular below. */
+  font-variant-numeric: lining-nums;
 }
 
-/* Instrument Serif has one weight and no variable axes, so headings get
-   their hierarchy from size alone. It also has close sidebearings already,
-   so tracking stays at 0 — negative tracking reads as crunched. */
+/* For figures that line up vertically and want equal widths — the stats board
+   on About, and any column of values. */
+.nums-tabular {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* A sans display needs the opposite of what the serif needed: real weight
+   and negative tracking, tightening as size grows. */
 h1,
 h2,
 h3,
 h4 {
   margin: 0;
-  font-weight: 400;
-  letter-spacing: 0;
-  word-spacing: 0.02em;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
@@ -136,26 +185,26 @@ hr {
    ───────────────────────────────────────────────────────────── */
 .t-h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.625rem, 6vw, 5.125rem);
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.1;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.042em;
+  line-height: 1.02;
 }
 
 .t-h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.875rem, 3.4vw, 2.875rem);
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.14;
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1.08;
 }
 
 .t-h3 {
   font-family: var(--font-body);
-  font-size: 1.25rem;
+  font-size: 1.1875rem;
   font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.005em;
+  line-height: 1.3;
+  letter-spacing: -0.018em;
 }
 
 .t-body {
@@ -168,14 +217,64 @@ hr {
   line-height: 1.55;
 }
 
+/* The one label style on the site: field labels, dates, step numbers, kickers.
+   It used to be uppercase with open tracking, which put small-caps labels on
+   every block of every page. Sentence case matches the labels in the work
+   cards, snapshot, decisions and section index, so all pages read as one. */
 .t-meta {
   font-family: var(--font-meta);
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.11em;
-  line-height: 1.5;
-  color: var(--color-label);
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+/* Buttons, shared by the homepage hero and the contact page so a primary
+   action looks identical wherever it appears. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: var(--pill);
+  transition:
+    background 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+  transition-duration: 100ms;
+}
+
+.btn--solid {
+  color: var(--color-bg);
+  background: var(--color-text);
+  border: 1px solid var(--color-text);
+}
+
+.btn--ghost {
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  border: 1px solid var(--color-border-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--solid:hover {
+    background: #2a2a2a;
+    transform: translateY(-1px);
+  }
+
+  .btn--ghost:hover {
+    background: var(--color-surface);
+    border-color: var(--color-tag-border);
+    transform: translateY(-1px);
+  }
 }
 
 .t-muted {
@@ -188,13 +287,7 @@ hr {
 .wrap {
   width: 100%;
   margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .wrap {
-    padding-inline: 2.5rem;
-  }
+  padding-inline: var(--gutter);
 }
 
 .measure {
@@ -210,13 +303,21 @@ hr {
 }
 
 .section {
-  padding-block: 3rem;
+  padding-block: var(--section-y);
 }
 
-@media (min-width: 768px) {
-  .section {
-    padding-block: 6rem;
-  }
+/* Section header: headline, then its one line of context directly beneath
+   it. Replaces the old headline-left / note-floating-right split, which the
+   taste audit flags as the "floating top-right sub-text" tell. */
+.section-head {
+  max-width: 44rem;
+}
+
+.section-head p {
+  margin-top: 0.875rem;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -241,8 +342,8 @@ hr {
 .prose h2 {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.2vw, 2.625rem);
-  font-weight: 400;
-  letter-spacing: 0;
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
   line-height: 1.16;
   margin-top: 4.5rem;
 }
@@ -366,7 +467,200 @@ hr {
 }
 
 /* ─────────────────────────────────────────────────────────────
+   Aurora
+
+   A blurred colour wash, used on the homepage hero and the case-study hero
+   and nowhere else. Two rules keep it on the right side of the line between
+   "expensive" and "every AI landing page in 2026":
+
+     1. It never sits behind body copy. It fades out through a mask well
+        before the reading column starts, so the careful contrast ratios in
+        the token block above still hold everywhere text actually lives.
+     2. It is atmosphere, not an element. No gradient headings, no gradient
+        borders, no gradient buttons competing with it.
+
+   Built from radial-gradients rather than blurred divs: `filter: blur()` on
+   a large element is a real per-frame cost and gets soft edges wrong at the
+   boundary. Gradient stops are free and stay smooth at any viewport.
+
+   Blob centres sit outside the box (negative and >100% positions) so the
+   element itself never exceeds the viewport width — an oversized absolutely
+   positioned layer is the usual way this trick introduces a horizontal
+   scrollbar on phones.
+   ───────────────────────────────────────────────────────────── */
+.aurora {
+  position: relative;
+  isolation: isolate;
+}
+
+.aurora::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -8rem;
+  left: 0;
+  right: 0;
+  height: calc(100% + 8rem);
+  pointer-events: none;
+  background:
+    radial-gradient(
+      40rem 30rem at 2% 10%,
+      rgb(var(--aurora-apricot) / 0.52),
+      transparent 70%
+    ),
+    radial-gradient(
+      36rem 28rem at 92% 0%,
+      rgb(var(--aurora-periwinkle) / 0.46),
+      transparent 72%
+    ),
+    radial-gradient(
+      38rem 28rem at 106% 40%,
+      rgb(var(--aurora-rose) / 0.38),
+      transparent 70%
+    ),
+    radial-gradient(
+      34rem 26rem at 26% 54%,
+      rgb(var(--aurora-cyan) / 0.3),
+      transparent 72%
+    );
+  /* Full strength across the headline, then away before the reading column.
+     The stop positions are the contrast safeguard, not a taste call. */
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 42%,
+    rgb(0 0 0 / 0.35) 68%,
+    transparent 92%
+  );
+}
+
+/* The blob radii are in rem, so on a 375px screen the same four gradients
+   cover roughly three times as much of the viewport and the wash ends up
+   behind the body copy. Narrow screens get a shorter mask and lighter
+   alphas — the same effect, held to the headline where it belongs. */
+@media (max-width: 767px) {
+  .aurora::before {
+    background:
+      radial-gradient(
+        22rem 18rem at 0% 8%,
+        rgb(var(--aurora-apricot) / 0.42),
+        transparent 70%
+      ),
+      radial-gradient(
+        20rem 16rem at 100% 2%,
+        rgb(var(--aurora-periwinkle) / 0.36),
+        transparent 72%
+      ),
+      radial-gradient(
+        20rem 16rem at 92% 30%,
+        rgb(var(--aurora-rose) / 0.26),
+        transparent 70%
+      );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 22%,
+      rgb(0 0 0 / 0.3) 42%,
+      transparent 62%
+    );
+  }
+}
+
+/* A very slow drift, so the wash reads as light rather than as a painted
+   shape. 48s and 2% of travel — at that speed it is never the thing you are
+   looking at, which is the only reason it is allowed behind a page someone
+   is trying to read. */
+@media (prefers-reduced-motion: no-preference) {
+  .aurora::before {
+    animation: aurora-drift 48s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(-1%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1%, -2%, 0) scale(1.06);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Reveal ("paper settle")
+
+   Elements with .reveal (plus case-study prose) arrive the way print settles
+   onto a page: a short rise, a fade, and a slight blur that sharpens. Driven
+   by src/scripts/motion.ts with an IntersectionObserver that fires ONCE and
+   then lets a fixed-length transition run to completion. That is the fix for
+   the earlier scroll-linked attempt, where tall cards stayed half-transparent
+   because their animation was tied to how far you had scrolled.
+
+   Guards:
+     html.motion       set inline in <head> only when reduced motion is off,
+                       so nothing is ever hidden for readers who opt out.
+     motion-ready      set by the script once it is running. If the script
+                       never loads, the failsafe below shows everything
+                       after 2s instead of leaving the page blank.
+
+   Elements entering together are staggered by the script (--stagger), in
+   reading order, 80ms apart and capped so a long batch never drags.
+
+   `translate` rather than `transform`, so the reveal composes with the
+   cards' hover lift instead of overriding it.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.motion :is(.reveal, .prose > h2, .prose > h3, .prose > p, .prose > ul) {
+  opacity: 0;
+  translate: 0 18px;
+  filter: blur(4px);
+  transition:
+    opacity 760ms var(--ease-paper),
+    translate 900ms var(--ease-paper),
+    filter 760ms var(--ease-paper),
+    transform 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out);
+  transition-delay:
+    calc(var(--stagger, 0) * 80ms),
+    calc(var(--stagger, 0) * 80ms),
+    calc(var(--stagger, 0) * 80ms),
+    0s,
+    0s;
+}
+
+/* Settles to `none`, not `0 0`: any other translate value makes the element
+   a containing block for position:fixed children, which would trap the image
+   lightbox inside the case-study figures. */
+html.motion :is(.reveal, .prose > h2, .prose > h3, .prose > p, .prose > ul).is-in {
+  opacity: 1;
+  translate: none;
+  filter: none;
+}
+
+html.motion:not(.motion-ready)
+  :is(.reveal, .prose > h2, .prose > h3, .prose > p, .prose > ul) {
+  animation: reveal-failsafe 0s 2s forwards;
+}
+
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    translate: none;
+    filter: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
    Motion
+
+   Everything that moves is listed here or in src/scripts/motion.ts, and
+   every one of them has a reason: reveals pace the reading, the count-up
+   makes the figures register as figures, the header change marks that you
+   have left the top, the status dot signals a live state. Nothing loops
+   except the status dot and the closing band's background, and both stop
+   under reduced motion.
    ───────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {

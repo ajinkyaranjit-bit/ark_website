@@ -25,102 +25,178 @@ export interface Props {
 const { n, decision, problem, evidence, why, consequence, result, needs } =
   Astro.props;
 
-const rows = [
+const fields = [
   { label: "Problem", value: problem },
   { label: "Evidence", value: evidence },
   { label: "Why this over the alternatives", value: why },
   { label: "Design consequence", value: consequence },
-  { label: "Result", value: result },
-].filter((r) => r.value);
+].filter((f) => f.value);
 ---
 
-<section class="decision">
+<section class="decision reveal">
   <header class="decision-head">
-    <p class="t-meta">Decision {n}</p>
-    <h3 class="decision-title">{decision}</h3>
+    <span class="decision-n" aria-hidden="true">{n}</span>
+    <div>
+      <p class="decision-kicker">Decision {n}</p>
+      <h3 class="decision-title">{decision}</h3>
+    </div>
   </header>
 
-  <dl class="decision-rows">
+  <dl class="decision-grid">
     {
-      rows.map((row) => (
-        <div class="decision-row">
-          <dt class="t-meta">{row.label}</dt>
-          <dd>{row.value}</dd>
+      fields.map((f) => (
+        <div class="decision-field">
+          <dt>{f.label}</dt>
+          <dd>{f.value}</dd>
         </div>
       ))
     }
   </dl>
 
-  {needs && <Draft label={`Decision ${n} — still needed`}>{needs}</Draft>}
+  {
+    result && (
+      <div class="decision-result">
+        <p class="decision-result-label">Result</p>
+        <p class="decision-result-text">{result}</p>
+      </div>
+    )
+  }
+
+  {needs && <Draft label={`Decision ${n}: still needed`}>{needs}</Draft>}
 </section>
 
 <style>
+  /* Each decision is one card: number and title, the four reasoning fields
+     as a 2 x 2 grid, and the result as a dark strip that closes the card.
+     The reasoning is read, the result is remembered, so the result gets the
+     weight. */
   .decision {
-    margin-top: 3.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
+    margin-top: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-rest);
+    overflow: hidden;
   }
 
-  /* Matches the page grid: heading left third, rows right two-thirds. */
-  @media (min-width: 900px) {
-    .decision {
-      display: grid;
-      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-      column-gap: 4rem;
-      align-items: start;
+  :global(.prose) > h2 + .decision {
+    margin-top: 2rem;
+  }
+
+  .decision-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.75rem 1.5rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .decision-head {
+      gap: 2rem;
+      padding: 2.25rem 2.25rem 0;
     }
+  }
+
+  .decision-n {
+    flex-shrink: 0;
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    font-weight: 300;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .decision-kicker {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
 
   .decision-title {
-    margin-top: 0.75rem;
+    margin-top: 0.375rem;
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
-    letter-spacing: 0;
-    line-height: 1.16;
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--display-tracking);
+    line-height: 1.15;
   }
 
-  .decision-rows {
-    margin: 2rem 0 0;
+  .decision-grid {
+    margin: 1.75rem 0 0;
     display: grid;
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--color-border);
   }
 
-  @media (min-width: 700px) {
-    .decision-rows {
-      grid-template-columns: 11rem 1fr;
-      gap: 1.5rem 2rem;
+  @media (min-width: 768px) {
+    .decision-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .decision-row {
-      display: contents;
+    .decision-field:nth-child(even) {
+      border-left: 1px solid var(--color-border);
     }
-  }
 
-  @media (min-width: 900px) {
-    .decision-rows {
-      margin-top: 0;
+    .decision-field:nth-child(n + 3) {
+      border-top: 1px solid var(--color-border);
     }
   }
 
-  .decision-row dt {
-    font-size: 0.6875rem;
+  .decision-field {
+    padding: 1.375rem 1.5rem;
   }
 
-  @media (min-width: 700px) {
-    .decision-row dt {
-      padding-top: 0.2rem;
+  @media (max-width: 767px) {
+    .decision-field + .decision-field {
+      border-top: 1px solid var(--color-border);
     }
   }
 
-  .decision-row dd {
-    margin: 0.375rem 0 0;
+  @media (min-width: 768px) {
+    .decision-field {
+      padding: 1.5rem 2.25rem;
+    }
+  }
+
+  .decision-field dt {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .decision-field dd {
+    margin: 0.5rem 0 0;
     font-size: 1rem;
-    line-height: 1.62;
+    line-height: 1.6;
   }
 
-  @media (min-width: 700px) {
-    .decision-row dd {
-      margin: 0;
+  .decision-result {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.375rem 1.5rem;
+    background: var(--color-text);
+    color: #fff;
+  }
+
+  @media (min-width: 768px) {
+    .decision-result {
+      grid-template-columns: 9rem 1fr;
+      align-items: baseline;
+      padding: 1.5rem 2.25rem;
     }
+  }
+
+  .decision-result-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .decision-result-text {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
   }
 </style>

@@ -23,8 +23,11 @@ const steps = [
 <ol class="vb">
   {
     steps.map((step, i) => (
-      <li class={i === 2 ? "vb-step vb-step--change" : "vb-step"}>
-        <p class="t-meta">{step.label}</p>
+      <li class={i === 2 ? "vb-step vb-step--change reveal" : "vb-step reveal"}>
+        <span class="vb-marker" aria-hidden="true">
+          {i + 1}
+        </span>
+        <p class="vb-label">{step.label}</p>
         <p class="vb-text">{step.value}</p>
       </li>
     ))
@@ -32,52 +35,86 @@ const steps = [
 </ol>
 
 <style>
+  /* A sequence, not a table. Four numbered steps joined by one line; the
+     step where the design actually changed is the dark one. Each step is its
+     own reveal target, so they settle in reading order, left to right. */
   .vb {
+    position: relative;
     margin: 2rem 0 0;
     padding: 0;
     list-style: none;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    background: var(--color-surface);
+    gap: 1rem;
   }
 
-  @media (min-width: 860px) {
+  @media (min-width: 900px) {
     .vb {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    /* The connecting line runs through the markers' centres. */
+    .vb::before {
+      content: "";
+      position: absolute;
+      top: 2.125rem;
+      left: 2.75rem;
+      right: 2.75rem;
+      height: 1px;
+      background: var(--color-border-strong);
     }
   }
 
   .vb-step {
+    position: relative;
     padding: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-rest);
   }
 
-  .vb-step:last-child {
-    border-bottom: none;
-  }
-
-  @media (min-width: 860px) {
-    .vb-step {
-      border-bottom: none;
-      border-right: 1px solid var(--color-border);
-    }
-
-    .vb-step:last-child {
-      border-right: none;
-    }
-  }
-
-  .vb-step--change {
+  .vb-marker {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text);
     background: var(--color-warm);
+    border: 1px solid var(--color-border-strong);
+  }
+
+  .vb-label {
+    margin-top: 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
 
   .vb-text {
-    margin-top: 0.75rem;
-    font-size: 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
     line-height: 1.6;
+  }
+
+  .vb-step--change {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: #fff;
+  }
+
+  .vb-step--change .vb-marker {
+    color: var(--color-text);
+    background: #fff;
+    border-color: #fff;
+  }
+
+  .vb-step--change .vb-label {
+    color: rgba(255, 255, 255, 0.62);
   }
 </style>

@@ -39,21 +39,21 @@ const experience = [
   {
     company: "Ungrammary",
     role: "Senior UX Lead",
-    dates: "2024 — now",
+    dates: "2024 to now",
     detail:
-      "Banking, healthcare and consumer products — including Kotak Cloud Branch, FYN and TrueMeds.",
+      "Banking, healthcare and consumer products, including Kotak Cloud Branch, FYN and TrueMeds.",
   },
   {
     company: "okoders",
     role: "Lead Designer",
-    dates: "2021 — 2024",
+    dates: "2021 to 2024",
     detail:
       "Promoted from Senior UX/UI Designer; built and led a seven-designer team across multiple client products.",
   },
   {
     company: "Nearby Technologies",
     role: "Product Designer",
-    dates: "2017 — 2021",
+    dates: "2017 to 2021",
     detail:
       "Joined as the first designer and worked across PayNearby, BuyNearby and LoanNearby as the company scaled.",
   },
@@ -68,7 +68,7 @@ const experience = [
   <div class="wrap measure-hero">
     <div class="about">
       <!-- Hero -->
-      <section class="about-hero">
+      <section class="about-hero reveal">
         <h1 class="t-h1">
           I design products for the messy parts of the real world.
         </h1>
@@ -88,7 +88,7 @@ const experience = [
       </section>
 
       <!-- Photos -->
-      <section class="block photos" aria-label="Photos">
+      <section class="block photos reveal" aria-label="Photos">
         {
           photos.map((p) => (
             <Image
@@ -104,8 +104,8 @@ const experience = [
       </section>
 
       <!-- A little about me -->
-      <section class="block block--split">
-        <h2 class="t-h2">A little about me</h2>
+      <section class="block block--split reveal">
+        <h2 class="t-h2 reveal">A little about me</h2>
         <div class="block-copy">
           <p>
             I started my career at Nearby Technologies as the company's first
@@ -131,11 +131,11 @@ const experience = [
 
       <!-- How I work -->
       <section class="block">
-        <h2 class="t-h2">How I work</h2>
+        <h2 class="t-h2 reveal">How I work</h2>
         <div class="board board--3">
           {
             principles.map((p, i) => (
-              <div class="cell">
+              <div class="cell reveal">
                 <p class="t-meta">{String(i + 1).padStart(2, "0")}</p>
                 <h3 class="t-h3 cell-title">{p.title}</h3>
                 <p class="cell-body">{p.body}</p>
@@ -147,11 +147,11 @@ const experience = [
 
       <!-- A few numbers -->
       <section class="block">
-        <h2 class="t-h2">A few numbers</h2>
-        <dl class="board board--4 numbers">
+        <h2 class="t-h2 reveal">A few numbers</h2>
+        <dl class="board board--4 numbers nums-tabular">
           {
             numbers.map((n) => (
-              <div class="cell">
+              <div class="cell reveal">
                 <dd class="number-value">{n.value}</dd>
                 <dt class="number-label">{n.label}</dt>
               </div>
@@ -162,11 +162,11 @@ const experience = [
 
       <!-- Where I've worked -->
       <section class="block">
-        <h2 class="t-h2">Where I've worked</h2>
+        <h2 class="t-h2 reveal">Where I've worked</h2>
         <ul class="board board--3 entries">
           {
             experience.map((e) => (
-              <li class="cell">
+              <li class="cell reveal">
                 <p class="t-meta">{e.dates}</p>
                 <h3 class="entry-company">{e.company}</h3>
                 <p class="entry-role">{e.role}</p>
@@ -175,7 +175,7 @@ const experience = [
             ))
           }
         </ul>
-        <p class="education">
+        <p class="education reveal">
           MCA · Design Thinking &amp; Innovation, IIT Delhi · HCI, Interaction
           Design Foundation
         </p>
@@ -188,7 +188,7 @@ const experience = [
           heading="I'm looking for the next difficult product problem."
           body="I'm currently exploring Lead and Principal Product Designer roles, particularly in fintech, banking and complex product environments."
         >
-          <a class="solid" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          <a class="solid" href={`mailto:${EMAIL}`}>Get in touch</a>
           <a
             class="outline"
             href={LINKEDIN_URL}
@@ -206,12 +206,12 @@ const experience = [
 
 <style>
   .about {
-    padding-block: 3rem 2rem;
+    padding-block: var(--page-top) 2rem;
   }
 
   @media (min-width: 768px) {
     .about {
-      padding-block: 5rem 2rem;
+      padding-block: var(--page-top) 2rem;
     }
   }
 
@@ -257,14 +257,15 @@ const experience = [
 
   /* Sections */
   .block {
-    margin-top: 5rem;
+    margin-top: var(--section-y);
   }
 
   @media (min-width: 768px) {
     .block {
-      margin-top: 7rem;
+      margin-top: var(--section-y);
     }
   }
+
 
   /* Heading left, copy right — the same editorial split as the case
      studies, so the About page and the work share one rhythm. */
@@ -327,7 +328,7 @@ const experience = [
   .cell {
     margin: 0;
     padding-top: 1.25rem;
-    border-top: 1px solid var(--color-text);
+    border-top: 1px solid var(--color-border-strong);
   }
 
   .cell-title {
@@ -345,10 +346,10 @@ const experience = [
   .number-value {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
-    font-weight: 400;
+    font-size: clamp(2.25rem, 3.6vw, 3rem);
+    font-weight: var(--display-weight);
     line-height: 1;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.04em;
   }
 
   .number-label {
@@ -362,8 +363,9 @@ const experience = [
   .entry-company {
     margin-top: 0.875rem;
     font-family: var(--font-display);
+    letter-spacing: var(--display-tracking);
     font-size: 1.625rem;
-    font-weight: 400;
+    font-weight: var(--display-weight);
     line-height: 1.15;
   }
 

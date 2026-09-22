@@ -6,7 +6,7 @@
  */
 ---
 
-<div class="breakout">
+<div class="breakout reveal">
   <slot />
 </div>
 
@@ -14,6 +14,15 @@
   .breakout {
     width: 100%;
     margin-block: 3rem;
+  }
+
+  /* Below 768px the artwork escapes .wrap's side padding and runs the full
+     viewport width. On a 375px screen that is 48px back — the difference
+     between a diagram you can squint at and one you cannot. */
+  @media (max-width: 767px) {
+    .breakout {
+      --media-bleed: var(--gutter);
+    }
   }
 
   @media (min-width: 900px) {

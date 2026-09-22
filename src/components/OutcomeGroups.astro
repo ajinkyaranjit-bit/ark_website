@@ -8,10 +8,22 @@ import Draft from "./Draft.astro";
  * is the fastest way to lose a senior reviewer, so every claim has to declare
  * which of these it is:
  *
+ *   shipped  — delivered and in use. A fact about what was built, not a metric
  *   measured — verified in production after launch
  *   observed — seen in testing, UAT, analytics or operations
  *   target   — what the project was expected to achieve
  *   scale    — the size of the environment, not a result of the work
+ *
+ * `shipped` exists because scope is not a measurement. "Six services designed
+ * end to end" and "later services inherited the pattern" are verifiable facts
+ * about delivery, and on an enterprise programme they are usually the strongest
+ * evidence available — but labelling them `measured` invites a reviewer to ask
+ * "measured how?", and the honest answer is that they weren't. Say what they
+ * actually are and they read as stronger, not weaker.
+ *
+ * Groups take an optional `note`, which IS rendered. Use it where a whole group
+ * shares a provenance caveat — it is better to state the caveat once, plainly,
+ * than to let a reviewer discover it.
  *
  * Set `verify: true` on any claim whose source Ajinkya has not yet confirmed.
  * It renders normally but raises a dev-only notice listing what to check.
@@ -21,7 +33,7 @@ import Draft from "./Draft.astro";
  * reviewer "confirm this before publishing". It appears only in the dev-only
  * checklist below.
  */
-export type ClaimKind = "measured" | "observed" | "target" | "scale";
+export type ClaimKind = "shipped" | "measured" | "observed" | "target" | "scale";
 
 export interface Claim {
   text: string;
@@ -32,12 +44,13 @@ export interface Claim {
 }
 
 export interface Props {
-  groups: { title: string; claims: Claim[] }[];
+  groups: { title: string; note?: string; claims: Claim[] }[];
 }
 
 const { groups } = Astro.props;
 
 const KIND_LABEL: Record<ClaimKind, string> = {
+  shipped: "Shipped",
   measured: "Measured",
   observed: "Observed",
   target: "Target",
@@ -52,8 +65,9 @@ const unverified = groups
 <div class="og">
   {
     groups.map((group) => (
-      <section class="og-group">
+      <section class="og-group reveal">
         <h3 class="og-group-title">{group.title}</h3>
+        {group.note && <p class="og-group-note">{group.note}</p>}
         <ul class="og-claims">
           {group.claims.map((claim) => (
             <li class="og-claim">
@@ -107,15 +121,25 @@ const unverified = groups
 
   .og-group {
     padding-top: 1.25rem;
-    border-top: 1px solid var(--color-text);
+    border-top: 1px solid var(--color-border-strong);
   }
 
   .og-group-title {
     font-family: var(--font-display);
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: var(--display-weight);
     line-height: 1.2;
-    letter-spacing: 0;
+    letter-spacing: var(--display-tracking);
+  }
+
+  /* The caveat a whole group shares. Stated once, in the reader's path —
+     small, but not hidden. */
+  .og-group-note {
+    margin-top: 0.6rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+    text-wrap: pretty;
   }
 
   .og-claims {
@@ -136,18 +160,19 @@ const unverified = groups
     justify-self: start;
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-label);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
     background: var(--color-warm);
     border-radius: var(--pill);
     padding: 0.22rem 0.6rem;
     white-space: nowrap;
   }
 
-  /* Only a verified production result gets the solid pill. */
-  .og-kind--measured {
+  /* Solid pill = a fact that can be checked — what was delivered, or what was
+     verified in production. Everything qualified (observed, target, scale)
+     stays on the warm pill, so the two tiers read at a glance. */
+  .og-kind--measured,
+  .og-kind--shipped {
     background: var(--color-text);
     color: #fff;
   }

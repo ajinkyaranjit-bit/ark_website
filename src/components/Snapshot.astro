@@ -17,11 +17,11 @@ const cols = n <= 4 ? n : Math.ceil(n / 2);
 ---
 
 <section class="snapshot" aria-label="Snapshot">
-  <p class="snapshot-challenge">{challenge}</p>
+  <p class="snapshot-challenge reveal">{challenge}</p>
   <dl class="snapshot-grid" style={`--snapshot-cols: ${cols}`}>
     {
       items.map((item) => (
-        <div class="snapshot-item">
+        <div class="snapshot-item reveal">
           <dt>{item.label}</dt>
           <dd>{item.value}</dd>
         </div>
@@ -31,58 +31,72 @@ const cols = n <= 4 ? n : Math.ceil(n / 2);
 </section>
 
 <style>
-  .snapshot {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-  }
-
-  @media (min-width: 768px) {
-    .snapshot {
-      padding: 2.5rem 2.75rem;
-    }
-  }
-
+  /* No box. The challenge sentence carries the block, and the facts beneath
+     it use the homepage figures' language: one rule above and below, thin
+     vertical separators between columns. The same device on both pages is
+     what makes the case study feel like part of the site. */
   .snapshot-challenge {
+    max-width: 44rem;
     font-family: var(--font-display);
+    font-weight: 500;
     font-size: clamp(1.375rem, 2.3vw, 1.875rem);
-    letter-spacing: 0;
-    line-height: 1.22;
+    letter-spacing: -0.024em;
+    line-height: 1.25;
   }
 
   .snapshot-grid {
-    margin: 2.25rem 0 0;
+    margin: 2.5rem 0 0;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-block: 1px solid var(--color-border);
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 900px) {
     .snapshot-grid {
-      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-      gap: 1.75rem 2rem;
+      grid-template-columns: repeat(var(--snapshot-cols), minmax(0, 1fr));
     }
   }
 
-  @media (min-width: 1024px) {
-    .snapshot-grid {
-      grid-template-columns: repeat(var(--snapshot-cols), 1fr);
+  .snapshot-item {
+    padding: 1.5rem 1.25rem 1.5rem 0;
+  }
+
+  @media (max-width: 899px) {
+    .snapshot-item:nth-child(even) {
+      padding-left: 1.25rem;
+      border-left: 1px solid var(--color-border);
+    }
+
+    .snapshot-item:nth-child(n + 3) {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .snapshot-item {
+      padding: 1.75rem 1.5rem;
+    }
+
+    .snapshot-item:first-child {
+      padding-left: 0;
+    }
+
+    .snapshot-item + .snapshot-item {
+      border-left: 1px solid var(--color-border);
     }
   }
 
   .snapshot-item dt {
-    font-family: var(--font-body);
+    font-size: 0.8125rem;
     font-weight: 500;
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.11em;
-    color: var(--color-label);
+    color: var(--color-text-muted);
   }
 
   .snapshot-item dd {
     margin: 0.5rem 0 0;
-    font-size: 0.9375rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
   }
 </style>

@@ -1,7 +1,5 @@
 ---
-import { Image } from "astro:assets";
 import { url, EMAIL, RESUME_PATH } from "../site.ts";
-import avatar from "../assets/about/avatar.webp";
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -15,17 +13,7 @@ const links = [
 
 <header class="site-header">
   <div class="wrap measure-hero header-inner">
-    <a href={url("/")} class="wordmark">
-      <Image
-        src={avatar}
-        alt=""
-        width={80}
-        height={80}
-        class="wordmark-avatar"
-        loading="eager"
-      />
-      <span>Ajinkya Kale</span>
-    </a>
+    <a href={url("/")} class="wordmark">Ajinkya Kale</a>
     <nav aria-label="Primary">
       <ul>
         {
@@ -43,8 +31,8 @@ const links = [
         <li>
           <a href={url(RESUME_PATH)} target="_blank" rel="noopener">Resume</a>
         </li>
-        <li>
-          <a class="email" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <li class="nav-cta-item">
+          <a class="nav-cta" href={`mailto:${EMAIL}`}>Get in touch</a>
         </li>
       </ul>
     </nav>
@@ -56,35 +44,57 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
-    backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition:
+      background 280ms var(--ease-out),
+      border-color 280ms var(--ease-out),
+      box-shadow 280ms var(--ease-out);
   }
 
+  /* Set by motion.ts once the page leaves the top: the bar firms up and
+     separates from the content scrolling under it. At the top it sits on
+     the hero's colour with no line at all. */
+  .site-header:global(.is-scrolled) {
+    background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+    border-bottom-color: var(--color-border);
+    box-shadow: 0 6px 24px -12px rgba(18, 14, 10, 0.12);
+  }
+
+  /* A short drop-in on load. The page's first movement, so it is quick. */
+  @keyframes header-in {
+    from {
+      opacity: 0;
+      translate: 0 -10px;
+    }
+  }
+
+  :global(html.motion) .header-inner {
+    animation: header-in 600ms var(--ease-paper) both;
+  }
+
+  /* Fixed height rather than padding around content, so the bar is the same
+     68px on every page regardless of what sits in it. The side edges come
+     from .wrap, the same gutter every section uses. */
   .header-inner {
+    height: var(--header-h);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    padding-block: 0.875rem;
   }
 
   .wordmark {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-display);
-    font-size: 1.3125rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-text);
     text-decoration: none;
     white-space: nowrap;
-  }
-
-  .wordmark-avatar {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
   }
 
   nav ul {
@@ -97,49 +107,63 @@ const links = [
   }
 
   nav a {
-    display: inline-block;
-    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    height: 2.25rem;
+    padding-inline: 0.8rem;
     font-size: 0.875rem;
     font-weight: 500;
     text-decoration: none;
     color: var(--color-text-muted);
-    padding: 0.4rem 0.8rem;
     border-radius: var(--pill);
     transition:
-      background 140ms ease,
-      color 140ms ease;
+      background 140ms var(--ease-out),
+      color 140ms var(--ease-out);
   }
 
-  nav a:hover,
   nav a[aria-current="page"] {
     color: var(--color-text);
     background: var(--color-warm);
   }
 
-  /* The address itself, not a button — nothing to "get in touch" through yet. */
-  nav a.email {
-    color: var(--color-text);
-    margin-left: 0.4rem;
+  @media (hover: hover) and (pointer: fine) {
+    nav a:hover {
+      color: var(--color-text);
+      background: var(--color-warm);
+    }
+  }
+
+  /* The one primary action in the bar. Same label as the hero and the
+     closing band, so contact has a single name everywhere on the site. */
+  .nav-cta-item {
+    margin-left: 0.5rem;
+  }
+
+  nav a.nav-cta {
+    color: var(--color-bg);
+    background: var(--color-text);
+    padding-inline: 1rem;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    nav a.nav-cta:hover {
+      color: var(--color-bg);
+      background: #2a2a2a;
+    }
+  }
+
+  nav a.nav-cta:active {
+    transform: scale(0.97);
   }
 
   @media (max-width: 640px) {
-    nav a.email {
+    .nav-cta-item {
       display: none;
-    }
-
-    .header-inner {
-      gap: 1rem;
     }
 
     nav a {
-      padding: 0.4rem 0.6rem;
+      padding-inline: 0.6rem;
     }
   }
 
-  /* On the narrowest screens the picture stands in for the name. */
-  @media (max-width: 480px) {
-    .wordmark span {
-      display: none;
-    }
-  }
 </style>

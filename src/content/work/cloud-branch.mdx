@@ -7,7 +7,7 @@ status: full
 cardTitle: Kotak Cloud Branch
 cardCategory: Enterprise Banking
 cardHook: >-
-  Bringing 10–15 fragmented systems into one operational platform.
+  Bringing 10-15 fragmented systems into one operational platform.
 cardDescription: >-
   I led UX across core branch-service workflows, helping create a common structure for transactions, states and service patterns instead of treating every banking service as a separate product.
 cardAudience: For 5,000+ branch staff
@@ -213,25 +213,27 @@ We also kept bank knowledge inside the workflow. The side panel gives staff cont
 <OutcomeGroups
   groups={[
     {
-      title: "Product and user impact",
+      title: "What shipped",
       claims: [
-        { kind: "target", text: "3 systems reduced to 1 for the representative fund-transfer journey.", note: "Mapped as-is versus target-state process evidence, not a post-launch production measurement. Keep that framing." },
-        { kind: "target", text: "25+ clicks reduced to 10–15 in the redesigned representative fund-transfer flow.", note: "Same provenance as above — process mapping, not measured production impact." },
+        { kind: "shipped", text: "Six core services designed end to end, including fund-transfer workflows and their variants." },
+        { kind: "shipped", text: "A shared workflow pattern — identify, capture, review, route, resolve — that later services were built on rather than around." },
+        { kind: "shipped", text: "Review, approval and status patterns reused across those services instead of being renegotiated service by service." },
+        { kind: "scale", text: "5,000+ branch staff the platform was designed for." },
+      ],
+    },
+    {
+      title: "What testing showed",
+      claims: [
+        { kind: "observed", text: "Checkers understood status; what they could not find was the route into the work. A dedicated task queue replaced the priority-task call to action, and the change held." },
         { kind: "observed", text: "Staff start from the customer and stay in one environment for a service request, instead of navigating each underlying application." },
       ],
     },
     {
-      title: "System impact",
+      title: "What it was designed to achieve",
+      note: "From as-is versus target-state process mapping, before launch. I have not seen post-launch production numbers, so these stay labelled as targets.",
       claims: [
-        { kind: "measured", text: "A shared workflow pattern — identify, capture, review, route, resolve — that later services could build on." },
-        { kind: "measured", text: "Reusable review, approval and status patterns carried across services." },
-        { kind: "measured", text: "Six core services designed end to end during my tenure, including fund-transfer workflows and their variants." },
-      ],
-    },
-    {
-      title: "Environment",
-      claims: [
-        { kind: "scale", text: "5,000+ branch staff the platform was designed for." },
+        { kind: "target", text: "3 systems reduced to 1 for the representative fund-transfer journey." },
+        { kind: "target", text: "25+ clicks reduced to 10–15 in the redesigned representative fund-transfer flow." },
       ],
     },
   ]}

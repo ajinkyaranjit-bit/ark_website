@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { EMAIL, LINKEDIN_URL } from "../site.ts";
+import { EMAIL, LINKEDIN_URL, RESUME_PATH, url } from "../site.ts";
 ---
 
 <BaseLayout
@@ -9,9 +9,9 @@ import { EMAIL, LINKEDIN_URL } from "../site.ts";
 >
   <div class="wrap measure-hero">
     <div class="contact">
-      <h1 class="t-h1">Let's talk</h1>
+      <h1 class="t-h1 reveal">Get in touch</h1>
 
-      <div class="contact-copy">
+      <div class="contact-copy reveal">
         <p>
           I'm currently exploring Lead and Principal Product Designer roles,
           particularly in fintech, banking and complex product environments.
@@ -23,18 +23,23 @@ import { EMAIL, LINKEDIN_URL } from "../site.ts";
         </p>
       </div>
 
-      <ul class="contact-links">
-        <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
-        <li>
-          <a href={LINKEDIN_URL} rel="noopener noreferrer" target="_blank"
-            >LinkedIn →</a
-          >
-        </li>
-      </ul>
+      <div class="contact-actions reveal">
+        <a class="btn btn--solid" href={`mailto:${EMAIL}`}>Get in touch</a>
+        <a
+          class="btn btn--ghost"
+          href={LINKEDIN_URL}
+          rel="noopener noreferrer"
+          target="_blank">LinkedIn</a
+        >
+        <a class="btn btn--ghost" href={url(RESUME_PATH)} target="_blank" rel="noopener">
+          Resume
+        </a>
+      </div>
 
-      <p class="contact-note t-meta">
-        Based in India. Open to opportunities globally.
+      <p class="contact-note t-meta reveal">
+        Based in Pune, India. Open to opportunities globally.
       </p>
+
     </div>
   </div>
 </BaseLayout>
@@ -42,13 +47,13 @@ import { EMAIL, LINKEDIN_URL } from "../site.ts";
 <style>
   .contact {
     max-width: var(--measure);
-    padding-block: 4rem 2rem;
+    padding-block: var(--page-top) 2rem;
     min-height: 55vh;
   }
 
   @media (min-width: 768px) {
     .contact {
-      padding-block: 7rem 2rem;
+      padding-block: var(--page-top) 2rem;
     }
   }
 
@@ -60,23 +65,16 @@ import { EMAIL, LINKEDIN_URL } from "../site.ts";
     margin-top: 1.5rem;
   }
 
-  .contact-links {
-    margin: 3rem 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 0.75rem;
-    font-size: 1.125rem;
-  }
-
-  .contact-links a {
-    text-underline-offset: 0.2em;
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 2.5rem;
   }
 
   .contact-note {
     margin-top: 3rem;
     padding-top: 2rem;
     border-top: 1px solid var(--color-border);
-    font-size: 0.7rem;
   }
 </style>

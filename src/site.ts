@@ -5,7 +5,7 @@
 
 export const NAME = "Ajinkya Kale";
 export const ROLE = "Lead Product Designer";
-export const SITE_TITLE = "Ajinkya Kale — Lead Product Designer";
+export const SITE_TITLE = "Ajinkya Kale | Lead Product Designer";
 export const SITE_DESCRIPTION =
   "Product designer for complex, real-world systems. 9 years across fintech, banking, healthcare, SaaS, and ed-tech. Currently leading UX for a large corporate-banking program at Ungrammary.";
 
@@ -20,6 +20,16 @@ export const LINKEDIN_URL = "https://linkedin.com/in/ajinkya-kale-88487b82";
 export const RESUME_PATH = "/Ajinkya-Kale-Resume.pdf";
 
 export const LOCATION = "Pune, India";
+
+/**
+ * The hiring line, shown in the homepage hero.
+ *
+ * It previously sat only at the foot of /about, which assumes a reader who
+ * scrolls a second page before deciding whether to write to you. Recruiters
+ * mostly do not. Narrow it the day you want to be more specific about
+ * location, or empty the string and the hero block disappears with it.
+ */
+export const AVAILABILITY = "Open to Lead and Principal design roles";
 
 /**
  * Prefixes an internal path with the deployment's base path.

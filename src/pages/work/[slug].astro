@@ -35,14 +35,16 @@ const sections = headings.filter((h) => h.depth === 2);
       {
         sections.length > 2 && (
           <nav class="cs-index" aria-label="Case study sections">
-            <p class="t-meta">In this case study</p>
+            <p class="cs-index-label reveal">In this case study</p>
             <ol>
               {sections.map((section, i) => (
-                <li>
-                  <span class="cs-index-n t-meta">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <a href={`#${section.slug}`}>{section.text}</a>
+                <li class="reveal">
+                  <a href={`#${section.slug}`}>
+                    <span class="cs-index-n">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span class="cs-index-text">{section.text}</span>
+                  </a>
                 </li>
               ))}
             </ol>
@@ -71,70 +73,111 @@ const sections = headings.filter((h) => h.depth === 2);
 
 <style>
   .cs-body {
-    padding-top: 3rem;
-    padding-bottom: 2rem;
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
   }
 
-  @media (min-width: 768px) {
-    .cs-body {
-      padding-top: 4.5rem;
-    }
-  }
-
-  .cs-index {
-    max-width: var(--measure);
-    padding: 1.75rem 0;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+  /* The jump list spans the same edges as the hero image above it: four
+     cells across, two rows, thin separators between cells in the same
+     language as the snapshot and the homepage figures. */
+  .cs-index-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
   }
 
   .cs-index ol {
-    margin: 1.25rem 0 0;
+    margin: 1rem 0 0;
     padding: 0;
     list-style: none;
     display: grid;
-    gap: 0.625rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--color-border);
   }
 
-  @media (min-width: 620px) {
+  @media (min-width: 900px) {
     .cs-index ol {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem 2rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
   .cs-index li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .cs-index-n {
-    font-size: 0.625rem;
-    flex-shrink: 0;
+  .cs-index li:nth-child(2n) {
+    border-left: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 900px) {
+    .cs-index li:nth-child(2n) {
+      border-left: 0;
+    }
+
+    .cs-index li:not(:nth-child(4n + 1)) {
+      border-left: 1px solid var(--color-border);
+    }
   }
 
   .cs-index a {
-    font-size: 0.9375rem;
-    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    height: 100%;
+    padding: 1.125rem 1.25rem;
     color: var(--color-text);
+    text-decoration: none;
   }
 
-  .cs-index a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  .cs-index li:nth-child(odd) a {
+    padding-left: 0;
+  }
+
+  @media (min-width: 900px) {
+    .cs-index li:nth-child(odd) a {
+      padding-left: 1.25rem;
+    }
+
+    .cs-index li:nth-child(4n + 1) a {
+      padding-left: 0;
+    }
+  }
+
+  .cs-index-n {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .cs-index-text {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cs-index a:hover .cs-index-text {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  /* The body starts a full section below the index, not against its rule. */
+  .cs-index + .prose {
+    margin-top: var(--section-y);
   }
 
   .cs-next {
     max-width: var(--measure);
-    margin-top: 5rem;
+    margin-top: var(--section-y);
     padding-top: 2.5rem;
     border-top: 1px solid var(--color-border);
   }
 
   @media (min-width: 768px) {
     .cs-next {
-      margin-top: 7rem;
+      margin-top: var(--section-y);
     }
   }
 
@@ -168,6 +211,6 @@ const sections = headings.filter((h) => h.depth === 2);
   /* Section headings get a little more air in the decision-led structure,
      and a scroll offset so the sticky header never covers a jump target. */
   .prose h2 {
-    scroll-margin-top: 5rem;
+    scroll-margin-top: calc(var(--header-h) + 1.5rem);
   }
 </style>

@@ -73,8 +73,9 @@ const { visible, underlying, challenge } = Astro.props;
   .pf-challenge-text {
     margin-top: 0.875rem;
     font-family: var(--font-display);
+    font-weight: 500; /* a full sentence, not a title: lighter than the display weight */
     font-size: clamp(1.3125rem, 2.2vw, 1.625rem);
-    letter-spacing: 0;
+    letter-spacing: -0.022em;
     line-height: 1.28;
     text-wrap: pretty;
   }

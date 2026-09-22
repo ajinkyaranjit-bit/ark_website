@@ -25,14 +25,14 @@ export interface Props {
 const { title, subtitle, tags, snapshot, image } = Astro.props;
 ---
 
-<header class="cs-hero">
+<header class="cs-hero aurora">
   <div class="wrap measure-hero">
-    <a href={url("/#work")} class="cs-back t-meta">← Selected work</a>
+    <a href={url("/#work")} class="cs-back t-meta reveal">← Selected work</a>
 
-    <h1 class="t-h1 cs-title">{title}</h1>
-    <p class="t-lead cs-subtitle">{subtitle}</p>
+    <h1 class="t-h1 cs-title reveal">{title}</h1>
+    <p class="t-lead cs-subtitle reveal">{subtitle}</p>
 
-    <ul class="cs-tags">
+    <ul class="cs-tags reveal">
       {
         tags.map((tag) => (
           <li>
@@ -46,7 +46,7 @@ const { title, subtitle, tags, snapshot, image } = Astro.props;
       <Snapshot challenge={snapshot.challenge} items={snapshot.items} />
     </div>
 
-    <div class="cs-media">
+    <div class="cs-media reveal">
       <Placeholder
         aspect={image.aspect ?? "16:9"}
         label={image.label}
@@ -60,18 +60,18 @@ const { title, subtitle, tags, snapshot, image } = Astro.props;
 
 <style>
   .cs-hero {
-    padding-top: 2.5rem;
+    padding-top: var(--page-top);
   }
 
   @media (min-width: 768px) {
     .cs-hero {
-      padding-top: 4rem;
+      padding-top: var(--page-top);
     }
   }
 
+  /* No size override: it takes .t-meta like every other label on the site. */
   .cs-back {
     display: inline-block;
-    font-size: 0.7rem;
     text-decoration: none;
   }
 
