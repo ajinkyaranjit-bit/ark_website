@@ -68,6 +68,7 @@ import Placeholder from "../../components/Placeholder.astro";
 import Breakout from "../../components/Breakout.astro";
 import DataStrip from "../../components/DataStrip.astro";
 import LeadershipBlock from "../../components/LeadershipBlock.astro";
+import OutcomeGroups from "../../components/OutcomeGroups.astro";
 import Band from "../../components/Band.astro";
 
 import homeStates from "../../assets/work/truemeds/01-home-three-user-states.webp";
@@ -212,6 +213,24 @@ That gave the team a consistent way to evaluate new ideas without forcing every 
 />
 
 ## Outcome
+
+<OutcomeGroups
+  groups={[
+    {
+      title: "What changed",
+      claims: [
+        { kind: "measured", text: "Checkout-stage drop-off reduced by 10%, identified through funnel analysis and confirmed after the changes shipped." },
+      ],
+    },
+    {
+      title: "What shipped",
+      claims: [
+        { kind: "shipped", text: "Several recommendations from the audit were implemented in the live product." },
+        { kind: "shipped", text: "Broader parts of the redesign were taken into development selectively as the product evolved." },
+      ],
+    },
+  ]}
+/>
 
 Several recommendations from the audit were implemented, while broader parts of the redesign were taken forward selectively as the product evolved.
 

@@ -1,0 +1,115 @@
+---
+/**
+ * A prototype recording, shown where an image slot would otherwise sit.
+ *
+ * Files live in /public rather than src/assets: Astro's image pipeline does
+ * not process video, so these are served as-is and referenced by path.
+ *
+ * These clips are silent by design, and silent in fact: the audio track is
+ * stripped from the file itself, not merely muted in markup. A reviewer who
+ * unmutes hears nothing, because there is nothing there. Keep it that way for
+ * any clip added here.
+ *
+ * Playback choices, and why:
+ *   muted + playsinline + autoplay — the only combination browsers allow to
+ *     start on its own. A prototype loop that needs a click is usually never
+ *     watched, and there is nothing to hear anyway.
+ *   loop — it is a short demonstration, not a film.
+ *   controls — still present, so a reviewer can scrub back to the step they
+ *     missed rather than waiting for the loop to come round.
+ *   poster — the first frame, so the slot is never an empty black box while
+ *     4MB loads.
+ *   preload="metadata" — the poster carries the first impression; the video
+ *     itself is only fetched when the reader gets there.
+ *
+ * motion.ts pauses these under prefers-reduced-motion, which autoplay alone
+ * cannot express in markup.
+ */
+export interface Props {
+  src: string;
+  poster?: string;
+  /** Line one under the video: what this shows. */
+  title: string;
+  /** Line two: the point it makes. */
+  description: string;
+  width: number;
+  height: number;
+}
+
+const { src, poster, title, description, width, height } = Astro.props;
+---
+
+<figure class="vid-figure reveal">
+  <video
+    class="vid"
+    src={src}
+    poster={poster}
+    width={width}
+    height={height}
+    autoplay
+    muted
+    loop
+    playsinline
+    controls
+    preload="metadata"
+    aria-label={`${title}. ${description}`}></video>
+  <figcaption class="vid-caption">
+    <span class="vid-title">{title}</span>
+    <span class="vid-desc">{description}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .vid-figure {
+    margin: 0;
+  }
+
+  /* Same frame as the image slots: identical radius, hairline and ground, so
+     a video and a still read as the same kind of object on the page. */
+  .vid {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-warm);
+  }
+
+  /* Edge to edge on phones, matching the image slots' bleed. */
+  @media (max-width: 767px) {
+    .vid-figure {
+      margin-inline: calc(var(--media-bleed, 0px) * -1);
+    }
+
+    .vid {
+      border-radius: 0;
+      border-inline: 0;
+    }
+
+    .vid-caption {
+      padding-inline: var(--media-bleed, 0px);
+    }
+  }
+
+  /* Two lines, not one sentence: the label the artwork used to carry baked
+     into the image, now live text that can be read, selected and searched. */
+  .vid-caption {
+    display: grid;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    max-width: 52ch;
+  }
+
+  .vid-title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+  }
+
+  .vid-desc {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+</style>

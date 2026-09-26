@@ -29,6 +29,18 @@ if (header) {
   }).observe(sentinel);
 }
 
+/* 1b — Looping video. `autoplay` is markup, so it cannot be gated on a media
+   query. Under reduced motion the loop is stopped and rewound to the poster
+   frame; the controls stay, so it is still watchable on demand. */
+if (reduce) {
+  document.querySelectorAll<HTMLVideoElement>("video[autoplay]").forEach((v) => {
+    v.autoplay = false;
+    v.loop = false;
+    v.pause();
+    v.currentTime = 0;
+  });
+}
+
 /* 3 — Count-up. Defined before reveal so reveal can call it. */
 const numberFormat = new Intl.NumberFormat("en-US");
 

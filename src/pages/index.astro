@@ -6,6 +6,13 @@ import Placeholder from "../components/Placeholder.astro";
 import Band from "../components/Band.astro";
 import { EMAIL, AVAILABILITY, url } from "../site.ts";
 
+import imgLoanNearby from "../assets/work/more/loannearby.webp";
+import imgWellytics from "../assets/work/more/wellytics.webp";
+import imgHighlandBrain from "../assets/work/more/highland-brain.webp";
+import img21kSchool from "../assets/work/more/21k-school.webp";
+import imgPayNearby from "../assets/work/more/paynearby.webp";
+import imgImsom from "../assets/work/more/imsom.webp";
+
 const featured = (await getCollection("work"))
   .filter((entry) => entry.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
@@ -15,10 +22,13 @@ const [lead, ...supporting] = featured;
 // Real figures, the same ones stated on /about. `count` drives the count-up;
 // the rendered text is the final value, so the page reads correctly with no
 // script at all.
+// Scale, scope, scope, leadership. Every one is a delivery fact that holds up
+// in an interview: no pre-launch targets, nothing needing a caveat. Years are
+// deliberately absent, because the hero line right above already states them.
 const proof = [
-  { count: 9, suffix: "+", label: "years designing products" },
-  { count: 5000, suffix: "+", label: "branch staff on a platform I design" },
-  { count: 16, suffix: "", label: "products shipped at Nearby" },
+  { count: 5000, suffix: "+", label: "branch staff on the platform I design" },
+  { count: 6, suffix: "", label: "core services designed end to end" },
+  { count: 60, suffix: "M+", label: "transactions a year on that platform" },
   { count: 7, suffix: "", label: "designers in the largest team I led" },
 ];
 
@@ -28,41 +38,43 @@ const more = [
   {
     name: "LoanNearby",
     blurb:
-      "Moved Aadhaar-KYC loan journeys from a largely offline process toward same-day digital approval.",
-    aspect: "16:9",
-    brief:
-      "The loan journey on a mid-range Android phone: the Aadhaar KYC step beside the approval screen. Two phones on a flat colour, 16:9.",
+      "Took Aadhaar-KYC loan approval from 15 days to same day by digitising a multi-signatory process.",
+    src: imgLoanNearby,
+    alt: "The LoanNearby credit review case on a tablet: applicant and business details beside the steps to CAM generation, each check marked complete before approval.",
   },
   {
     name: "Wellytics",
     blurb:
       "A 0→1 health product combining records, genomics, tracking and an AI health companion.",
-    aspect: "16:9",
-    brief:
-      "The health timeline and the AI companion chat, side by side on two phones. Calm, clinical palette, 16:9.",
+    src: imgWellytics,
+    alt: "Wellytics on two phones and a watch: the daily check-in and plan, the genetic report with heart, diabetes and sleep risk levels, and live heart rate, steps and sleep.",
   },
   {
     name: "Highland Brain",
     blurb:
       "A learning platform designed across mobile, desktop, tablet and feature phones.",
-    aspect: "4:3",
-    brief:
-      "One lesson shown on a laptop, a tablet and a feature phone together. The range is the point, 4:3.",
+    src: imgHighlandBrain,
+    alt: "Highlands Brain on a laptop and phone: the campus dashboard with attendance, services and events, and the student view showing classes, tasks and upcoming events.",
   },
   {
     name: "21K School",
     blurb: "Administration for a multi-school digital education platform.",
-    aspect: "4:3",
-    brief:
-      "The admin overview: schools, classes and attendance at a glance. Desktop screen, cropped tight, 4:3.",
+    src: img21kSchool,
+    alt: "21K School on a laptop and phone: the weekly class timetable with live class details, and the teacher home with notices, classes and today's events.",
+  },
+  {
+    name: "IMSOM",
+    blurb:
+      "End-to-end design of a unified ticketing and event operations platform.",
+    src: imgImsom,
+    alt: "The IMSOM site on a laptop and phone: the Indian Music Society of Minnesota home page with artist portraits, membership and event calls to action, and the years, artists and members figures.",
   },
   {
     name: "PayNearby / BuyNearby",
     blurb:
       "Payments, commerce and lending for India's assisted-commerce network.",
-    aspect: "4:3",
-    brief:
-      "The retailer app mid-transaction at a kirana counter. A real photo if you have one, otherwise the screen on a phone, 4:3.",
+    src: imgPayNearby,
+    alt: "PayNearby and BuyNearby on two phones: the retailer wallet and service grid for Aadhaar withdrawal, transfers and recharges, and the nearby store map with shop listings.",
   },
 ] as const;
 ---
@@ -176,9 +188,11 @@ const more = [
             <li class="more-item reveal">
               <div class="more-media">
                 <Placeholder
-                  aspect={item.aspect}
-                  label={`Image brief: ${item.name}`}
-                  description={item.brief}
+                  aspect="16:9"
+                  label={item.src ? item.name : `Image brief: ${item.name}`}
+                  description={item.alt}
+                  src={item.src}
+                  alt={item.alt}
                   zoomable={false}
                 />
               </div>
@@ -381,10 +395,7 @@ const more = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /* Tablet: 2 + 2 + 1, the fifth spanning so no tile is left alone. */
-    .more-item:last-child {
-      grid-column: 1 / -1;
-    }
+
   }
 
   @media (min-width: 1024px) {
@@ -393,14 +404,6 @@ const more = [
     }
 
     .more-item {
-      grid-column: span 2;
-    }
-
-    .more-item:nth-child(-n + 2) {
-      grid-column: span 3;
-    }
-
-    .more-item:last-child {
       grid-column: span 2;
     }
   }

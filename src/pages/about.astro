@@ -28,10 +28,11 @@ const principles = [
   },
 ];
 
+// Same four as the homepage strip, so the two pages never contradict.
 const numbers = [
-  { value: "9+", label: "years designing products" },
   { value: "5,000+", label: "branch staff using a platform I currently design for" },
-  { value: "16", label: "products designed during my time at Nearby" },
+  { value: "6", label: "core services designed end to end on Cloud Branch" },
+  { value: "60M+", label: "transactions a year on that platform" },
   { value: "7", label: "designers in the largest team I've built and led" },
 ];
 
@@ -48,14 +49,14 @@ const experience = [
     role: "Lead Designer",
     dates: "2021 to 2024",
     detail:
-      "Promoted from Senior UX/UI Designer; built and led a seven-designer team across multiple client products.",
+      "One of the first designers to join. Promoted from Senior UX/UI Designer, then built and led a seven-designer team across multiple client products.",
   },
   {
     company: "Nearby Technologies",
     role: "Product Designer",
     dates: "2017 to 2021",
     detail:
-      "Joined as the first designer and worked across PayNearby, BuyNearby and LoanNearby as the company scaled.",
+      "Founding designer. Worked across PayNearby, BuyNearby and LoanNearby as the company scaled, designing 16 products in four years.",
   },
 ];
 ---
@@ -108,24 +109,25 @@ const experience = [
         <h2 class="t-h2 reveal">A little about me</h2>
         <div class="block-copy">
           <p>
-            I started my career at Nearby Technologies as the company's first
-            designer. The team grew, the products grew, and so did my role —
-            from designing interfaces to figuring out how payments, lending and
-            merchant products should actually work.
+            I started my career as the first designer at Nearby Technologies,
+            working across payments, lending and merchant products as the
+            company scaled. Later, I joined okoders as one of its first
+            designers. Those experiences shaped how I work today: understand
+            the system first, stay close to the people using it, and make
+            complicated workflows easier to act on.
           </p>
           <p>
-            Since then, I've worked across consumer products, SaaS, healthcare
-            and enterprise banking. I've built a design team of seven, led
-            smaller product teams, and worked with PMs, engineers, operations
-            and business teams on products that rarely come with clean
-            requirements.
+            Since then, I've worked across fintech, healthcare, SaaS and
+            consumer products, built and led design teams of up to seven, and
+            stayed hands-on with product strategy, flows, prototyping and
+            validation. Today, most of my work sits in banking and fintech, but
+            the problems I enjoy are broader: multiple users, messy constraints
+            and products where understanding the system matters as much as
+            designing the interface.
           </p>
-          <p>
-            Today, most of my work sits in fintech and banking. I like problems
-            with multiple users, awkward constraints and enough complexity that
-            drawing the screen is rarely the hardest part.
+          <p class="block-close">
+            I lead design, but I still stay close to the work.
           </p>
-          <p class="block-close">I still design. That matters to me.</p>
         </div>
       </section>
 
@@ -273,17 +275,31 @@ const experience = [
     margin-top: 1.5rem;
   }
 
+  /* Measured, not guessed: Geist's `ch` (the width of a zero, ~11.9px here)
+     is much wider than its average letter (~7.5px), so a ch-based measure
+     reads far longer than it looks. 44ch lands the line near 70 characters,
+     inside the comfortable range, and the column keeps its 33/67 split. */
   .block-copy p {
+    max-width: 44ch;
     font-size: 1.125rem;
     line-height: 1.62;
   }
 
-  .block-copy p + p {
+  /* Excludes the closing note. With Astro's scoping attributes this compound
+     outscores `.block-copy .block-close`, so without the :not() it was
+     clamping the closing note back to normal paragraph spacing. */
+  .block-copy p + p:not(.block-close) {
     margin-top: 1.25rem;
   }
 
-  .block-close {
-    font-weight: 600;
+  /* A quieter line set apart by whitespace, not weight. Muted tone measures
+     4.71:1 on the page background, so it stays AA while reading softer.
+     Scoped under .block-copy so it outranks the `p + p` rule above, which
+     was otherwise capping the gap at the normal paragraph spacing. */
+  .block-copy .block-close {
+    margin-top: 2.25rem;
+    font-size: 1rem;
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 900px) {

@@ -69,6 +69,7 @@ next:
 ---
 
 import Placeholder from "../../components/Placeholder.astro";
+import Video from "../../components/Video.astro";
 import Breakout from "../../components/Breakout.astro";
 import DecisionBlock from "../../components/DecisionBlock.astro";
 import ValidationBlock from "../../components/ValidationBlock.astro";
@@ -76,10 +77,8 @@ import OutcomeGroups from "../../components/OutcomeGroups.astro";
 import LeadershipBlock from "../../components/LeadershipBlock.astro";
 import Band from "../../components/Band.astro";
 
-import entryPoint from "../../assets/work/cloud-branch/01-shared-entry-point.webp";
 import workflowArchitecture from "../../assets/work/cloud-branch/03-common-workflow-architecture.webp";
 import fundTransfer from "../../assets/work/cloud-branch/04-fund-transfer-workflow.webp";
-import reviewContext from "../../assets/work/cloud-branch/05-review-with-context.webp";
 import checkerTesting from "../../assets/work/cloud-branch/06-checker-testing.webp";
 import aiInWorkflow from "../../assets/work/cloud-branch/07-ai-inside-workflow.webp";
 
@@ -106,13 +105,13 @@ A representative fund-transfer journey spanned **3 systems and 25+ clicks**, wit
 />
 
 <Breakout>
-  <Placeholder
-    aspect="4:3"
-    label="One shared entry point"
-    description="Employee home, customer search, and the opened customer context — the three steps of starting from the customer rather than the system."
-    src={entryPoint}
-    alt="One shared entry point — employee home with the day's tasks, customer search, and the opened customer context showing accounts, activity and notes."
-    caption="Decision 01 — a shared starting point reduced switching between service-specific systems."
+  <Video
+    src="/work/cloud-branch/01-shared-entry-point.mp4"
+    poster="/work/cloud-branch/01-shared-entry-point-poster.jpg"
+    width={1128}
+    height={720}
+    title="One shared entry point"
+    description="Employees began from the customer, not from the legacy system: search once, open the customer context, and move into the service from there."
   />
 </Breakout>
 
@@ -127,13 +126,13 @@ A representative fund-transfer journey spanned **3 systems and 25+ clicks**, wit
 />
 
 <Breakout>
-  <Placeholder
-    aspect="4:3"
-    label="Clear review and status visibility"
-    description="A cash withdrawal awaiting approval — transaction context, attachment preview and audit trail — beside the approved state showing the outcome and next steps."
-    src={reviewContext}
-    alt="Clear review and status visibility — a cash withdrawal pending approval with full transaction context, attachment preview and audit trail, beside the approved state showing outcome and next steps."
-    caption="Decision 02 — visibility reduced rework and improved checker confidence."
+  <Video
+    src="/work/cloud-branch/02-review-status.mp4"
+    poster="/work/cloud-branch/02-review-status-poster.jpg"
+    width={1128}
+    height={720}
+    title="Clear review and status visibility"
+    description="Everything a checker needs in one place: the transaction beside the scanned cheque, inline validation on each field, and a remark saying why the amount was queried."
   />
 </Breakout>
 
@@ -218,19 +217,21 @@ We also kept bank knowledge inside the workflow. The side panel gives staff cont
         { kind: "shipped", text: "Six core services designed end to end, including fund-transfer workflows and their variants." },
         { kind: "shipped", text: "A shared workflow pattern — identify, capture, review, route, resolve — that later services were built on rather than around." },
         { kind: "shipped", text: "Review, approval and status patterns reused across those services instead of being renegotiated service by service." },
-        { kind: "scale", text: "5,000+ branch staff the platform was designed for." },
+        { kind: "scale", text: "5,000+ branch staff, handling 60M+ transactions a year." },
       ],
     },
     {
-      title: "What testing showed",
+      title: "What changed",
       claims: [
+        { kind: "measured", text: "Authentication clicks reduced by 50% through a consolidated sign-on experience." },
+        { kind: "measured", text: "Representative handling time cut from 46 minutes to 28." },
         { kind: "observed", text: "Checkers understood status; what they could not find was the route into the work. A dedicated task queue replaced the priority-task call to action, and the change held." },
         { kind: "observed", text: "Staff start from the customer and stay in one environment for a service request, instead of navigating each underlying application." },
       ],
     },
     {
       title: "What it was designed to achieve",
-      note: "From as-is versus target-state process mapping, before launch. I have not seen post-launch production numbers, so these stay labelled as targets.",
+      note: "From as-is versus target-state process mapping of one representative journey, rather than a production measurement. The measured results are in the column before this one.",
       claims: [
         { kind: "target", text: "3 systems reduced to 1 for the representative fund-transfer journey." },
         { kind: "target", text: "25+ clicks reduced to 10–15 in the redesigned representative fund-transfer flow." },
